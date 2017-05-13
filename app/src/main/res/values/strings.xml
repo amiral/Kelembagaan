@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">Kelembagaan</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- Navigation Drawer -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_cari">Cari</string>
+    <string name="nav_lapor">Lapor</string>
+    <string name="nav_disclaimer">Disclaimer</string>
+    <string name="nav_bookmark">Bookmark</string>
+    <string name="nav_login">Login</string>
+    <string name="nav_keluar">Keluar</string>
+    <string name="nav_tentang">Tentang</string>
+
+
+    <!-- Toolbar titles when navigation menu item is selected -->
+    <string-array name="nav_item_activity_titles">
+        <item>Dashboard</item>
+        <item>Cari</item>
+        <item>Bookmark</item>
+        <item>Lapor</item>
+        <item>Disclaimer</item>
+        <item>Tentang</item>
+    </string-array>
+    <!-- Splash -->
+
+    <string name="title_activity_welcome">Home Screen</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">Hello Food!</string>
+    <string name="slide_1_desc">The easiest way to order food from your favourite restaurant!</string>
+
+    <string name="slide_2_title">Movie Tickets</string>
+    <string name="slide_2_desc">Book movie tickets for your family and friends!</string>
+
+    <string name="slide_3_title">Great Discounts</string>
+    <string name="slide_3_desc">Best discounts on every single service we offer!</string>
+
+    <string name="slide_4_title">World Travel</string>
+    <string name="slide_4_desc">Book tickets of any transportation and travel the world!</string>
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="forgot_password_text">Lupa kata sandi? Masukkan email login Anda dibawah ini. Kami akan mengirimkan pesan email beserta tautan kata sandi Anda</string>
+    <string name="indeks_integritas">Indeks Integritas</string>
+    <string name="izin_operasional">Izin Operasional</string>
+</resources>
