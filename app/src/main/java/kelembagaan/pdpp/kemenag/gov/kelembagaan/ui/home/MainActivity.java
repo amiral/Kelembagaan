@@ -323,6 +323,9 @@ public class MainActivity extends AppCompatActivity {
                 navItemIndex = 1;
                 CURRENT_TAG = TAG_CARI;
                 loadHomeFragment();
+                if(isSearchOpened) {
+                    handleMenuSearch();
+                }
                 return;
             }
         }
@@ -354,6 +357,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
+            handleMenuSearch();
             return true;
         }
 
@@ -373,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(etSearch.getWindowToken(), 0);
 
             //add the search icon in the action bar
-            mSearchAction.setIcon(getResources().getDrawable(R.drawable.and));
+            mSearchAction.setIcon(R.drawable.ic_action_search);
 
             isSearchOpened = false;
         } else { //open the search entry
@@ -383,10 +387,10 @@ public class MainActivity extends AppCompatActivity {
             action.setCustomView(R.layout.search_bar);//add the custom view
             action.setDisplayShowTitleEnabled(false); //hide the title
 
-            edtSeach = (EditText)action.getCustomView().findViewById(R.id.edtSearch); //the text editor
+            etSearch = (EditText)action.getCustomView().findViewById(R.id.edit_search); //the text editor
 
             //this is a listener to do a search when the user clicks on search button
-            edtSeach.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -398,18 +402,24 @@ public class MainActivity extends AppCompatActivity {
             });
 
 
-            edtSeach.requestFocus();
+            etSearch.requestFocus();
 
             //open the keyboard focused in the edtSearch
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(edtSeach, InputMethodManager.SHOW_IMPLICIT);
+            imm.showSoftInput(etSearch, InputMethodManager.SHOW_IMPLICIT);
 
 
             //add the close icon
-            mSearchAction.setIcon(getResources().getDrawable(R.drawable.ic_close_search));
+            mSearchAction.setIcon(R.drawable.ic_action_close);
 
             isSearchOpened = true;
         }
     }
+
+    private void doSearch(){
+
+    }
+
+
 
 }

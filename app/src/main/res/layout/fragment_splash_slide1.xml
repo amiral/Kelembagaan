@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_background">
+    android:background="@drawable/background_polos">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -14,13 +14,20 @@
         <ImageView
             android:layout_width="@dimen/img_width_height"
             android:layout_height="@dimen/img_width_height"
-            android:src="@drawable/ic_menu_desktop" />
+            android:src="@drawable/logo_kemenag" />
+
+        <View
+            android:layout_width="50dp"
+            android:layout_height="2dp"
+            android:background="@color/primary"
+            android:layout_margin="5dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/slide_1_title"
             android:textColor="@android:color/white"
+            android:gravity="center"
             android:textSize="@dimen/slide_title"
             android:textStyle="bold" />
 
