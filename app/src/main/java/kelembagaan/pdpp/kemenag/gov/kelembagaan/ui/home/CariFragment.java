@@ -27,7 +27,6 @@ import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
 public class CariFragment extends Fragment {
 
     ViewPager viewPager;
-//    TabLayout tabLayout;
     PagerSlidingTabStrip tabsStrip;
 
     public CariFragment() {
@@ -41,9 +40,6 @@ public class CariFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_cari, container, false);
 
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
-//        tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
-
-        // Give the PagerSlidingTabStrip the ViewPager
         tabsStrip = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -137,30 +133,5 @@ public class CariFragment extends Fragment {
             fragmentTitles.add(name);
         }
     }
-
-    /*public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
-        final int PAGE_COUNT = 2;
-        private String tabTitles[] = new String[] { "Pesantren", "Madrasah"};
-
-        public SampleFragmentPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public int getCount() {
-            return PAGE_COUNT;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return PageFragment.newInstance(position + 1);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            // Generate title based on item position
-            return tabTitles[position];
-        }
-    }*/
 
 }

@@ -43,8 +43,19 @@
         </activity>
         <activity android:name=".ui.dashboard.IzinOperationalActivity">
             <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".ui.home.MainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.home.MainActivity" />
+        </activity>
+        <activity android:name=".ui.pesantren.PesantrenActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.home.MainActivity" />
+        </activity>
+        <activity android:name=".ui.madrasah.MadrasahActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.home.MainActivity" />
         </activity>
     </application>
 

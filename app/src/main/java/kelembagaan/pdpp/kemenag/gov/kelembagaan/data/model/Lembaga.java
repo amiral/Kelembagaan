@@ -5,9 +5,26 @@ package kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model;
  */
 
 public class Lembaga {
+
+//      "id_lembaga": 27,
+//              "npsn": "929087",
+//              "nsm": "819492",
+//              "nama_lembaga": "Ferry, Borer and Walter",
+//              "alamat": "Apt. 166",
+//              "kode_pos": "68851",
+//              "telepon": "862-458-9175 x69026",
+//              "pimpinan": "Leland Mraz",
+//              "website": "langosh.com",
+//              "status_lembaga": "negeri",
+//              "masa_berlaku_ijin_operasional": "2018-02-20",
+//              "longitude": "-40.1148880",
+//              "latitude": "29.1094650",
+//              "nama_tipe_lembaga": null,
+//              "nama_jenjang_lembaga": null,
+//              "status_data": "tidak aktif"
+
     int idLembaga;
     String npsn;
-    String nspp;
     String nsm;
     String namaLembaga;
     String alamat;
@@ -24,13 +41,14 @@ public class Lembaga {
     int statusData;
     String pembaharuanTerakhir;
     int isFavorit;
+    String lokasiLembaga;
 
-    public int getIsFavorit() {
-        return isFavorit;
+    public String getLokasiLembaga() {
+        return lokasiLembaga;
     }
 
-    public void setIsFavorit(int isFavorit) {
-        this.isFavorit = isFavorit;
+    public void setLokasiLembaga(String lokasiLembaga) {
+        this.lokasiLembaga = lokasiLembaga;
     }
 
     public int getIdLembaga() {
@@ -47,14 +65,6 @@ public class Lembaga {
 
     public void setNpsn(String npsn) {
         this.npsn = npsn;
-    }
-
-    public String getNspp() {
-        return nspp;
-    }
-
-    public void setNspp(String nspp) {
-        this.nspp = nspp;
     }
 
     public String getNsm() {
@@ -175,5 +185,13 @@ public class Lembaga {
 
     public void setPembaharuanTerakhir(String pembaharuanTerakhir) {
         this.pembaharuanTerakhir = pembaharuanTerakhir;
+    }
+
+    public int getIsFavorit() {
+        return isFavorit;
+    }
+
+    public void setIsFavorit(int isFavorit) {
+        this.isFavorit = isFavorit;
     }
 }

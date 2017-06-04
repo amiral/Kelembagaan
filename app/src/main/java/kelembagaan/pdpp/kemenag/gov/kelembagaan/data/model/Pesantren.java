@@ -1,15 +1,35 @@
 package kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model;
 
+import org.parceler.Parcel;
+
 /**
  * Created by Amiral on 5/30/17.
  */
 
+@Parcel(Parcel.Serialization.BEAN)
 public class Pesantren {
 
+
+   /* "id_pesantren": 2,
+            "nama_pesantren": "Vena Bergstrom",
+            "nspp": "510011010001",
+            "alamat": "9440 Terrance Fort Apt. 255\nNorth Tianna, MD 65502",
+            "kode_pos": "22620",
+            "telepon": "+1-305-225-6132",
+            "pimpinan": "Mrs. Opal Yost",
+            "longitude": "1.2000000",
+            "latitude": "8.4000000",
+            "masa_berlaku_ijin_operasional": "2016-11-08",
+            "nama_potensi_ekonomi": "Wartel/Warnet/Rental Komputer",
+            "nama_tipologi": "Salafiyah",
+            "nama_konsentrasi": "Hadits"
+
+    tahun_berdiri,nspp,idkabupaten,idprovinsi,website,sejarah_singkat,pembaruan_terakhir
+    */
     int idPesantren;
     String namaPesantren;
     String tahunBerdiri;
-    int nspp;
+    String nspp;
     String alamat;
     int kodeKabupaten;
     int kodeProvinsi;
@@ -29,21 +49,6 @@ public class Pesantren {
     int isFavorit;
     String lokasiPesantren;
 
-
-    /*
-    - NSPP
-- Nama Pesantren
-- Tahun Berdiri
-- Nama Pengasuh
-- Alamat
-- No Telp
-- Website
-- Tipe Pesantren
-- Potensi Ekonomi
-- Konsentrasi Agama
-- Luas Pesantren
-- Perbaruan Terakhir
-     */
 
     public int getIdPesantren() {
         return idPesantren;
@@ -69,11 +74,11 @@ public class Pesantren {
         this.tahunBerdiri = tahunBerdiri;
     }
 
-    public int getNspp() {
+    public String getNspp() {
         return nspp;
     }
 
-    public void setNspp(int nspp) {
+    public void setNspp(String nspp) {
         this.nspp = nspp;
     }
 

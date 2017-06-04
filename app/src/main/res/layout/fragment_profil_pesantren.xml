@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.pesantren.ProfilPesantrenFragment"
+app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/background_content"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView7"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:visibility="visible"
+                android:text="NSPP"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/textView5" />
+
+            <TextView
+                android:id="@+id/text_nspp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible"
+                android:text="FIELD NSPP"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/border_profil">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView8"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:visibility="visible"
+                android:text="NAMA PESANTREN"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/textView7" />
+
+            <TextView
+                android:id="@+id/text_nama_pesantren_profil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible"
+                android:text="FIELD NAMA" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/border_profil">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView20"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:visibility="visible"
+                android:text="TAHUN BERDIRI"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/textView20" />
+
+            <TextView
+                android:id="@+id/text_tahun_berdiri"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible"
+                android:text="FIELD TAHUN BERDIRI" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/border_profil">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView9"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:visibility="visible"
+                android:text="PENGASUH"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/textView11" />
+
+            <TextView
+                android:id="@+id/text_pengasuh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible"
+                android:text="FIELD PENGASUH" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/llAlamat"
+        android:background="@drawable/border_profil">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView10"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:visibility="visible"
+                android:text="ALAMAT"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/textView12" />
+
+            <TextView
+                android:id="@+id/text_alamat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible"
+                android:text="FIELD ALAMAT" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/llPhone"
+        android:background="@drawable/border_profil">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView11"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:visibility="visible"
+                android:text="NO TELP."
+                android:layout_gravity="center_vertical"
+                android:id="@+id/textView13" />
+
+            <TextView
+                android:id="@+id/text_telp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible"
+                android:text="FIELD TELP"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/llWebsite"
+        android:background="@drawable/border_profil">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView12"
+            android:visibility="gone"
+            android:layout_centerVertical="true" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:visibility="visible"
+                android:text="WEBSITE"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/textView14" />
+
+            <TextView
+                android:id="@+id/text_website"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible"
+                android:text="FIELD WEBSITE"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/border_profil">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView13"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:visibility="visible"
+                android:text="TIPE PESANTREN"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/textView15" />
+
+            <TextView
+                android:id="@+id/text_tipe_pesantren"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible"
+                android:text="FIELD TIPE PESANTREN"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/border_profil">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView14"
+            android:visibility="gone"
+            android:layout_centerVertical="true" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:visibility="visible"
+                android:text="POTENSI EKONOMI"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/textView16" />
+
+            <TextView
+                android:id="@+id/text_potensi_ekonomi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible"
+                android:text="FIELD POTENSI EKONOMI" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/border_profil">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView15"
+            android:visibility="gone"
+            android:layout_centerVertical="true" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:visibility="visible"
+                android:text="KONSENTRASI AGAMA"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/textView17" />
+
+            <TextView
+                android:id="@+id/text_konsentrasi_agama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible"
+                android:text="FIELD KONSENTRASI AGAMA" />
+        </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/border_profil">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView16"
+                android:visibility="gone"
+                android:layout_centerVertical="true" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_profil"
+                    android:visibility="visible"
+                    android:text="LUAS PESANTREN"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/textView18" />
+
+                <TextView
+                    android:id="@+id/text_luas_pesantren"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_profil"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="visible"
+                    android:text="FIELD LUAS PESANTREN" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/border_profil">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView17"
+                android:visibility="gone"
+                android:layout_centerVertical="true" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_profil"
+                    android:visibility="visible"
+                    android:text="PEMBARUAN TERAKHIR"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/textView19" />
+
+                <TextView
+                    android:id="@+id/text_pembaruan_terakhir"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_profil"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="visible"
+                    android:text="FIELD PEMBARUAN TERAKHIR" />
+            </LinearLayout>
+        </LinearLayout>
+
+</LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

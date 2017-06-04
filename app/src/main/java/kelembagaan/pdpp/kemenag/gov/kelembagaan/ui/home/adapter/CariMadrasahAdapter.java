@@ -17,33 +17,27 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Pesantren;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Lembaga;
 
 /**
  * Created by Amiral on 6/1/17.
  */
 
-public class CariPesantrenAdapter extends RecyclerView.Adapter<CariPesantrenAdapter.MyViewHolder> {
+public class CariMadrasahAdapter extends RecyclerView.Adapter<CariMadrasahAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<Pesantren> pesantrenList;
-    private ItemClickListener clickListener;
+    private List<Lembaga> madrasahList;
 
 
-
-    public interface ItemClickListener {
-        void onClick(View view, int position);
-    }
-
-    public CariPesantrenAdapter(Context mContext, List<Pesantren> pesantrenList){
+    public CariMadrasahAdapter(Context mContext, List<Lembaga> madrasahList){
         this.mContext = mContext;
-        this.pesantrenList = pesantrenList;
+        this.madrasahList = madrasahList;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_card_pesantren, parent, false);
+                .inflate(R.layout.item_card_madrasah, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -51,12 +45,12 @@ public class CariPesantrenAdapter extends RecyclerView.Adapter<CariPesantrenAdap
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
 
-        Pesantren pesantren = pesantrenList.get(position);
+        Lembaga madrasah = madrasahList.get(position);
 
-        holder.tvNamaPesantren.setText(pesantren.getNamaPesantren());
-        holder.tvPimpinanPesantren.setText("Pengasuh : "+pesantren.getPimpinan());
-        holder.tvLokasiPesantren.setText(pesantren.getLokasiPesantren());
-        holder.tvNspp.setText("NSPP : "+pesantren.getNspp());
+        holder.tvNamaMadrasah.setText(madrasah.getNamaLembaga());
+        holder.tvNamaPesantren.setText("Pesantren : "+madrasah.getNpsn());
+        holder.tvLokasiMadrasah.setText(madrasah.getLokasiLembaga());
+        holder.tvNsm.setText("NSPP : "+madrasah.getNsm());
 
         holder.btnMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +64,7 @@ public class CariPesantrenAdapter extends RecyclerView.Adapter<CariPesantrenAdap
 
     @Override
     public int getItemCount() {
-        return pesantrenList.size();
+        return madrasahList.size();
     }
 
     private void showPopupMenu(View view) {
@@ -81,10 +75,6 @@ public class CariPesantrenAdapter extends RecyclerView.Adapter<CariPesantrenAdap
         inflater.inflate(R.menu.menu_cari_pesantren, popup.getMenu());
         popup.setOnMenuItemClickListener(new MyMenuItemClickListener());
         popup.show();
-    }
-
-    public void setClickListener(ItemClickListener itemClickListener) {
-        this.clickListener = itemClickListener;
     }
 
     /**
@@ -111,24 +101,17 @@ public class CariPesantrenAdapter extends RecyclerView.Adapter<CariPesantrenAdap
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.button_more) ImageButton btnMore;
+        @BindView(R.id.text_nama_madrasah) TextView tvNamaMadrasah;
         @BindView(R.id.text_nama_pesantren) TextView tvNamaPesantren;
-        @BindView(R.id.text_pimpinan_pesantren) TextView tvPimpinanPesantren;
-        @BindView(R.id.text_nspp) TextView tvNspp;
-        @BindView(R.id.text_lokasi_pesantren) TextView tvLokasiPesantren;
-        @BindView(R.id.text_jumlah_madrasah) TextView tvJumlahMadrasah;
+        @BindView(R.id.text_nsm) TextView tvNsm;
+        @BindView(R.id.text_lokasi_madrasah) TextView tvLokasiMadrasah;
 
         public MyViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-            view.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View view) {
-            if (clickListener != null) clickListener.onClick(view, getAdapterPosition());
-
-        }
     }
 }
