@@ -38,8 +38,8 @@ public class Pesantren {
     String website;
     String pimpinan;
     String sejarahSingkat;
-    long longitude;
-    long latitude;
+    double longitude;
+    double latitude;
     String masaBerlakuIjinOperasional;
     int potensiEkonomi;
     int idTipologi;
@@ -154,19 +154,19 @@ public class Pesantren {
         this.sejarahSingkat = sejarahSingkat;
     }
 
-    public long getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 

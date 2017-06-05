@@ -172,8 +172,8 @@ public class PesantrenActivity extends AppCompatActivity {
         PetaLokasiPesantrenPesantren lokasi = new PetaLokasiPesantrenPesantren();
         Bundle bundleLokasi = new Bundle();
 //        -6.218857, 106.663234
-        bundleLokasi.putDouble("latitude", -6.218857);
-        bundleLokasi.putDouble("longitude", 106.663234);
+        bundleLokasi.putDouble("latitude", pesantren.getLatitude());
+        bundleLokasi.putDouble("longitude", pesantren.getLongitude());
         bundleLokasi.putString("namaPesantren", pesantren.getNamaPesantren());
         bundleLokasi.putString("alamatPesantren", pesantren.getAlamat());
         lokasi.setArguments(bundleLokasi);
