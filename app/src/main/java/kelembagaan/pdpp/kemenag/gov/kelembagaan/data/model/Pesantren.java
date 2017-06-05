@@ -1,5 +1,8 @@
 package kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import org.parceler.Parcel;
 
 /**
@@ -26,25 +29,79 @@ public class Pesantren {
 
     tahun_berdiri,nspp,idkabupaten,idprovinsi,website,sejarah_singkat,pembaruan_terakhir
     */
-    int idPesantren;
+
+    @SerializedName("id_pesantren")
+    @Expose
+    Integer idPesantren;
+
+    @SerializedName("nama_pesantren")
+    @Expose
     String namaPesantren;
+
     String tahunBerdiri;
+
+    @SerializedName("nspp")
+    @Expose
     String nspp;
+
+    @SerializedName("alamat")
+    @Expose
     String alamat;
-    int kodeKabupaten;
+
+    @SerializedName("kabupaten_id")
+    @Expose
+    String kodeKabupaten;
+
     int kodeProvinsi;
+
+    @SerializedName("kode_pos")
+    @Expose
     String kodepos;
+
+    @SerializedName("telepon")
+    @Expose
     String telp;
+
+    @SerializedName("website")
+    @Expose
     String website;
+
+    @SerializedName("pimpinan")
+    @Expose
     String pimpinan;
+
+    @SerializedName("sejarah_singkat")
+    @Expose
     String sejarahSingkat;
-    double longitude;
-    double latitude;
+
+    @SerializedName("longitude")
+    @Expose
+    String longitude;
+
+    @SerializedName("latitude")
+    @Expose
+    String latitude;
+
+    @SerializedName("masa_berlaku_ijin_operasional")
+    @Expose
     String masaBerlakuIjinOperasional;
-    int potensiEkonomi;
-    int idTipologi;
-    int idKonsentrasi;
+
+    @SerializedName("nama_potensi_ekonomi")
+    @Expose
+    String potensiEkonomi;
+
+    @SerializedName("nama_tipologi")
+    @Expose
+    String idTipologi;
+
+    @SerializedName("nama_konsentrasi")
+    @Expose
+    String idKonsentrasi;
+
     int statusData;
+
+    @SerializedName("pembaruan_terakhir")
+    @Expose
     String pembaharuanTerakhir;
     int isFavorit;
     String lokasiPesantren;
@@ -98,11 +155,11 @@ public class Pesantren {
         this.alamat = alamat;
     }
 
-    public int getKodeKabupaten() {
+    public String getKodeKabupaten() {
         return kodeKabupaten;
     }
 
-    public void setKodeKabupaten(int kodeKabupaten) {
+    public void setKodeKabupaten(String kodeKabupaten) {
         this.kodeKabupaten = kodeKabupaten;
     }
 
@@ -154,19 +211,19 @@ public class Pesantren {
         this.sejarahSingkat = sejarahSingkat;
     }
 
-    public double getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
-    public double getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
@@ -178,27 +235,27 @@ public class Pesantren {
         this.masaBerlakuIjinOperasional = masaBerlakuIjinOperasional;
     }
 
-    public int getPotensiEkonomi() {
+    public String getPotensiEkonomi() {
         return potensiEkonomi;
     }
 
-    public void setPotensiEkonomi(int potensiEkonomi) {
+    public void setPotensiEkonomi(String potensiEkonomi) {
         this.potensiEkonomi = potensiEkonomi;
     }
 
-    public int getIdTipologi() {
+    public String getIdTipologi() {
         return idTipologi;
     }
 
-    public void setIdTipologi(int idTipologi) {
+    public void setIdTipologi(String idTipologi) {
         this.idTipologi = idTipologi;
     }
 
-    public int getIdKonsentrasi() {
+    public String getIdKonsentrasi() {
         return idKonsentrasi;
     }
 
-    public void setIdKonsentrasi(int idKonsentrasi) {
+    public void setIdKonsentrasi(String idKonsentrasi) {
         this.idKonsentrasi = idKonsentrasi;
     }
 

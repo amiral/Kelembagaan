@@ -42,8 +42,8 @@ public class PetaLokasiPesantrenPesantren extends Fragment implements OnMapReady
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_peta_lokasi_pesantren, container, false);
 
-        lattitude = getArguments().getDouble("latitude", 0);
-        longitudinal = getArguments().getDouble("longitude", 0);
+        lattitude = Double.parseDouble(getArguments().getString("latitude"));
+        longitudinal = Double.parseDouble(getArguments().getString("longitude"));
         namaPesantren = getArguments().getString("namaPesantren");
         alamat = getArguments().getString("alamatPesantren");
 

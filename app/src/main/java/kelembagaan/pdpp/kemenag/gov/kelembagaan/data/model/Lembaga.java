@@ -1,5 +1,8 @@
 package kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Amiral on 5/30/17.
  */
@@ -23,25 +26,88 @@ public class Lembaga {
 //              "nama_jenjang_lembaga": null,
 //              "status_data": "tidak aktif"
 
+    @SerializedName("id_lembaga")
+    @Expose
     int idLembaga;
+
+    @SerializedName("npsn")
+    @Expose
     String npsn;
+
+    @SerializedName("nsm")
+    @Expose
     String nsm;
+
+    @SerializedName("nama_lembaga")
+    @Expose
     String namaLembaga;
+
+    @SerializedName("alamat")
+    @Expose
     String alamat;
+
+    @SerializedName("kode_pos")
+    @Expose
     String kodepos;
+
+    @SerializedName("telepon")
+    @Expose
     String telp;
+
+    @SerializedName("pimpinan")
+    @Expose
     String pimpinan;
+
+    @SerializedName("website")
+    @Expose
     String website;
+
+    @SerializedName("status_lembaga")
+    @Expose
     String statusLembaga;
+
+    @SerializedName("masa_berlaku_ijin_operasional")
+    @Expose
     String masaBerlakuIjinOperasional;
-    long longitude;
-    long latitude;
-    int idTipeLembaga;
-    int idJenjangLembaga;
-    int statusData;
+
+    @SerializedName("longitude")
+    @Expose
+    String longitude;
+
+    @SerializedName("latitude")
+    @Expose
+    String latitude;
+
+    @SerializedName("kabupaten_id")
+    @Expose
+    private int kabupatenId;
+
+    @SerializedName("nama_tipe_lembaga")
+    @Expose
+    String idTipeLembaga;
+
+    @SerializedName("nama_jenjang_lembaga")
+    @Expose
+    String idJenjangLembaga;
+
+    @SerializedName("status_data")
+    @Expose
+    String statusData;
+
+    @SerializedName("pembaruan_terakhir")
+    @Expose
     String pembaharuanTerakhir;
+
     int isFavorit;
     String lokasiLembaga;
+
+    public int getKabupatenId() {
+        return kabupatenId;
+    }
+
+    public void setKabupatenId(int kabupatenId) {
+        this.kabupatenId = kabupatenId;
+    }
 
     public String getLokasiLembaga() {
         return lokasiLembaga;
@@ -139,43 +205,43 @@ public class Lembaga {
         this.masaBerlakuIjinOperasional = masaBerlakuIjinOperasional;
     }
 
-    public long getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
-    public long getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
-    public int getIdTipeLembaga() {
+    public String getIdTipeLembaga() {
         return idTipeLembaga;
     }
 
-    public void setIdTipeLembaga(int idTipeLembaga) {
+    public void setIdTipeLembaga(String idTipeLembaga) {
         this.idTipeLembaga = idTipeLembaga;
     }
 
-    public int getIdJenjangLembaga() {
+    public String getIdJenjangLembaga() {
         return idJenjangLembaga;
     }
 
-    public void setIdJenjangLembaga(int idJenjangLembaga) {
+    public void setIdJenjangLembaga(String idJenjangLembaga) {
         this.idJenjangLembaga = idJenjangLembaga;
     }
 
-    public int getStatusData() {
+    public String getStatusData() {
         return statusData;
     }
 
-    public void setStatusData(int statusData) {
+    public void setStatusData(String statusData) {
         this.statusData = statusData;
     }
 

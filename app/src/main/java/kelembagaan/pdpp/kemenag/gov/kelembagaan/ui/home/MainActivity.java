@@ -1,5 +1,6 @@
 package kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.home;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,16 +23,35 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.KabupatenDbHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.ProvinsiDbHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Kabupaten;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Lembaga;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Pesantren;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Provinsi;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.preference.PreferenceManager;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.ApiClient;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.ApiHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.ApiServerURL;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.GetResponseKabupaten;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.GetResponseLembaga;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.GetResponsePesantren;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.GetResponseProvinsi;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.bookmark.BookmarkFragment;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.dashboard.DashboardFragment;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.lapor.LaporFragment;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.login.LoginActivity;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.tentang.TentangFragment;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_DISCLAIMER = "disclaimer";
     private static final String TAG_BOOKMARK = "bookmark";
     private static final String TAG_TENTANG = "tentang";
+    private static final String TAG_SYNCRON = "syncron";
 
     public static String CURRENT_TAG = TAG_CARI;
 
@@ -95,14 +117,6 @@ public class MainActivity extends AppCompatActivity {
         navHeader = navigationView.getHeaderView(0);
 
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         loadNavHeader();
 
@@ -169,6 +183,13 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 5;
                         CURRENT_TAG = TAG_TENTANG;
                         break;
+                    case R.id.nav_syncronize:
+//                        onSyncron();
+//                        onSyncronLembaga();
+//                        onSyncronKabupaten();
+                        onSyncronProvinsi();
+                        return true;
+
                     case R.id.nav_login:
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         drawer.closeDrawers();
@@ -219,10 +240,170 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
     /***
      * Returns respected fragment that user
      * selected from navigation menu
      */
+    private void onSyncron() {
+
+        PreferenceManager pref = new PreferenceManager(this);
+        String lastUpdate = pref.getLastUpdate();
+
+        ApiHelper apiService = ApiClient.getClient().create(ApiHelper.class);
+
+        final String TAG = "Retrofit";
+
+        Call<GetResponsePesantren> call = apiService.getPesantren(ApiServerURL.TOKEN_PUBLIC,lastUpdate);
+
+        final ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage("mengambil data...");
+        progressDialog.setTitle("Sinkronisasi Data");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // show it
+        progressDialog.show();
+        call.enqueue(new Callback<GetResponsePesantren>() {
+            @Override
+            public void onResponse(Call<GetResponsePesantren>call, Response<GetResponsePesantren> response) {
+                progressDialog.dismiss();
+                if (response != null){
+                    List<Pesantren> pesantrens = response.body().getData();
+                    Log.d(TAG, "Number of pesantren received: " + pesantrens.size());
+                    Toast.makeText(MainActivity.this, "Number of pesantren received: " + pesantrens.size(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GetResponsePesantren>call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    private void onSyncronLembaga() {
+
+        PreferenceManager pref = new PreferenceManager(this);
+        String lastUpdate = pref.getLastUpdate();
+
+        ApiHelper apiService = ApiClient.getClient().create(ApiHelper.class);
+
+        final String TAG = "Retrofit";
+
+        Call<GetResponseLembaga> call = apiService.getLembaga(ApiServerURL.TOKEN_PUBLIC,lastUpdate);
+
+        final ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage("mengambil data...");
+        progressDialog.setTitle("Sinkronisasi Data");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // show it
+        progressDialog.show();
+        call.enqueue(new Callback<GetResponseLembaga>() {
+            @Override
+            public void onResponse(Call<GetResponseLembaga>call, Response<GetResponseLembaga> response) {
+                progressDialog.dismiss();
+                if (response != null){
+                    List<Lembaga> lembagas = response.body().getData();
+                    Log.d(TAG, "Number of pesantren received: " + lembagas.size());
+                    Toast.makeText(MainActivity.this, "Number of pesantren received: " + lembagas.size(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GetResponseLembaga>call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    private void onSyncronKabupaten() {
+
+        ApiHelper apiService = ApiClient.getClient().create(ApiHelper.class);
+
+        final String TAG = "RetrofitKabupaten";
+
+        Call<GetResponseKabupaten> call = apiService.getKabupaten(ApiServerURL.TOKEN_PUBLIC);
+
+        final ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage("mengambil data kabupaten...");
+        progressDialog.setTitle("Sinkronisasi Data");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // show it
+        progressDialog.show();
+        call.enqueue(new Callback<GetResponseKabupaten>() {
+            @Override
+            public void onResponse(Call<GetResponseKabupaten>call, Response<GetResponseKabupaten> response) {
+                progressDialog.dismiss();
+                if (response != null){
+                    List<Kabupaten> kabupatens = response.body().getData();
+                    Log.d(TAG, "Number of pesantren received: " + kabupatens.size());
+                    Toast.makeText(MainActivity.this, "Number of pesantren received: " + kabupatens.size(), Toast.LENGTH_LONG).show();
+
+                    //simpan
+                    KabupatenDbHelper helper = new KabupatenDbHelper(MainActivity.this);
+                    helper.addManyKabupaten(kabupatens);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GetResponseKabupaten>call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    private void onSyncronProvinsi() {
+
+        ApiHelper apiService = ApiClient.getClient().create(ApiHelper.class);
+
+        final String TAG = "RetrofitProvinsi";
+
+        Call<GetResponseProvinsi> call = apiService.getProvinsi(ApiServerURL.TOKEN_PUBLIC);
+
+        final ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage("mengambil data kabupaten...");
+        progressDialog.setTitle("Sinkronisasi Data");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // show it
+        progressDialog.show();
+        call.enqueue(new Callback<GetResponseProvinsi>() {
+            @Override
+            public void onResponse(Call<GetResponseProvinsi>call, Response<GetResponseProvinsi> response) {
+                progressDialog.dismiss();
+                if (response != null){
+                    List<Provinsi> lsProvinsi = response.body().getData();
+                    Log.d(TAG, "Number of pesantren received: " + lsProvinsi.size());
+                    Toast.makeText(MainActivity.this, "Number of pesantren received: " + lsProvinsi.size(), Toast.LENGTH_LONG).show();
+
+                    //simpan
+                    ProvinsiDbHelper helper = new ProvinsiDbHelper(MainActivity.this);
+                    helper.addManyProvinsi(lsProvinsi);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GetResponseProvinsi>call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+                progressDialog.dismiss();
+            }
+        });
+    }
+
     private void loadHomeFragment() {
         // selecting appropriate nav menu item
         selectNavMenu();

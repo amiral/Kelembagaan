@@ -78,16 +78,16 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
         p1.setPimpinan("K.H Kudus Wangi");
         p1.setLokasiPesantren("Kudus, Jawa Timur");
         p1.setNspp("12345678");
-        p1.setLatitude(-6.827682);
-        p1.setLongitude(110.831347);
+        p1.setLatitude("-6.827682");
+        p1.setLongitude("110.831347");
         listPesantren.add(p1);
 
         Pesantren p2 = new Pesantren();
         p2.setNamaPesantren("Pesantren Tebu Ireng");
         p2.setPimpinan("K.H Tebu Ireng Wangi");
         p2.setLokasiPesantren("Tebu Ireng, Jawa Tengah");
-        p2.setLatitude(-7.604065);
-        p2.setLongitude(112.238470);
+        p2.setLatitude("-7.604065");
+        p2.setLongitude("112.238470");
         p2.setNspp("1234567");
         listPesantren.add(p2);
 
@@ -96,8 +96,8 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
         p3.setPimpinan("K.H Cieubeureum Wangi");
         p3.setLokasiPesantren("Cieubeureum, Jawa Barat");
         p3.setNspp("123456");
-        p3.setLatitude(-6.892775);
-        p3.setLongitude(106.960385);
+        p3.setLatitude("-6.892775");
+        p3.setLongitude("106.960385");
         listPesantren.add(p3);
 
         Pesantren p4 = new Pesantren();
@@ -105,8 +105,8 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
         p4.setPimpinan("K.H Kunciran Wangi");
         p4.setLokasiPesantren("Kunciran, Jakarta");
         p4.setNspp("12345");
-        p4.setLatitude(-6.218857);
-        p4.setLongitude(106.663234);
+        p4.setLatitude("-6.218857");
+        p4.setLongitude("106.663234");
         listPesantren.add(p4);
 
         Pesantren p5 = new Pesantren();
@@ -114,8 +114,8 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
         p5.setPimpinan("K.H Badui Wangi");
         p5.setLokasiPesantren("Badui, Banten");
         p5.setNspp("1234");
-        p5.setLatitude(-6.544272);
-        p5.setLongitude(106.228787);
+        p5.setLatitude("-6.544272");
+        p5.setLongitude("106.228787");
         listPesantren.add(p5);
 
         adapterPesantren.notifyDataSetChanged();

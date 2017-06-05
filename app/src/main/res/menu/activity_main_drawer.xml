@@ -28,6 +28,10 @@
             android:icon="@drawable/ic_menu_info"
             android:title="@string/nav_tentang" />
         <item
+            android:id="@+id/nav_syncronize"
+            android:icon="@drawable/ic_action_syncronize"
+            android:title="@string/nav_sycron" />
+        <item
             android:id="@+id/nav_login"
             android:icon="@drawable/ic_menu_login"
             android:title="@string/nav_login" />
@@ -35,6 +39,8 @@
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_logout"
             android:title="@string/nav_keluar" />
+
+
     </group>
 
 

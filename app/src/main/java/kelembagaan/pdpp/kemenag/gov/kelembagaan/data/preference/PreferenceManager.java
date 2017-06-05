@@ -21,6 +21,7 @@ public class PreferenceManager {
 
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
     private static final String IS_LOGIN = "IsLogin";
+    private static final String LAST_UPDATE = "lastUpdate";
 
     public PreferenceManager(Context context) {
         this._context = context;
@@ -44,5 +45,14 @@ public class PreferenceManager {
 
     public boolean isLogin() {
         return pref.getBoolean(IS_LOGIN, true);
+    }
+
+    public void setLastUpdate(String lastUpdate){
+        editor.putString(LAST_UPDATE,lastUpdate);
+        editor.commit();
+    }
+
+    public String getLastUpdate(){
+        return pref.getString(LAST_UPDATE, "2016-01-01 00:00:00");
     }
 }
