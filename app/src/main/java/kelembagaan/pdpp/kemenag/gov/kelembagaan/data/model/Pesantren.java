@@ -48,7 +48,15 @@ public class Pesantren {
     String pembaharuanTerakhir;
     int isFavorit;
     String lokasiPesantren;
+    String luasPesantren;
 
+    public String getLuasPesantren() {
+        return luasPesantren;
+    }
+
+    public void setLuasPesantren(String luasPesantren) {
+        this.luasPesantren = luasPesantren;
+    }
 
     public int getIdPesantren() {
         return idPesantren;

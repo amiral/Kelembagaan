@@ -158,10 +158,26 @@ public class PesantrenActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new ProfilPesantrenFragment());
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("pesantren", Parcels.wrap(pesantren));
+
+        ProfilPesantrenFragment profil = new ProfilPesantrenFragment();
+        profil.setArguments(bundle);
+
+        adapter.addFragment(profil);
         adapter.addFragment(new DaftarLembagaPesantrenFragment());
         adapter.addFragment(new StatistikPesantrenFragment());
-        adapter.addFragment(new PetaLokasiPesantrenPesantren());
+
+        PetaLokasiPesantrenPesantren lokasi = new PetaLokasiPesantrenPesantren();
+        Bundle bundleLokasi = new Bundle();
+//        -6.218857, 106.663234
+        bundleLokasi.putDouble("latitude", -6.218857);
+        bundleLokasi.putDouble("longitude", 106.663234);
+        bundleLokasi.putString("namaPesantren", pesantren.getNamaPesantren());
+        bundleLokasi.putString("alamatPesantren", pesantren.getAlamat());
+        lokasi.setArguments(bundleLokasi);
+        adapter.addFragment(lokasi);
         viewPager.setAdapter(adapter);
     }
 
@@ -278,7 +294,7 @@ public class PesantrenActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_share){
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
-            String shareBodyText = "Pesantren : "+pesantren.getNamaPesantren();
+            String shareBodyText = "Pesantren : "+pesantren.getNamaPesantren() + "\n NSPP : "+pesantren.getNspp() + "\n Pimpinan : "+pesantren.getPimpinan() + "\n Alamat : "+pesantren.getAlamat();
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Cek Pesantren");
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
             startActivity(Intent.createChooser(sharingIntent, "Shearing Option"));
