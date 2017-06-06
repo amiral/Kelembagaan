@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <tabs>
+        <tab
+            id="@+id/tab_wilayah"
+            icon="@drawable/ic_tab_wilayah"
+            title="Wilayah" />
+        <tab
+            id="@+id/tab_tipe"
+            icon="@drawable/ic_tab_tipe"
+            title="Tipe" />
+        <tab
+            id="@+id/tab_jenjang"
+            icon="@drawable/ic_tab_jenjang"
+            title="Jenjang" />
+    </tabs>

@@ -1,0 +1,266 @@
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.madrasah.ProfilMadrasahFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/background_content"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:visibility="visible"
+                android:text="NSM"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/textView5" />
+
+            <TextView
+                android:id="@+id/text_nsm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible"
+                android:text="FIELD NSM"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/border_profil">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:visibility="visible"
+                android:text="NSPP"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/text_nspp_madrasah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible"
+                android:text="FIELD NSPP" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/border_profil">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:visibility="visible"
+                android:text="NAMA Madrasah / Perguruan"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/textView7" />
+
+            <TextView
+                android:id="@+id/text_nama_madrasah_profil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:text="FIELD NAMA" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/border_profil">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:visibility="visible"
+                android:text="ALAMAT"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/textView12" />
+
+            <TextView
+                android:id="@+id/text_alamat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible"
+                android:text="FIELD ALAMAT" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/border_profil">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:text="NO TELP."
+                android:id="@+id/textView13" />
+
+            <TextView
+                android:id="@+id/text_telp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:text="FIELD TELP"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/border_profil">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:visibility="visible"
+                android:text="PIMPINAN"
+                android:id="@+id/textView11" />
+
+            <TextView
+                android:id="@+id/text_pimpinan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible"
+                android:text="FIELD Pimpinan" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/border_profil">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:text="WEBSITE"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/textView14" />
+
+            <TextView
+                android:id="@+id/text_website"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:visibility="visible"
+                android:text="FIELD WEBSITE"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/border_profil">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:text="TIPE MADRASAH"
+                android:id="@+id/textView15" />
+
+            <TextView
+                android:id="@+id/text_tipe_madrasah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:text="FIELD TIPE MADRASAH"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/border_profil">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:text="TANGGAL HABIS IZIN OPERASIONAL"
+                android:id="@+id/textView16" />
+
+            <TextView
+                android:id="@+id/text_izin_operasional"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:text="FIELD IZIN OPERASIONAL" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/border_profil">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_profil"
+                android:text="PEMBARUAN TERAKHIR"
+                android:id="@+id/textView19" />
+
+            <TextView
+                android:id="@+id/text_pembaruan_terakhir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_profil"
+                android:text="FIELD PEMBARUAN TERAKHIR" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</android.support.v4.widget.NestedScrollView>

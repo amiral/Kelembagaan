@@ -27,7 +27,11 @@ public class CariMadrasahAdapter extends RecyclerView.Adapter<CariMadrasahAdapte
 
     private Context mContext;
     private List<Lembaga> madrasahList;
+    private ItemClickListener clickListener;
 
+    public interface ItemClickListener {
+        void onClick(View view, int position);
+    }
 
     public CariMadrasahAdapter(Context mContext, List<Lembaga> madrasahList){
         this.mContext = mContext;
@@ -77,6 +81,9 @@ public class CariMadrasahAdapter extends RecyclerView.Adapter<CariMadrasahAdapte
         popup.show();
     }
 
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
     /**
      * Click listener for popup menu items
      */
@@ -101,7 +108,7 @@ public class CariMadrasahAdapter extends RecyclerView.Adapter<CariMadrasahAdapte
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.button_more) ImageButton btnMore;
         @BindView(R.id.text_nama_madrasah) TextView tvNamaMadrasah;
         @BindView(R.id.text_nama_pesantren) TextView tvNamaPesantren;
@@ -111,6 +118,13 @@ public class CariMadrasahAdapter extends RecyclerView.Adapter<CariMadrasahAdapte
         public MyViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (clickListener != null) clickListener.onClick(view, getAdapterPosition());
+
         }
 
     }

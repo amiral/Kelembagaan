@@ -43,7 +43,7 @@ public class KabupatenDbHelper {
         realm.beginTransaction();
 
         for (Kabupaten kb : lsKabupaten) {
-            realm.copyToRealm(kb);
+            realm.copyToRealmOrUpdate(kb);
             showLog("Added ; " + kb.getNamaKabupaten());
 //            showToast(kb.getNamaKabupaten() + " berhasil disimpan.");
         }
@@ -56,7 +56,7 @@ public class KabupatenDbHelper {
     public void addKabupaten(Kabupaten kb) {
 
         realm.beginTransaction();
-        realm.copyToRealm(kb);
+        realm.copyToRealmOrUpdate(kb);
         realm.commitTransaction();
 
         showLog("Added ; " + kb.getNamaKabupaten());

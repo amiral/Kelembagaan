@@ -41,7 +41,7 @@ public class ProvinsiDbHelper {
         realm.beginTransaction();
 
         for (Provinsi p : lsProvinsi) {
-            realm.copyToRealm(p);
+            realm.copyToRealmOrUpdate(p);
             showLog("Added ; " + p.getNamaProvinsi());
 //            showToast(kb.getNamaKabupaten() + " berhasil disimpan.");
         }
@@ -53,7 +53,7 @@ public class ProvinsiDbHelper {
     public void addProvinsi(Provinsi p) {
 
         realm.beginTransaction();
-        realm.copyToRealm(p);
+        realm.copyToRealmOrUpdate(p);
         realm.commitTransaction();
 
         showLog("Added ; " + p.getNamaProvinsi());

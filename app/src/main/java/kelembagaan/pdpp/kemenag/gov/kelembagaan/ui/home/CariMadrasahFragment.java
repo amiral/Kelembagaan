@@ -1,6 +1,7 @@
 package kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.home;
 
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +24,12 @@ import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Lembaga;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.home.adapter.CariMadrasahAdapter;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.madrasah.MadrasahActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CariMadrasahFragment extends Fragment {
+public class CariMadrasahFragment extends Fragment implements CariMadrasahAdapter.ItemClickListener{
 
     @BindView(R.id.recyclerViewMadrasah) RecyclerView recyclerView;
 
@@ -52,6 +56,8 @@ public class CariMadrasahFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapterMadrasah);
 
+
+        adapterMadrasah.setClickListener(this);
         dataSampleMadrasah();
 
         return view;
@@ -100,6 +106,15 @@ public class CariMadrasahFragment extends Fragment {
         l6.setNsm("123456789");
         l6.setLokasiLembaga("Jayapura, Papua Barat");
         listMadrasah.add(l6);
+    }
+
+    @Override
+    public void onClick(View view, int position) {
+        Lembaga madrasah = listMadrasah.get(position);
+
+        Intent intent = new Intent(getActivity(), MadrasahActivity.class);
+        intent.putExtra("madrasah", Parcels.wrap(madrasah));
+        startActivity(intent);
     }
 
     /**

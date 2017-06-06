@@ -26,6 +26,7 @@
         <item>Lapor</item>
         <item>Disclaimer</item>
         <item>Tentang</item>
+        <item>Sinkronisasi</item>
     </string-array>
     <!-- Splash -->
 
@@ -58,6 +59,6 @@
     <string name="forgot_password_text">Lupa kata sandi? Masukkan email login Anda dibawah ini. Kami akan mengirimkan pesan email beserta tautan kata sandi Anda</string>
     <string name="indeks_integritas">Indeks Integritas</string>
     <string name="izin_operasional">Izin Operasional</string>
-    
+
     <string name="google_maps_api_key">AIzaSyDr_5-GVAUV9rkQcddoMb2A-tInFuBbVRg</string>
 </resources>

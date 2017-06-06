@@ -32,7 +32,7 @@ public class Pesantren {
 
     @SerializedName("id_pesantren")
     @Expose
-    Integer idPesantren;
+    int idPesantren;
 
     @SerializedName("nama_pesantren")
     @Expose

@@ -3,10 +3,12 @@ package kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 /**
  * Created by Amiral on 5/30/17.
  */
-
+@Parcel(Parcel.Serialization.BEAN)
 public class Lembaga {
 
 //      "id_lembaga": 27,

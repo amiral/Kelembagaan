@@ -1,12 +1,13 @@
 package kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.home;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.IdRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,7 +15,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,33 +25,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabSelectListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.KabupatenDbHelper;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.ProvinsiDbHelper;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Kabupaten;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Lembaga;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Pesantren;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Provinsi;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.preference.PreferenceManager;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.ApiClient;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.ApiHelper;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.ApiServerURL;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.GetResponseKabupaten;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.GetResponseLembaga;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.GetResponsePesantren;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.GetResponseProvinsi;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.bookmark.BookmarkFragment;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.dashboard.DashboardFragment;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.disclaimer.DisclaimerFragment;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.lapor.LaporFragment;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.login.LoginActivity;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.tentang.SyncronFragment;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.tentang.TentangFragment;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -89,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.bottomBar)
+    BottomBar bottomBar;
 
     EditText etSearch;
     private MenuItem mSearchAction;
@@ -105,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+//        mIsLargeLayout = getResources().getBoolean(R.bool.large_layout);
 
         preferenceManager = new PreferenceManager(this);
 
@@ -184,12 +174,9 @@ public class MainActivity extends AppCompatActivity {
                         CURRENT_TAG = TAG_TENTANG;
                         break;
                     case R.id.nav_syncronize:
-//                        onSyncron();
-//                        onSyncronLembaga();
-//                        onSyncronKabupaten();
-                        onSyncronProvinsi();
-                        return true;
-
+                        navItemIndex = 6;
+                        CURRENT_TAG = TAG_SYNCRON;
+                        break;
                     case R.id.nav_login:
                         startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         drawer.closeDrawers();
@@ -242,167 +229,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    /***
-     * Returns respected fragment that user
-     * selected from navigation menu
-     */
-    private void onSyncron() {
 
-        PreferenceManager pref = new PreferenceManager(this);
-        String lastUpdate = pref.getLastUpdate();
-
-        ApiHelper apiService = ApiClient.getClient().create(ApiHelper.class);
-
-        final String TAG = "Retrofit";
-
-        Call<GetResponsePesantren> call = apiService.getPesantren(ApiServerURL.TOKEN_PUBLIC,lastUpdate);
-
-        final ProgressDialog progressDialog;
-        progressDialog = new ProgressDialog(MainActivity.this);
-        progressDialog.setMessage("mengambil data...");
-        progressDialog.setTitle("Sinkronisasi Data");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        // show it
-        progressDialog.show();
-        call.enqueue(new Callback<GetResponsePesantren>() {
-            @Override
-            public void onResponse(Call<GetResponsePesantren>call, Response<GetResponsePesantren> response) {
-                progressDialog.dismiss();
-                if (response != null){
-                    List<Pesantren> pesantrens = response.body().getData();
-                    Log.d(TAG, "Number of pesantren received: " + pesantrens.size());
-                    Toast.makeText(MainActivity.this, "Number of pesantren received: " + pesantrens.size(), Toast.LENGTH_LONG).show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<GetResponsePesantren>call, Throwable t) {
-                // Log error here since request failed
-                Log.e(TAG, t.toString());
-                progressDialog.dismiss();
-            }
-        });
-    }
-
-    private void onSyncronLembaga() {
-
-        PreferenceManager pref = new PreferenceManager(this);
-        String lastUpdate = pref.getLastUpdate();
-
-        ApiHelper apiService = ApiClient.getClient().create(ApiHelper.class);
-
-        final String TAG = "Retrofit";
-
-        Call<GetResponseLembaga> call = apiService.getLembaga(ApiServerURL.TOKEN_PUBLIC,lastUpdate);
-
-        final ProgressDialog progressDialog;
-        progressDialog = new ProgressDialog(MainActivity.this);
-        progressDialog.setMessage("mengambil data...");
-        progressDialog.setTitle("Sinkronisasi Data");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        // show it
-        progressDialog.show();
-        call.enqueue(new Callback<GetResponseLembaga>() {
-            @Override
-            public void onResponse(Call<GetResponseLembaga>call, Response<GetResponseLembaga> response) {
-                progressDialog.dismiss();
-                if (response != null){
-                    List<Lembaga> lembagas = response.body().getData();
-                    Log.d(TAG, "Number of pesantren received: " + lembagas.size());
-                    Toast.makeText(MainActivity.this, "Number of pesantren received: " + lembagas.size(), Toast.LENGTH_LONG).show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<GetResponseLembaga>call, Throwable t) {
-                // Log error here since request failed
-                Log.e(TAG, t.toString());
-                progressDialog.dismiss();
-            }
-        });
-    }
-
-    private void onSyncronKabupaten() {
-
-        ApiHelper apiService = ApiClient.getClient().create(ApiHelper.class);
-
-        final String TAG = "RetrofitKabupaten";
-
-        Call<GetResponseKabupaten> call = apiService.getKabupaten(ApiServerURL.TOKEN_PUBLIC);
-
-        final ProgressDialog progressDialog;
-        progressDialog = new ProgressDialog(MainActivity.this);
-        progressDialog.setMessage("mengambil data kabupaten...");
-        progressDialog.setTitle("Sinkronisasi Data");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        // show it
-        progressDialog.show();
-        call.enqueue(new Callback<GetResponseKabupaten>() {
-            @Override
-            public void onResponse(Call<GetResponseKabupaten>call, Response<GetResponseKabupaten> response) {
-                progressDialog.dismiss();
-                if (response != null){
-                    List<Kabupaten> kabupatens = response.body().getData();
-                    Log.d(TAG, "Number of pesantren received: " + kabupatens.size());
-                    Toast.makeText(MainActivity.this, "Number of pesantren received: " + kabupatens.size(), Toast.LENGTH_LONG).show();
-
-                    //simpan
-                    KabupatenDbHelper helper = new KabupatenDbHelper(MainActivity.this);
-                    helper.addManyKabupaten(kabupatens);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<GetResponseKabupaten>call, Throwable t) {
-                // Log error here since request failed
-                Log.e(TAG, t.toString());
-                progressDialog.dismiss();
-            }
-        });
-    }
-
-    private void onSyncronProvinsi() {
-
-        ApiHelper apiService = ApiClient.getClient().create(ApiHelper.class);
-
-        final String TAG = "RetrofitProvinsi";
-
-        Call<GetResponseProvinsi> call = apiService.getProvinsi(ApiServerURL.TOKEN_PUBLIC);
-
-        final ProgressDialog progressDialog;
-        progressDialog = new ProgressDialog(MainActivity.this);
-        progressDialog.setMessage("mengambil data kabupaten...");
-        progressDialog.setTitle("Sinkronisasi Data");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        // show it
-        progressDialog.show();
-        call.enqueue(new Callback<GetResponseProvinsi>() {
-            @Override
-            public void onResponse(Call<GetResponseProvinsi>call, Response<GetResponseProvinsi> response) {
-                progressDialog.dismiss();
-                if (response != null){
-                    List<Provinsi> lsProvinsi = response.body().getData();
-                    Log.d(TAG, "Number of pesantren received: " + lsProvinsi.size());
-                    Toast.makeText(MainActivity.this, "Number of pesantren received: " + lsProvinsi.size(), Toast.LENGTH_LONG).show();
-
-                    //simpan
-                    ProvinsiDbHelper helper = new ProvinsiDbHelper(MainActivity.this);
-                    helper.addManyProvinsi(lsProvinsi);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<GetResponseProvinsi>call, Throwable t) {
-                // Log error here since request failed
-                Log.e(TAG, t.toString());
-                progressDialog.dismiss();
-            }
-        });
-    }
 
     private void loadHomeFragment() {
         // selecting appropriate nav menu item
@@ -466,11 +293,18 @@ public class MainActivity extends AppCompatActivity {
                 // lapor fragment
                 LaporFragment laporFragment = new LaporFragment();
                 return laporFragment;
-
             case 4:
+                // diclaimer fragment
+                DisclaimerFragment disclaimerFragment = new DisclaimerFragment();
+                return disclaimerFragment;
+            case 5:
                 // tentang fragment
                 TentangFragment tentangFragment = new TentangFragment();
                 return tentangFragment;
+            case 6:
+                // syncron fragment
+                SyncronFragment syncronFragment = new SyncronFragment();
+                return syncronFragment;
             default:
                 return new CariFragment();
         }
@@ -561,6 +395,8 @@ public class MainActivity extends AppCompatActivity {
             mSearchAction.setIcon(R.drawable.ic_action_search);
 
             isSearchOpened = false;
+            bottomBar.setVisibility(View.GONE);
+            isFirstBar = true;
         } else { //open the search entry
 
             action.setDisplayShowCustomEnabled(true); //enable it to display a
@@ -594,13 +430,71 @@ public class MainActivity extends AppCompatActivity {
             mSearchAction.setIcon(R.drawable.ic_action_close);
 
             isSearchOpened = true;
+            bottomBar.setVisibility(View.VISIBLE);
+
+            handleBottomBar();
         }
+
     }
 
     private void doSearch(){
 
     }
 
+    boolean isFirstBar = true;
+    boolean mIsLargeLayout;
+    private void handleBottomBar(){
 
+        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelected(@IdRes int tabId) {
+
+                if (isFirstBar){
+                    isFirstBar = false;
+                }else {
+                    if (tabId == R.id.tab_wilayah) {
+                        // The tab with id R.id.tab_favorites was selected,
+                        // change your content accordingly.
+                        Toast.makeText(MainActivity.this, "Tab Wilayah", Toast.LENGTH_SHORT).show();
+                        showDialogWilayah();
+                    } else if (tabId == R.id.tab_tipe) {
+                        // The tab with id R.id.tab_favorites was selected,
+                        // change your content accordingly.
+                        Toast.makeText(MainActivity.this, "Tab Tipe", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Tab Jenjang", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
+    }
+
+    public void showDialogWilayah() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        DialogWilayahFragment newFragment = new DialogWilayahFragment();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        // For a little polish, specify a transition animation
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        // To make it fullscreen, use the 'content' root view as the container
+        // for the fragment, which is always the root view for the activity
+        transaction.add(android.R.id.content, newFragment)
+                .addToBackStack(null).commit();
+//
+//        if (mIsLargeLayout) {
+//            // The device is using a large layout, so show the fragment as a dialog
+//            newFragment.show(fragmentManager, "dialog");
+//        } else {
+//            // The device is smaller, so show the fragment fullscreen
+//            FragmentTransaction transaction = fragmentManager.beginTransaction();
+//            // For a little polish, specify a transition animation
+//            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//            // To make it fullscreen, use the 'content' root view as the container
+//            // for the fragment, which is always the root view for the activity
+//            transaction.add(android.R.id.content, newFragment)
+//                    .addToBackStack(null).commit();
+//        }
+    }
 
 }

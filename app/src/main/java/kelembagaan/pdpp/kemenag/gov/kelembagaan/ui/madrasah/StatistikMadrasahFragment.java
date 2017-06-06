@@ -1,4 +1,4 @@
-package kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.tentang;
+package kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.madrasah;
 
 
 import android.os.Bundle;
@@ -7,16 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TentangFragment extends Fragment {
+public class StatistikMadrasahFragment extends Fragment {
 
 
-    public TentangFragment() {
+    public StatistikMadrasahFragment() {
         // Required empty public constructor
     }
 
@@ -25,10 +24,7 @@ public class TentangFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_tentang, container, false);
-
-        ButterKnife.bind(this,view);
-        return view;
+        return inflater.inflate(R.layout.fragment_statistik_madrasah, container, false);
     }
 
 }

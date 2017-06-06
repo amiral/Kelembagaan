@@ -25,13 +25,20 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"></FrameLayout>
 
 
+    <com.roughike.bottombar.BottomBar
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone"
+        app:bb_tabXmlResource="@xml/bottombar_cari" />
+
     <!-- <include layout="@layout/content_main" />
 
      <android.support.design.widget.FloatingActionButton
          android:id="@+id/fab"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_gravity="bottom|end"
          android:layout_margin="@dimen/fab_margin"
          app:srcCompat="@android:drawable/ic_dialog_email" />-->
 
