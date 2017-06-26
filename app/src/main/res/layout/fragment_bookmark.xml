@@ -1,13 +1,27 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.bookmark.BookmarkFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/tabsBookmark"
+        app:pstsShouldExpand="true"
+        app:pstsTextAllCaps="false"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="48dp"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:background="@color/unselected_color"
+        app:pstsIndicatorColor="@color/selected_color"
+        app:pstsIndicatorHeight="5dp"
+        app:pstsTabPaddingLeftRight="14dp"/>
 
-</FrameLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpagerBookmark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white" />
+</LinearLayout>

@@ -5,11 +5,17 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import io.realm.LembagaRealmProxy;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by Amiral on 5/30/17.
  */
-@Parcel(Parcel.Serialization.BEAN)
-public class Lembaga {
+@Parcel(implementations = { LembagaRealmProxy.class },
+        value = Parcel.Serialization.BEAN,
+        analyze = { Lembaga.class })
+public class Lembaga extends RealmObject {
 
 //      "id_lembaga": 27,
 //              "npsn": "929087",
@@ -28,6 +34,7 @@ public class Lembaga {
 //              "nama_jenjang_lembaga": null,
 //              "status_data": "tidak aktif"
 
+    @PrimaryKey
     @SerializedName("id_lembaga")
     @Expose
     int idLembaga;

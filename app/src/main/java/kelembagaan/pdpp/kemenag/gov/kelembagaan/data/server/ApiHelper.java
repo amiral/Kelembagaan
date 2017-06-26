@@ -4,8 +4,12 @@ import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.GetResponseKab
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.GetResponseLembaga;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.GetResponsePesantren;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.GetResponseProvinsi;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.PostResponseLogin;
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -26,4 +30,8 @@ public interface ApiHelper {
 
     @GET("/pdpp/api/lembaga/{token}/ambil_kabupaten")
     Call<GetResponseKabupaten> getKabupaten(@Path("token") String token);
+
+    @FormUrlEncoded
+    @POST("/pdpp/api/lembaga/{token}/login")
+    Call<PostResponseLogin> postLogin(@Path("token") String token, @Field("email") String email, @Field("password") String password);
 }

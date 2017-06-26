@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -18,6 +19,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.KabupatenDbHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.LembagaDbHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.PesantrenDbHelper;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.ProvinsiDbHelper;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Kabupaten;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Lembaga;
@@ -53,6 +56,13 @@ public class SyncronFragment extends Fragment {
     @BindView(R.id.provinsi)
     Button btnProvinsi;
 
+    @BindView(R.id.tvPesantren)
+    TextView tvPesantren;
+
+    @BindView(R.id.tvLembaga)
+    TextView tvLembaga;
+
+    PreferenceManager pref;
     public SyncronFragment() {
         // Required empty public constructor
     }
@@ -65,6 +75,10 @@ public class SyncronFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_syncron, container, false);
         ButterKnife.bind(this,view);
 
+        pref = new PreferenceManager(getContext());
+
+        tvPesantren.setText("Last update pesantren : "+pref.getLastUpdatePesantren());
+        tvLembaga.setText("Last update lembaga : "+ pref.getLastUpdateLembaga());
         return view;
     }
 
@@ -75,8 +89,7 @@ public class SyncronFragment extends Fragment {
     @OnClick(R.id.pesantren)
     public void onSyncronPesantren() {
 
-        PreferenceManager pref = new PreferenceManager(getContext());
-        String lastUpdate = pref.getLastUpdate();
+        String lastUpdate = pref.getLastUpdatePesantren();
 
         ApiHelper apiService = ApiClient.getClient().create(ApiHelper.class);
 
@@ -96,9 +109,20 @@ public class SyncronFragment extends Fragment {
             public void onResponse(Call<GetResponsePesantren>call, Response<GetResponsePesantren> response) {
                 progressDialog.dismiss();
                 if (response != null){
+
                     List<Pesantren> pesantrens = response.body().getData();
-                    Log.d(TAG, "Number of pesantren received: " + pesantrens.size());
-                    Toast.makeText(getActivity(), "Number of pesantren received: " + pesantrens.size(), Toast.LENGTH_LONG).show();
+                    String lastSync = response.body().getTanggal().getDate();
+                    pref.setLastUpdatePesantren(lastSync);
+                    tvPesantren.setText("Last update pesantren : "+pref.getLastUpdatePesantren());
+                    if (pesantrens.size()> 0){
+                        PesantrenDbHelper helper = new PesantrenDbHelper(getContext());
+                        helper.addManyPesantren(pesantrens);
+                        Log.d(TAG, "Number of pesantren received: " + pesantrens.size());
+                        Toast.makeText(getActivity(), "Number of pesantren received: " + pesantrens.size(), Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getActivity(), "Tidak ada pembaruan data", Toast.LENGTH_LONG).show();
+                    }
+
                 }
 
             }
@@ -115,8 +139,7 @@ public class SyncronFragment extends Fragment {
     @OnClick(R.id.lembaga)
     public void onSyncronLembaga() {
 
-        PreferenceManager pref = new PreferenceManager(getContext());
-        String lastUpdate = pref.getLastUpdate();
+        String lastUpdate = pref.getLastUpdateLembaga();
 
         ApiHelper apiService = ApiClient.getClient().create(ApiHelper.class);
 
@@ -137,8 +160,19 @@ public class SyncronFragment extends Fragment {
                 progressDialog.dismiss();
                 if (response != null){
                     List<Lembaga> lembagas = response.body().getData();
-                    Log.d(TAG, "Number of pesantren received: " + lembagas.size());
-                    Toast.makeText(getActivity(), "Number of pesantren received: " + lembagas.size(), Toast.LENGTH_LONG).show();
+                    String lastSync = response.body().getTanggal().getDate();
+                    pref.setLastUpdateLembaga(lastSync);
+                    tvLembaga.setText("Last update lembaga : "+pref.getLastUpdateLembaga());
+
+                    if (lembagas.size()> 0){
+                        LembagaDbHelper helper = new LembagaDbHelper(getContext());
+                        helper.addManyLembaga(lembagas);
+                        Log.d(TAG, "Number of pesantren received: " + lembagas.size());
+                        Toast.makeText(getActivity(), "Number of pesantren received: " + lembagas.size(), Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getActivity(), "Tidak ada pembaruan data", Toast.LENGTH_LONG).show();
+                    }
+
                 }
 
             }
@@ -246,6 +280,40 @@ public class SyncronFragment extends Fragment {
                 progressDialog.dismiss();
             }
         });
+    }
+
+    public void exportDatabase() {
+
+        // init realm
+//        Realm realm = Realm.getInstance(getActivity());
+//
+//        File exportRealmFile = null;
+//        try {
+//            // get or create an "export.realm" file
+//            exportRealmFile = new File(getActivity().getExternalCacheDir(), "export.realm");
+//
+//            // if "export.realm" already exists, delete
+//            exportRealmFile.delete();
+//
+//            // copy current realm to "export.realm"
+//            realm.writeCopyTo(exportRealmFile);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        realm.close();
+//
+//        // init email intent and add export.realm as attachment
+//        Intent intent = new Intent(Intent.ACTION_SEND);
+//        intent.setType("plain/text");
+//        intent.putExtra(Intent.EXTRA_EMAIL, "YOUR MAIL");
+//        intent.putExtra(Intent.EXTRA_SUBJECT, "YOUR SUBJECT");
+//        intent.putExtra(Intent.EXTRA_TEXT, "YOUR TEXT");
+//        Uri u = Uri.fromFile(exportRealmFile);
+//        intent.putExtra(Intent.EXTRA_STREAM, u);
+//
+//        // start email intent
+//        startActivity(Intent.createChooser(intent, "YOUR CHOOSER TITLE"));
     }
 
 }

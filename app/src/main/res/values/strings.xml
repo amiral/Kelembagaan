@@ -20,6 +20,14 @@
 
     <!-- Toolbar titles when navigation menu item is selected -->
     <string-array name="nav_item_activity_titles">
+        <item>Cari</item>
+        <item>Bookmark</item>
+        <item>Lapor</item>
+        <item>Disclaimer</item>
+        <item>Tentang</item>
+        <item>Sinkronisasi</item>
+    </string-array>
+    <string-array name="nav_item_activity_titles_login">
         <item>Dashboard</item>
         <item>Cari</item>
         <item>Bookmark</item>

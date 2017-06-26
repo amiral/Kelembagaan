@@ -3,6 +3,10 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_menu_desktop"
+            android:title="@string/nav_dashboard" />
+        <item
             android:id="@+id/nav_search"
             android:icon="@drawable/ic_menu_search"
             android:title="@string/nav_cari" />
@@ -28,9 +32,10 @@
             android:icon="@drawable/ic_action_syncronize"
             android:title="@string/nav_sycron" />
         <item
-            android:id="@+id/nav_login"
-            android:icon="@drawable/ic_menu_login"
-            android:title="@string/nav_login" />
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_menu_logout"
+            android:title="@string/nav_keluar" />
+
 
     </group>
 

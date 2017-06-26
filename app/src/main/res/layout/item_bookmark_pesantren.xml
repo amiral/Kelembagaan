@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:padding="5dp"
+        android:src="@drawable/icon_pesantren"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/imageView">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/font_profil"
+            android:visibility="visible"
+            android:text="NAMA MADRASAH"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/text_nama_pesantren_bookmark" />
+
+        <TextView
+            android:id="@+id/text_nspp_pesantren_bookmark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_profil"
+            android:layout_gravity="center_vertical"
+            android:visibility="visible"
+            android:text="FIELD NSPP" />
+        <TextView
+            android:id="@+id/text_lokasi_pesantren"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_profil"
+            android:gravity="right"
+            android:visibility="visible"
+            android:textColor="@color/red_light"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Kabupaten, Provinsi" />
+    </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/book"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/ic_bookmark_on"/>
+</RelativeLayout>

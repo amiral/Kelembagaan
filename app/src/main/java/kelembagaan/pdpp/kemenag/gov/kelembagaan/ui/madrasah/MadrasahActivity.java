@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -29,6 +31,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.LembagaDbHelper;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Lembaga;
 
 import static com.google.android.gms.wearable.DataMap.TAG;
@@ -49,7 +52,11 @@ public class MadrasahActivity extends AppCompatActivity {
     @BindView(R.id.viewpager_madrasah)
     ViewPager viewPager;
 
+    @BindView(R.id.base_layout)
+    CoordinatorLayout baseLayout;
+
     Menu menu;
+
     private ShareActionProvider mShareActionProvider;
 
     boolean isBookmark = false;
@@ -68,6 +75,7 @@ public class MadrasahActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         madrasah = Parcels.unwrap(getIntent().getParcelableExtra("madrasah"));
+        isBookmark = madrasah.getIsFavorit() == 1 ? true : false;
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) getSupportActionBar().setTitle("Profil Madrasah");
@@ -201,8 +209,17 @@ public class MadrasahActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_profil_pesantren, menu);
-
+        updateBookmark(isBookmark);
         return true;
+    }
+
+    private void updateBookmark(boolean isBookmark) {
+        MenuItem item = menu.findItem(R.id.action_bookmark);
+        if (isBookmark) {
+            item.setIcon(getResources().getDrawable(R.drawable.ic_menu_bookmark_on));
+        } else {
+            item.setIcon(getResources().getDrawable(R.drawable.ic_menu_bookmark_off));
+        }
     }
 
     @Override
@@ -221,20 +238,18 @@ public class MadrasahActivity extends AppCompatActivity {
         }
 
         if (item.getItemId() == R.id.action_bookmark){
+            LembagaDbHelper helper = new LembagaDbHelper(this);
             if (isBookmark){
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_menu_bookmark_off));
-
-//                item.setIcon(getResources().getDrawable(R.drawable.ic_menu_bookmark_off));
-//                menu.getItem(item.getItemId()).setIcon(getResources().getDrawable(R.drawable.ic_menu_bookmark_off));
                 isBookmark = false;
-//                invalidateOptionsMenu();
+                helper.setBookmark(madrasah, 0);
+                updateBookmark(isBookmark);
+                Snackbar.make(baseLayout, "Madrasah dihapus dari favorit.", Snackbar.LENGTH_SHORT).show();
                 return true;
             }else {
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_menu_bookmark_on));
-//                menu.getItem(item.getItemId()).setIcon(getResources().getDrawable(R.drawable.ic_menu_bookmark_on));
-//                item.setIcon(getResources().getDrawable(R.drawable.ic_menu_bookmark_on));
-//                invalidateOptionsMenu();
+                helper.setBookmark(madrasah, 1);
                 isBookmark = true;
+                updateBookmark(isBookmark);
+                Snackbar.make(baseLayout, "Madrasah dijadikan favorit", Snackbar.LENGTH_SHORT).show();
                 return true;
             }
         }
@@ -242,8 +257,8 @@ public class MadrasahActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_share){
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
-            String shareBodyText = "Pesantren : "+madrasah.getNamaLembaga() + "\n NSM : "+madrasah.getNsm() + "\n Pimpinan : "+madrasah.getPimpinan() + "\n Alamat : "+madrasah.getAlamat();
-            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Cek Pesantren");
+            String shareBodyText = "Madrasah : "+madrasah.getNamaLembaga() + "\n NSM : "+madrasah.getNsm() + "\n Pimpinan : "+madrasah.getPimpinan() + "\n Alamat : "+madrasah.getAlamat();
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Cek Madrasah");
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
             startActivity(Intent.createChooser(sharingIntent, "Shearing Option"));
             return true;

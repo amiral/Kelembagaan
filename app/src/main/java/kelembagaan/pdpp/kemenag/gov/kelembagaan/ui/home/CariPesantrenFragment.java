@@ -13,8 +13,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import org.parceler.Parcels;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +21,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.PesantrenDbHelper;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Pesantren;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.home.adapter.CariPesantrenAdapter;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.pesantren.PesantrenActivity;
@@ -32,6 +32,9 @@ import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.pesantren.PesantrenActivity;
 public class CariPesantrenFragment extends Fragment implements CariPesantrenAdapter.ItemClickListener {
 
     @BindView(R.id.recyclerViewPesantren) RecyclerView recyclerView;
+
+    @BindView(R.id.text_no_data)
+    TextView tvNodata;
 
     private CariPesantrenAdapter adapterPesantren;
     private List<Pesantren> listPesantren;
@@ -49,23 +52,36 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
         View view = inflater.inflate(R.layout.fragment_cari_pesantren, container, false);
         ButterKnife.bind(this, view);
 
-        listPesantren = new ArrayList<>();
-        adapterPesantren = new CariPesantrenAdapter(view.getContext(), listPesantren);
 
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(view.getContext(), 2);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapterPesantren);
+        getDataPesantren();
 
-        adapterPesantren.setClickListener(this);
-        dataSamplePesantren();
+        if (listPesantren.size() > 0) {
+            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(view.getContext(), 2);
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setAdapter(adapterPesantren);
+        }else{
+            recyclerView.setVisibility(View.GONE);
+            tvNodata.setVisibility(View.VISIBLE);
+        }
+
+
+//        dataSamplePesantren();
 
 
 
         return view;
     }
 
+    private  void getDataPesantren(){
+        PesantrenDbHelper helper = new PesantrenDbHelper(getContext());
+        listPesantren = new ArrayList<Pesantren>();
+        listPesantren = helper.getAllPesantren();
+        adapterPesantren = new CariPesantrenAdapter(getContext(), listPesantren);
+        adapterPesantren.setClickListener(this);
+//        adapterPesantren.notifyDataSetChanged();
+    }
     private void dataSamplePesantren(){
 
 //        holder.tvNamaPesantren.setText(pesantren.getNamaPesantren());
@@ -125,9 +141,9 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
     public void onClick(View view, int position) {
 
         Pesantren pesantren = listPesantren.get(position);
-
         Intent intent = new Intent(getActivity(), PesantrenActivity.class);
-        intent.putExtra("pesantren", Parcels.wrap(pesantren));
+//        intent.putExtra("pesantren", Parcels.wrap(pesantren));
+        intent.putExtra("idPesantren", pesantren.getIdPesantren());
         startActivity(intent);
     }
 

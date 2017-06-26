@@ -101,8 +101,7 @@ public class MainActivity extends AppCompatActivity {
         mHandler = new Handler();
 
 
-        // load toolbar titles from string resources
-        activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
+
 
         navHeader = navigationView.getHeaderView(0);
 
@@ -132,13 +131,23 @@ public class MainActivity extends AppCompatActivity {
     private void loadNavHeader() {
         // Cek apakah login atau tidak
         if (preferenceManager.isLogin()) {
-
+        // load toolbar titles from string resources
+            activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles_login);
         } else {
-
+        // load toolbar titles from string resources
+            activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
         }
     }
 
     private void setUpNavigationView() {
+
+        if (preferenceManager.isLogin()) {
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_main_drawer_login);
+        }else{
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_main_drawer);
+        }
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -312,6 +321,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void onLogout() {
+        preferenceManager.setLogin(false);
+        preferenceManager.clearPengguna();
     }
 
     private void setToolbarTitle() {

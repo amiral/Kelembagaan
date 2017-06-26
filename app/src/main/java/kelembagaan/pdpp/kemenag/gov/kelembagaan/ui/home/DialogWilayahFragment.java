@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,17 +34,17 @@ public class DialogWilayahFragment extends DialogFragment{
 
         View rootView = inflater.inflate(R.layout.fragment_dialog_wilayah1, container, false);
 
-        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-        toolbar.setTitle("Filter Wilayah");
+//        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+//        toolbar.setTitle("Filter Wilayah");
 
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setHomeAsUpIndicator(android.R.drawable.ic_menu_close_clear_cancel);
-        }
+//        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+//
+//        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+//        if (actionBar != null) {
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//            actionBar.setHomeButtonEnabled(true);
+//            actionBar.setHomeAsUpIndicator(android.R.drawable.ic_menu_close_clear_cancel);
+//        }
         setHasOptionsMenu(true);
         return rootView;
     }

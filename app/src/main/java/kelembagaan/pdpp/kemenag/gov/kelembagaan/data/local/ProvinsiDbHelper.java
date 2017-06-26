@@ -84,7 +84,7 @@ public class ProvinsiDbHelper {
         return data;
     }
 
-    public Provinsi getKabupaten(int id){
+    public Provinsi getProvinsi(int id){
         Provinsi p;
 
         p = realm.where(Provinsi.class).equalTo("idProvinsi", id).findFirst();

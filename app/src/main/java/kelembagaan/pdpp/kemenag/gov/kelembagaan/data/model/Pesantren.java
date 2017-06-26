@@ -5,12 +5,17 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import io.realm.PesantrenRealmProxy;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by Amiral on 5/30/17.
  */
-
-@Parcel(Parcel.Serialization.BEAN)
-public class Pesantren {
+@Parcel(implementations = { PesantrenRealmProxy.class },
+        value = Parcel.Serialization.BEAN,
+        analyze = { Pesantren.class })
+public class Pesantren extends RealmObject{
 
 
    /* "id_pesantren": 2,
@@ -30,6 +35,7 @@ public class Pesantren {
     tahun_berdiri,nspp,idkabupaten,idprovinsi,website,sejarah_singkat,pembaruan_terakhir
     */
 
+    @PrimaryKey
     @SerializedName("id_pesantren")
     @Expose
     int idPesantren;

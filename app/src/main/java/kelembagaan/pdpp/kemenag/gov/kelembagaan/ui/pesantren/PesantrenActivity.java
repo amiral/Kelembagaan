@@ -1,10 +1,13 @@
 package kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.pesantren;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -31,6 +34,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.PesantrenDbHelper;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Pesantren;
 
 public class PesantrenActivity extends AppCompatActivity {
@@ -55,6 +59,12 @@ public class PesantrenActivity extends AppCompatActivity {
 
     boolean isBookmark = false;
 
+    Context mContext;
+    PesantrenDbHelper helper;
+
+    @BindView(R.id.base_layout)
+    CoordinatorLayout baseLayout;
+
     private int[] tabIcons = {
             R.drawable.ic_tab_profil_pesantren,
             R.drawable.ic_tab_lembaga_pesantren,
@@ -66,10 +76,15 @@ public class PesantrenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pesantren);
         ButterKnife.bind(this);
+        mContext = this;
 
-        pesantren = Parcels.unwrap(getIntent().getParcelableExtra("pesantren"));
+        int idPesantren = getIntent().getIntExtra("idPesantren", 0);
+         helper = new PesantrenDbHelper(this);
+        pesantren = helper.getPesantren(idPesantren);
 
-//        Toast.makeText(this,"Pesantren : "+pesantren.getNamaPesantren(),Toast.LENGTH_LONG).show();
+        isBookmark = pesantren.getIsFavorit() == 1 ? true : false;
+
+//        pesantren = Parcels.unwrap(getIntent().getParcelableExtra("pesantren"));
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) getSupportActionBar().setTitle("Profil Pesantren");
@@ -173,7 +188,7 @@ public class PesantrenActivity extends AppCompatActivity {
         Bundle bundleLokasi = new Bundle();
 //        -6.218857, 106.663234
         bundleLokasi.putString("latitude", pesantren.getLatitude());
-        bundleLokasi.putString("longitude", pesantren.getLongitude());
+        bundleLokasi.putString("longitude",pesantren.getLongitude());
         bundleLokasi.putString("namaPesantren", pesantren.getNamaPesantren());
         bundleLokasi.putString("alamatPesantren", pesantren.getAlamat());
         lokasi.setArguments(bundleLokasi);
@@ -252,10 +267,18 @@ public class PesantrenActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_profil_pesantren, menu);
-
+        updateBookmark(isBookmark);
         return true;
     }
 
+    private void updateBookmark(boolean isBookmark) {
+        MenuItem item = menu.findItem(R.id.action_bookmark);
+        if (isBookmark) {
+            item.setIcon(getResources().getDrawable(R.drawable.ic_menu_bookmark_on));
+        } else {
+            item.setIcon(getResources().getDrawable(R.drawable.ic_menu_bookmark_off));
+        }
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -273,20 +296,17 @@ public class PesantrenActivity extends AppCompatActivity {
         }
 
         if (item.getItemId() == R.id.action_bookmark){
-            if (isBookmark){
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_menu_bookmark_off));
-
-//                item.setIcon(getResources().getDrawable(R.drawable.ic_menu_bookmark_off));
-//                menu.getItem(item.getItemId()).setIcon(getResources().getDrawable(R.drawable.ic_menu_bookmark_off));
+            if (isBookmark) {
+                helper.setBookmark(pesantren, 0);
                 isBookmark = false;
-//                invalidateOptionsMenu();
+                updateBookmark(isBookmark);
+                Snackbar.make(baseLayout, "Pondok pesantren dihapus dari favorit.", Snackbar.LENGTH_SHORT).show();
                 return true;
             }else {
-                menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_menu_bookmark_on));
-//                menu.getItem(item.getItemId()).setIcon(getResources().getDrawable(R.drawable.ic_menu_bookmark_on));
-//                item.setIcon(getResources().getDrawable(R.drawable.ic_menu_bookmark_on));
-//                invalidateOptionsMenu();
+                helper.setBookmark(pesantren, 1);
                 isBookmark = true;
+                updateBookmark(isBookmark);
+                Snackbar.make(baseLayout, "Pondok pesantren telah dijadikan favorit", Snackbar.LENGTH_SHORT).show();
                 return true;
             }
         }

@@ -13,6 +13,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.parceler.Parcels;
 
@@ -22,6 +23,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.LembagaDbHelper;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Lembaga;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.home.adapter.CariMadrasahAdapter;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.madrasah.MadrasahActivity;
@@ -32,6 +34,9 @@ import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.madrasah.MadrasahActivity;
 public class CariMadrasahFragment extends Fragment implements CariMadrasahAdapter.ItemClickListener{
 
     @BindView(R.id.recyclerViewMadrasah) RecyclerView recyclerView;
+
+    @BindView(R.id.text_no_data)
+    TextView tvNodata;
 
     private CariMadrasahAdapter adapterMadrasah;
     private List<Lembaga> listMadrasah;
@@ -47,20 +52,32 @@ public class CariMadrasahFragment extends Fragment implements CariMadrasahAdapte
         View view = inflater.inflate(R.layout.fragment_cari_madrasah, container, false);
         ButterKnife.bind(this, view);
 
-        listMadrasah = new ArrayList<>();
-        adapterMadrasah = new CariMadrasahAdapter(view.getContext(), listMadrasah);
+        getDataMadrasah();
 
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(view.getContext(), 2);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapterMadrasah);
+        if (listMadrasah.size() > 0){
+            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(view.getContext(), 2);
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setAdapter(adapterMadrasah);
 
+            adapterMadrasah.setClickListener(this);
+        }else{
+            recyclerView.setVisibility(View.GONE);
+            tvNodata.setVisibility(View.VISIBLE);
+        }
 
-        adapterMadrasah.setClickListener(this);
-        dataSampleMadrasah();
+//        dataSampleMadrasah();
 
         return view;
+    }
+
+    private  void getDataMadrasah(){
+        LembagaDbHelper helper = new LembagaDbHelper(getContext());
+        listMadrasah = new ArrayList<Lembaga>();
+        listMadrasah = helper.getAllLembaga();
+        adapterMadrasah = new CariMadrasahAdapter(getContext(), listMadrasah);
+        adapterMadrasah.setClickListener(this);
     }
 
     private void dataSampleMadrasah() {
