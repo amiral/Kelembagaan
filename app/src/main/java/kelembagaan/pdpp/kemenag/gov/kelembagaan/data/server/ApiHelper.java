@@ -4,6 +4,7 @@ import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.GetResponseKab
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.GetResponseLembaga;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.GetResponsePesantren;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.GetResponseProvinsi;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.PostResponseForgotPassword;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.PostResponseLogin;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -37,5 +38,5 @@ public interface ApiHelper {
 
     @FormUrlEncoded
     @POST("/pdpp/api/lembaga/{token}/lupa_password")
-    Call<PostResponseLogin> postForgotPassword(@Path("token") String token, @Field("email") String email);
+    Call<PostResponseForgotPassword> postForgotPassword(@Path("token") String token, @Field("email") String email);
 }

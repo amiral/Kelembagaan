@@ -33,6 +33,7 @@ import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.LembagaDbHelper;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Lembaga;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.lapor.KoreksiActivity;
 
 import static com.google.android.gms.wearable.DataMap.TAG;
 
@@ -252,6 +253,15 @@ public class MadrasahActivity extends AppCompatActivity {
                 Snackbar.make(baseLayout, "Madrasah dijadikan favorit", Snackbar.LENGTH_SHORT).show();
                 return true;
             }
+        }
+
+        if (item.getItemId() == R.id.action_koreksi){
+            Intent intent = new Intent(MadrasahActivity.this, KoreksiActivity.class);
+            intent.putExtra("tipe", 1);
+            intent.putExtra("nama", madrasah.getNamaLembaga());
+            intent.putExtra("id", madrasah.getIdLembaga());
+            startActivity(intent);
+            return true;
         }
 
         if (item.getItemId() == R.id.action_share){

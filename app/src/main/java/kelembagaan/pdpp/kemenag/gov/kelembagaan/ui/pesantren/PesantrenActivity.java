@@ -36,6 +36,7 @@ import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.PesantrenDbHelper;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Pesantren;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.lapor.KoreksiActivity;
 
 public class PesantrenActivity extends AppCompatActivity {
     private static final String TAG = PesantrenActivity.class.getSimpleName();
@@ -309,6 +310,15 @@ public class PesantrenActivity extends AppCompatActivity {
                 Snackbar.make(baseLayout, "Pondok pesantren telah dijadikan favorit", Snackbar.LENGTH_SHORT).show();
                 return true;
             }
+        }
+
+        if (item.getItemId() == R.id.action_koreksi){
+            Intent intent = new Intent(PesantrenActivity.this, KoreksiActivity.class);
+            intent.putExtra("tipe", 0);
+            intent.putExtra("nama", pesantren.getNamaPesantren());
+            intent.putExtra("id", pesantren.getIdPesantren());
+            startActivity(intent);
+            return true;
         }
 
         if (item.getItemId() == R.id.action_share){

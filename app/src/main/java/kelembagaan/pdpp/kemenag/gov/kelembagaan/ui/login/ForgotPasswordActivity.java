@@ -17,7 +17,7 @@ import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.ApiClient;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.ApiHelper;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.ApiServerURL;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.PostResponseLogin;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.PostResponseForgotPassword;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,7 +53,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         String email = etEmail.getText().toString();
 
         if (isEmailValid(email)){
-
+            forgotProcess(email);
         }else{
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ForgotPasswordActivity.this);
             alertDialogBuilder.setMessage("Format Email yang dimasukkan tidak sesuai!");
@@ -79,7 +79,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         final String TAG = "RetrofitForgot";
 
-        Call<PostResponseLogin> call = apiService.postForgotPassword(ApiServerURL.TOKEN_PUBLIC, email);
+        Call<PostResponseForgotPassword> call = apiService.postForgotPassword(ApiServerURL.TOKEN_PUBLIC, email);
 
         final ProgressDialog progressDialog;
         progressDialog = new ProgressDialog(this);
@@ -88,9 +88,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         // show it
         progressDialog.show();
-        call.enqueue(new Callback<PostResponseLogin>() {
+        call.enqueue(new Callback<PostResponseForgotPassword>() {
             @Override
-            public void onResponse(Call<PostResponseLogin>call, Response<PostResponseLogin> response) {
+            public void onResponse(Call<PostResponseForgotPassword>call, Response<PostResponseForgotPassword> response) {
                 progressDialog.dismiss();
                 if (response != null){
                     if (response.body().getError()){
@@ -123,7 +123,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<PostResponseLogin>call, Throwable t) {
+            public void onFailure(Call<PostResponseForgotPassword>call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
                 progressDialog.dismiss();

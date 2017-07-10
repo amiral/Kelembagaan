@@ -69,4 +69,6 @@
     <string name="izin_operasional">Izin Operasional</string>
 
     <string name="google_maps_api_key">AIzaSyDr_5-GVAUV9rkQcddoMb2A-tInFuBbVRg</string>
+
+    <string name="koreksi_hiden">Berikan saran, koreksi, komentar atau informasi terkait profil %1$s</string>
 </resources>
