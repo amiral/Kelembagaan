@@ -17,27 +17,37 @@ import io.realm.annotations.PrimaryKey;
         analyze = { Lembaga.class })
 public class Lembaga extends RealmObject {
 
-//      "id_lembaga": 27,
-//              "npsn": "929087",
-//              "nsm": "819492",
-//              "nama_lembaga": "Ferry, Borer and Walter",
-//              "alamat": "Apt. 166",
-//              "kode_pos": "68851",
-//              "telepon": "862-458-9175 x69026",
-//              "pimpinan": "Leland Mraz",
-//              "website": "langosh.com",
-//              "status_lembaga": "negeri",
-//              "masa_berlaku_ijin_operasional": "2018-02-20",
-//              "longitude": "-40.1148880",
-//              "latitude": "29.1094650",
-//              "nama_tipe_lembaga": null,
-//              "nama_jenjang_lembaga": null,
-//              "status_data": "tidak aktif"
+    /*"id_lembaga": 1,
+            "nspp": "510011020055",
+            "npsn": "593559",
+            "nsm": "581213",
+            "nama_lembaga": "Will Ltd",
+            "alamat": "Suite 413",
+            "kode_pos": "32046",
+            "telepon": "+1 (891) 770-6424",
+            "pimpinan": "Juliet Wolff",
+            "website": "koss.com",
+            "status_lembaga": "swasta",
+            "masa_berlaku_ijin_operasional": "2020-06-13",
+            "longitude": "-117.8137340",
+            "latitude": "25.8252800",
+            "kabupaten_id": 0,
+            "id_tipe_lembaga": null,
+            "nama_tipe_lembaga": null,
+            "id_jenjang_lembaga": null,
+            "nama_jenjang_lembaga": null,
+            "status_data": "tidak aktif",
+            "pembaruan_terakhir": "2016-12-31 18:45:12"
+    */
 
     @PrimaryKey
     @SerializedName("id_lembaga")
     @Expose
     int idLembaga;
+
+    @SerializedName("nspp")
+    @Expose
+    String nspp;
 
     @SerializedName("npsn")
     @Expose
@@ -91,13 +101,22 @@ public class Lembaga extends RealmObject {
     @Expose
     private int kabupatenId;
 
+
+    @SerializedName("id_tipe_lembaga")
+    @Expose
+    int idTipeLembaga;
+
     @SerializedName("nama_tipe_lembaga")
     @Expose
-    String idTipeLembaga;
+    String namaTipeLembaga;
+
+    @SerializedName("id_jenjang_lembaga")
+    @Expose
+    int idJenjangLembaga;
 
     @SerializedName("nama_jenjang_lembaga")
     @Expose
-    String idJenjangLembaga;
+    String namaJenjangLembaga;
 
     @SerializedName("status_data")
     @Expose
@@ -106,6 +125,8 @@ public class Lembaga extends RealmObject {
     @SerializedName("pembaruan_terakhir")
     @Expose
     String pembaharuanTerakhir;
+
+
 
     int isFavorit;
     String lokasiLembaga;
@@ -230,20 +251,20 @@ public class Lembaga extends RealmObject {
         this.latitude = latitude;
     }
 
-    public String getIdTipeLembaga() {
-        return idTipeLembaga;
+    public String getNamaTipeLembaga() {
+        return namaTipeLembaga;
     }
 
-    public void setIdTipeLembaga(String idTipeLembaga) {
-        this.idTipeLembaga = idTipeLembaga;
+    public void setNamaTipeLembaga(String namaTipeLembaga) {
+        this.namaTipeLembaga = namaTipeLembaga;
     }
 
-    public String getIdJenjangLembaga() {
-        return idJenjangLembaga;
+    public String getNamaJenjangLembaga() {
+        return namaJenjangLembaga;
     }
 
-    public void setIdJenjangLembaga(String idJenjangLembaga) {
-        this.idJenjangLembaga = idJenjangLembaga;
+    public void setNamaJenjangLembaga(String namaJenjangLembaga) {
+        this.namaJenjangLembaga = namaJenjangLembaga;
     }
 
     public String getStatusData() {
@@ -268,5 +289,29 @@ public class Lembaga extends RealmObject {
 
     public void setIsFavorit(int isFavorit) {
         this.isFavorit = isFavorit;
+    }
+
+    public String getNspp() {
+        return nspp;
+    }
+
+    public void setNspp(String nspp) {
+        this.nspp = nspp;
+    }
+
+    public int getIdTipeLembaga() {
+        return idTipeLembaga;
+    }
+
+    public void setIdTipeLembaga(int idTipeLembaga) {
+        this.idTipeLembaga = idTipeLembaga;
+    }
+
+    public int getIdJenjangLembaga() {
+        return idJenjangLembaga;
+    }
+
+    public void setIdJenjangLembaga(int idJenjangLembaga) {
+        this.idJenjangLembaga = idJenjangLembaga;
     }
 }

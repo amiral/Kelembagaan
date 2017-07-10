@@ -190,7 +190,7 @@ public class SyncronFragment extends Fragment {
     public void onSyncronKabupaten() {
 
         KabupatenDbHelper kHelper = new KabupatenDbHelper(getContext());
-        List<Kabupaten> lsK = kHelper.findAllProvinsi();
+        List<Kabupaten> lsK = kHelper.findAllKabupaten();
 
         if (lsK.size() > 0) {
             btnKabupaten.setEnabled(false);

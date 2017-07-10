@@ -34,4 +34,8 @@ public interface ApiHelper {
     @FormUrlEncoded
     @POST("/pdpp/api/lembaga/{token}/login")
     Call<PostResponseLogin> postLogin(@Path("token") String token, @Field("email") String email, @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("/pdpp/api/lembaga/{token}/lupa_password")
+    Call<PostResponseLogin> postForgotPassword(@Path("token") String token, @Field("email") String email);
 }

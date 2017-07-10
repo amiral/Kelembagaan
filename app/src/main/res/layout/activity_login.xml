@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.login.LoginActivity"
-    android:background="@android:color/darker_gray"
+    android:background="@drawable/background_polos"
+    android:orientation="vertical"
     android:id="@+id/base_layout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/gambar_user_login"
+            android:layout_marginTop="20dp"/>
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/primary_dark"/>
+    </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/text_welcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Selamat Datang"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="30dp"
         android:textStyle="bold"
         android:textSize="24sp"
         android:textAlignment="center"
@@ -24,7 +42,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_marginTop="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,6 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nama Pengguna"
+                android:textColorHint="#80ffffff"
+                android:textColor="@color/white"
                 android:layout_margin="5dp"
                 android:drawablePadding="5dp"
                 android:drawableLeft="@drawable/ic_menu_login"/>
@@ -46,6 +66,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Kata Sandi"
+                android:textColorHint="#80ffffff"
+                android:textColor="@color/white"
                 android:layout_margin="5dp"
                 android:drawablePadding="5dp"
                 android:drawableLeft="@drawable/ic_action_lock"/>
@@ -62,12 +84,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Lupa kata sandi?"
-                android:textStyle="bold"
                 android:layout_margin="3dp"
                 android:textSize="18sp"
                 android:onClick="onForgot"
+                android:textColor="@color/grey"
                 android:textAlignment="center"/>
         </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

@@ -3,6 +3,12 @@ package kelembagaan.pdpp.kemenag.gov.kelembagaan.data.preference;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Pengguna;
 
 /**
@@ -26,6 +32,10 @@ public class PreferenceManager {
     private static final String LAST_UPDATE_PESANTREN = "lastUpdatePesantren";
     private static final String LAST_UPDATE_LEMBAGA = "lastUpdateLembaga";
     private static final String USER = "pengguna";
+    private static final String FILTER_KABUPATEN = "kabupatenId";
+    private static final String FILTER_LEMBAGA = "tipeLembaga";
+    private static final String FILTER_JENJANG = "jenjangId";
+
 
     public PreferenceManager(Context context) {
         this._context = context;
@@ -48,7 +58,7 @@ public class PreferenceManager {
     }
 
     public boolean isLogin() {
-        return pref.getBoolean(IS_LOGIN, true);
+        return pref.getBoolean(IS_LOGIN, false);
     }
 
     public void setLastUpdatePesantren(String lastUpdate){
@@ -114,5 +124,54 @@ public class PreferenceManager {
         p.setNamaHakAkses(pref.getString(USER+"11",""));
 
         return p;
+    }
+
+    public void setFilterKabupaten(ArrayList<Integer> listKabupatenId){
+        Gson gson = new Gson();
+        String json = gson.toJson(listKabupatenId);
+        editor.putString(FILTER_KABUPATEN, json);
+        editor.commit();
+    }
+
+    public ArrayList<Integer> getFilterKabupaten(){
+        Gson gson = new Gson();
+        String json = pref.getString(FILTER_KABUPATEN, null);
+        Type type = new TypeToken<ArrayList<Integer>>() {}.getType();
+        ArrayList<Integer> arrayList = gson.fromJson(json, type) ;
+
+        arrayList = arrayList == null ? new ArrayList<Integer>() : arrayList;
+        return arrayList;
+    }
+
+    public void setFilterJenjang(ArrayList<Integer> listJijangId){
+        Gson gson = new Gson();
+        String json = gson.toJson(listJijangId);
+        editor.putString(FILTER_JENJANG, json);
+        editor.commit();
+    }
+
+    public ArrayList<Integer> getFilterJenjang(){
+        Gson gson = new Gson();
+        String json = pref.getString(FILTER_JENJANG, null);
+        Type type = new TypeToken<ArrayList<Integer>>() {}.getType();
+        ArrayList<Integer> arrayList = gson.fromJson(json, type);
+        arrayList = arrayList == null ? new ArrayList<Integer>() : arrayList;
+        return arrayList;
+    }
+
+    public void setFilterLembaga(ArrayList<Integer> listTipeLembaga){
+        Gson gson = new Gson();
+        String json = gson.toJson(listTipeLembaga);
+        editor.putString(FILTER_LEMBAGA, json);
+        editor.commit();
+    }
+
+    public ArrayList<Integer> getFilterLembaga(){
+        Gson gson = new Gson();
+        String json = pref.getString(FILTER_LEMBAGA, null);
+        Type type = new TypeToken<ArrayList<Integer>>() {}.getType();
+        ArrayList<Integer> arrayList = gson.fromJson(json, type);
+        arrayList = arrayList == null ? new ArrayList<Integer>() : arrayList;
+        return arrayList;
     }
 }

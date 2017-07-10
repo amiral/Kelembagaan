@@ -65,9 +65,29 @@ public class KabupatenDbHelper {
 
 
     /**
-     * method mencari semua kabupaten
+     * method mencari semua kabupaten provinsi
      */
-    public ArrayList<Kabupaten> findAllProvinsi() {
+    public ArrayList<Kabupaten> findAllProvinsiKabupaten(int idProvinsi) {
+        ArrayList<Kabupaten> data = new ArrayList<>();
+
+
+        realmResult = realm.where(Kabupaten.class).equalTo("provinsiIdProvinsi", idProvinsi).findAll();
+        realmResult.sort("namaKabupaten", Sort.ASCENDING);
+        if (realmResult.size() > 0) {
+            showLog("Size : " + realmResult.size());
+            for (int i = 0; i < realmResult.size(); i++) {
+                data.add(realmResult.get(i));
+            }
+
+        } else {
+            showLog("Size : 0");
+            showToast("Database Kosong!");
+        }
+
+        return data;
+    }
+
+    public ArrayList<Kabupaten> findAllKabupaten() {
         ArrayList<Kabupaten> data = new ArrayList<>();
 
 
@@ -86,6 +106,32 @@ public class KabupatenDbHelper {
 
         return data;
     }
+
+    /**
+     * method mencari semua kabupaten
+     */
+    /*public ArrayList<Kabupaten> findAllProvinsiKabupaten(int idProvinsi, ArrayList<Integer> filteredKabupaten) {
+        ArrayList<Kabupaten> data = new ArrayList<>();
+
+
+        realmResult = realm.where(Kabupaten.class).equalTo("provinsiIdProvinsi", idProvinsi).findAll();
+        realmResult.sort("namaKabupaten", Sort.ASCENDING);
+        if (realmResult.size() > 0) {
+            showLog("Size : " + realmResult.size());
+            for (int i = 0; i < realmResult.size(); i++) {
+
+                if (filteredKabupaten.contains(realmResult.get(i).getIdKabupaten()))
+                    realmResult.get(i).setSelected(true);
+                data.add(realmResult.get(i));
+            }
+
+        } else {
+            showLog("Size : 0");
+            showToast("Database Kosong!");
+        }
+
+        return data;
+    }*/
 
 
     public Kabupaten getKabupaten(int id){

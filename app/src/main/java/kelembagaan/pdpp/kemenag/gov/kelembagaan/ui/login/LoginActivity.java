@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText etPassword;
 
     @BindView(R.id.base_layout)
-    RelativeLayout baseLayout;
+    LinearLayout baseLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

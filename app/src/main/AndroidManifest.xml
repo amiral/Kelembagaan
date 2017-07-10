@@ -2,19 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kelembagaan.pdpp.kemenag.gov.kelembagaan">
 
+    <!-- <permission -->
+    <!-- android:name="kelembagaan.pdpp.kemenag.gov.kelembagaan.MAPS_RECEIVE" -->
+    <!-- android:protectionLevel="signature" /> -->
 
-    <!--<permission-->
-        <!--android:name="kelembagaan.pdpp.kemenag.gov.kelembagaan.MAPS_RECEIVE"-->
-        <!--android:protectionLevel="signature" />-->
 
-    <!--<uses-permission android:name="gov.kemenag.pdpp.permission.MAPS_RECEIVE" />-->
+    <!-- <uses-permission android:name="gov.kemenag.pdpp.permission.MAPS_RECEIVE" /> -->
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -28,10 +28,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
-
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
@@ -62,7 +61,11 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.login.ForgotPasswordActivity" />
+        <activity android:name=".ui.login.ForgotPasswordActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.login.LoginActivity" />
+        </activity>
         <activity android:name=".ui.dashboard.IndeksIntegritasActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -73,18 +76,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.home.MainActivity" />
         </activity>
-        <activity android:name=".ui.pesantren.PesantrenActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.home.MainActivity" />
-        </activity>
-        <activity android:name=".ui.madrasah.MadrasahActivity"
+        <activity
+            android:name=".ui.pesantren.PesantrenActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.home.MainActivity" />
         </activity>
+        <activity
+            android:name=".ui.madrasah.MadrasahActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.home.MainActivity" />
+        </activity>
+        <activity android:name=".ui.home.FilterSearchActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

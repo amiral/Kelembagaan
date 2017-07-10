@@ -1,6 +1,7 @@
 package kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.home;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +14,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -22,8 +24,8 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -31,6 +33,7 @@ import com.roughike.bottombar.OnTabSelectListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Pengguna;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.preference.PreferenceManager;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.bookmark.BookmarkFragment;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.dashboard.DashboardFragment;
@@ -62,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_TENTANG = "tentang";
     private static final String TAG_SYNCRON = "syncron";
 
+    int FILTER_REQUEST = 111;
+
     public static String CURRENT_TAG = TAG_CARI;
 
     private boolean isLogin = false;
@@ -78,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.bottomBar)
     BottomBar bottomBar;
+
+    RelativeLayout lytHeader;
+    RelativeLayout lytHeaderLogin;
 
     EditText etSearch;
     private MenuItem mSearchAction;
@@ -100,11 +108,10 @@ public class MainActivity extends AppCompatActivity {
 
         mHandler = new Handler();
 
-
-
-
         navHeader = navigationView.getHeaderView(0);
 
+        lytHeader = (RelativeLayout) navHeader.findViewById(R.id.lytHeader);
+        lytHeaderLogin = (RelativeLayout) navHeader.findViewById(R.id.lytHeaderLogin);
 
 
         loadNavHeader();
@@ -113,9 +120,15 @@ public class MainActivity extends AppCompatActivity {
         setUpNavigationView();
 
         if (savedInstanceState == null) {
-            navItemIndex = 1;
-            CURRENT_TAG = TAG_CARI;
-            loadHomeFragment();
+            if (preferenceManager.isLogin()) {
+                navItemIndex = 1;
+                CURRENT_TAG = TAG_CARI;
+                loadHomeFragment();
+            } else {
+                navItemIndex = 0;
+                CURRENT_TAG = TAG_CARI;
+                loadHomeFragment();
+            }
         }
 
 
@@ -131,10 +144,10 @@ public class MainActivity extends AppCompatActivity {
     private void loadNavHeader() {
         // Cek apakah login atau tidak
         if (preferenceManager.isLogin()) {
-        // load toolbar titles from string resources
+            // load toolbar titles from string resources
             activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles_login);
         } else {
-        // load toolbar titles from string resources
+            // load toolbar titles from string resources
             activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
         }
     }
@@ -142,75 +155,142 @@ public class MainActivity extends AppCompatActivity {
     private void setUpNavigationView() {
 
         if (preferenceManager.isLogin()) {
+            lytHeaderLogin.setVisibility(View.VISIBLE);
+            lytHeader.setVisibility(View.GONE);
+
+            TextView tvNama = (TextView) lytHeaderLogin.findViewById(R.id.text_nama_profil);
+            TextView tvJabatan = (TextView) lytHeaderLogin.findViewById(R.id.text_jabatan_profil);
+
+            Pengguna pengguna = preferenceManager.getPengguna();
+
+            tvNama.setText(pengguna.getNama());
+            tvJabatan.setText(pengguna.getNamaHakAkses());
+
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.activity_main_drawer_login);
-        }else{
+            //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+                // This method will trigger on item Click of navigation menu
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                    //Check to see which item was being clicked and perform appropriate action
+                    switch (menuItem.getItemId()) {
+                        //Replacing the main content with ContentFragment Which is our Inbox View;
+                        case R.id.nav_dashboard:
+                            navItemIndex = 0;
+                            CURRENT_TAG = TAG_DASHBOARD;
+                            break;
+                        case R.id.nav_search:
+                            navItemIndex = 1;
+                            CURRENT_TAG = TAG_CARI;
+                            break;
+                        case R.id.nav_bookmark:
+                            navItemIndex = 2;
+                            CURRENT_TAG = TAG_BOOKMARK;
+                            break;
+                        case R.id.nav_lapor:
+                            navItemIndex = 3;
+                            CURRENT_TAG = TAG_LAPOR;
+                            break;
+                        case R.id.nav_disclaimer:
+                            navItemIndex = 4;
+                            CURRENT_TAG = TAG_DISCLAIMER;
+                            break;
+                        case R.id.nav_tentang:
+                            navItemIndex = 5;
+                            CURRENT_TAG = TAG_TENTANG;
+                            break;
+                        case R.id.nav_syncronize:
+                            navItemIndex = 6;
+                            CURRENT_TAG = TAG_SYNCRON;
+                            break;
+                        case R.id.nav_logout:
+                            onLogout();
+                            navItemIndex = 1;
+                            CURRENT_TAG = TAG_CARI;
+                            break;
+                        default:
+                            navItemIndex = 0;
+                    }
+
+                    //Checking if the item is in checked state or not, if not make it in checked state
+                    if (menuItem.isChecked()) {
+                        menuItem.setChecked(false);
+                    } else {
+                        menuItem.setChecked(true);
+                    }
+//                    menuItem.setChecked(true);
+
+                    loadHomeFragment();
+
+                    return true;
+                }
+            });
+        } else {
+
+            lytHeaderLogin.setVisibility(View.GONE);
+            lytHeader.setVisibility(View.VISIBLE);
+
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.activity_main_drawer);
+            //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+                // This method will trigger on item Click of navigation menu
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                    //Check to see which item was being clicked and perform appropriate action
+                    switch (menuItem.getItemId()) {
+                        //Replacing the main content with ContentFragment Which is our Inbox View;
+                        case R.id.nav_search:
+                            navItemIndex = 0;
+                            CURRENT_TAG = TAG_CARI;
+                            break;
+                        case R.id.nav_bookmark:
+                            navItemIndex = 1;
+                            CURRENT_TAG = TAG_BOOKMARK;
+                            break;
+                        case R.id.nav_lapor:
+                            navItemIndex = 2;
+                            CURRENT_TAG = TAG_LAPOR;
+                            break;
+                        case R.id.nav_disclaimer:
+                            navItemIndex = 3;
+                            CURRENT_TAG = TAG_DISCLAIMER;
+                            break;
+                        case R.id.nav_tentang:
+                            navItemIndex = 4;
+                            CURRENT_TAG = TAG_TENTANG;
+                            break;
+                        case R.id.nav_syncronize:
+                            navItemIndex = 5;
+                            CURRENT_TAG = TAG_SYNCRON;
+                            break;
+                        case R.id.nav_login:
+                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                            drawer.closeDrawers();
+                            return true;
+                        default:
+                            navItemIndex = 0;
+                    }
+
+                    //Checking if the item is in checked state or not, if not make it in checked state
+                    if (menuItem.isChecked()) {
+                        menuItem.setChecked(false);
+                    } else {
+                        menuItem.setChecked(true);
+                    }
+//                    menuItem.setChecked(true);
+
+                    loadHomeFragment();
+
+                    return true;
+                }
+            });
         }
-        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-            // This method will trigger on item Click of navigation menu
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-                //Check to see which item was being clicked and perform appropriate action
-                switch (menuItem.getItemId()) {
-                    //Replacing the main content with ContentFragment Which is our Inbox View;
-                    case R.id.nav_dashboard:
-                        navItemIndex = 0;
-                        CURRENT_TAG = TAG_DASHBOARD;
-                        break;
-                    case R.id.nav_search:
-                        navItemIndex = 1;
-                        CURRENT_TAG = TAG_CARI;
-                        break;
-                    case R.id.nav_bookmark:
-                        navItemIndex = 2;
-                        CURRENT_TAG = TAG_BOOKMARK;
-                        break;
-                    case R.id.nav_lapor:
-                        navItemIndex = 3;
-                        CURRENT_TAG = TAG_LAPOR;
-                        break;
-                    case R.id.nav_disclaimer:
-                        navItemIndex = 4;
-                        CURRENT_TAG = TAG_DISCLAIMER;
-                        break;
-                    case R.id.nav_tentang:
-                        navItemIndex = 5;
-                        CURRENT_TAG = TAG_TENTANG;
-                        break;
-                    case R.id.nav_syncronize:
-                        navItemIndex = 6;
-                        CURRENT_TAG = TAG_SYNCRON;
-                        break;
-                    case R.id.nav_login:
-                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                        drawer.closeDrawers();
-                        return true;
-                    case R.id.nav_logout:
-                        onLogout();
-                        drawer.refreshDrawableState();
-                        return true;
-                    default:
-                        navItemIndex = 0;
-                }
-
-                //Checking if the item is in checked state or not, if not make it in checked state
-                if (menuItem.isChecked()) {
-                    menuItem.setChecked(false);
-                } else {
-                    menuItem.setChecked(true);
-                }
-                menuItem.setChecked(true);
-
-                loadHomeFragment();
-
-                return true;
-            }
-        });
 
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
@@ -236,15 +316,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
     private void loadHomeFragment() {
+
         // selecting appropriate nav menu item
         selectNavMenu();
 
         // set toolbar title
+        loadNavHeader();
         setToolbarTitle();
 
         // if user select the current navigation menu again, don't do anything
@@ -285,44 +363,92 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Fragment getHomeFragment() {
-        switch (navItemIndex) {
-            case 1:
-                // home
-                CariFragment cariFragment = new CariFragment();
-                return cariFragment;
-            case 0:
-                // dahsboard
-                DashboardFragment dashboardFragment = new DashboardFragment();
-                return dashboardFragment;
-            case 2:
-                // bookmark fragment
-                BookmarkFragment bookmarkFragment = new BookmarkFragment();
-                return bookmarkFragment;
-            case 3:
-                // lapor fragment
-                LaporFragment laporFragment = new LaporFragment();
-                return laporFragment;
-            case 4:
-                // diclaimer fragment
-                DisclaimerFragment disclaimerFragment = new DisclaimerFragment();
-                return disclaimerFragment;
-            case 5:
-                // tentang fragment
-                TentangFragment tentangFragment = new TentangFragment();
-                return tentangFragment;
-            case 6:
-                // syncron fragment
-                SyncronFragment syncronFragment = new SyncronFragment();
-                return syncronFragment;
-            default:
-                return new CariFragment();
+        if (preferenceManager.isLogin()){
+            switch (navItemIndex) {
+                case 1:
+                    // home
+                    CariFragment cariFragment = new CariFragment();
+                    return cariFragment;
+                case 0:
+                    // dahsboard
+                    DashboardFragment dashboardFragment = new DashboardFragment();
+                    return dashboardFragment;
+                case 2:
+                    // bookmark fragment
+                    BookmarkFragment bookmarkFragment = new BookmarkFragment();
+                    return bookmarkFragment;
+                case 3:
+                    // lapor fragment
+                    LaporFragment laporFragment = new LaporFragment();
+                    return laporFragment;
+                case 4:
+                    // diclaimer fragment
+                    DisclaimerFragment disclaimerFragment = new DisclaimerFragment();
+                    return disclaimerFragment;
+                case 5:
+                    // tentang fragment
+                    TentangFragment tentangFragment = new TentangFragment();
+                    return tentangFragment;
+                case 6:
+                    // syncron fragment
+                    SyncronFragment syncronFragment = new SyncronFragment();
+                    return syncronFragment;
+                default:
+                    return new CariFragment();
+            }
+        }else{
+            switch (navItemIndex) {
+                case 0:
+                    // home
+                    CariFragment cariFragment = new CariFragment();
+                    return cariFragment;
+                case 1:
+                    // bookmark fragment
+                    BookmarkFragment bookmarkFragment = new BookmarkFragment();
+                    return bookmarkFragment;
+                case 2:
+                    // lapor fragment
+                    LaporFragment laporFragment = new LaporFragment();
+                    return laporFragment;
+                case 3:
+                    // diclaimer fragment
+                    DisclaimerFragment disclaimerFragment = new DisclaimerFragment();
+                    return disclaimerFragment;
+                case 4:
+                    // tentang fragment
+                    TentangFragment tentangFragment = new TentangFragment();
+                    return tentangFragment;
+                case 5:
+                    // syncron fragment
+                    SyncronFragment syncronFragment = new SyncronFragment();
+                    return syncronFragment;
+                default:
+                    return new CariFragment();
+            }
         }
+
     }
 
 
     private void onLogout() {
         preferenceManager.setLogin(false);
-        preferenceManager.clearPengguna();
+        navItemIndex = 0;
+        CURRENT_TAG = TAG_CARI;
+        loadHomeFragment();
+        setUpNavigationView();
+
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+        alertDialogBuilder.setMessage("Anda Berhasil Keluar");
+        alertDialogBuilder.setPositiveButton("OKE",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private void setToolbarTitle() {
@@ -345,24 +471,52 @@ public class MainActivity extends AppCompatActivity {
         if (shouldLoadHomeFragOnBackPress) {
             // checking if user is on other navigation menu
             // rather than home
-            if (navItemIndex != 1) {
-                navItemIndex = 1;
+            int index = 0;
+            if (preferenceManager.isLogin())
+                index = 1;
+
+            if (navItemIndex != index) {
+                navItemIndex = index;
                 CURRENT_TAG = TAG_CARI;
                 loadHomeFragment();
-                if(isSearchOpened) {
+                if (isSearchOpened) {
                     handleMenuSearch();
                 }
                 return;
+            }else{
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                alertDialogBuilder.setMessage("Apakah anda ingin keluar dari aplikasi?");
+                alertDialogBuilder.setPositiveButton("Tidak",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+
+                            }
+                        });
+                alertDialogBuilder.setNegativeButton("Keluar",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                finish();
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
+//                super.onBackPressed();
             }
         }
 
-        super.onBackPressed();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // show menu only when home fragment is selected
-        if (navItemIndex == 1) {
+        int index = 0;
+        if (preferenceManager.isLogin())
+            index = 1;
+
+        if (navItemIndex == index) {
             getMenuInflater().inflate(R.menu.main, menu);
         }
         return true;
@@ -390,10 +544,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void handleMenuSearch(){
+    private void handleMenuSearch() {
         ActionBar action = getSupportActionBar(); //get the actionbar
 
-        if(isSearchOpened){ //test if the search is open
+        if (isSearchOpened) { //test if the search is open
 
             action.setDisplayShowCustomEnabled(false); //disable a custom view inside the actionbar
             action.setDisplayShowTitleEnabled(true); //show the title in the action bar
@@ -415,7 +569,7 @@ public class MainActivity extends AppCompatActivity {
             action.setCustomView(R.layout.search_bar);//add the custom view
             action.setDisplayShowTitleEnabled(false); //hide the title
 
-            etSearch = (EditText)action.getCustomView().findViewById(R.id.edit_search); //the text editor
+            etSearch = (EditText) action.getCustomView().findViewById(R.id.edit_search); //the text editor
 
             //this is a listener to do a search when the user clicks on search button
             etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -448,33 +602,44 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void doSearch(){
+    private void doSearch() {
 
     }
 
     boolean isFirstBar = true;
     boolean mIsLargeLayout;
-    private void handleBottomBar(){
+
+    private void handleBottomBar() {
 
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
 
-                if (isFirstBar){
+                if (isFirstBar) {
                     isFirstBar = false;
-                }else {
+                } else {
+
+                    int TIPE_FILTER;
+
                     if (tabId == R.id.tab_wilayah) {
                         // The tab with id R.id.tab_favorites was selected,
                         // change your content accordingly.
-                        Toast.makeText(MainActivity.this, "Tab Wilayah", Toast.LENGTH_SHORT).show();
-                        showDialogWilayah();
+                        TIPE_FILTER = 0;
+//                        showDialogWilayah();
                     } else if (tabId == R.id.tab_tipe) {
                         // The tab with id R.id.tab_favorites was selected,
                         // change your content accordingly.
-                        Toast.makeText(MainActivity.this, "Tab Tipe", Toast.LENGTH_SHORT).show();
+                        TIPE_FILTER = 1;
                     } else {
-                        Toast.makeText(MainActivity.this, "Tab Jenjang", Toast.LENGTH_SHORT).show();
+                        TIPE_FILTER = 2;
                     }
+
+                    Intent intent = new Intent(MainActivity.this, FilterSearchActivity.class);
+//                    intent.putExtra(FilterActivity.FILTER_TYPE, FilterType.JenisKelamin);
+//                    intent.putExtra(FilterActivity.FILTER_DATA, this.filterData);
+                    intent.putExtra("TIPEFILTER", TIPE_FILTER);
+                    startActivityForResult(intent, FILTER_REQUEST);
+                    overridePendingTransition(R.anim.slide_up, R.anim.stay);
                 }
 
             }
