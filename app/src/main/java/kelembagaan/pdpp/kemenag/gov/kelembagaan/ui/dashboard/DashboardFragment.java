@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.sccomponents.widgets.ScArcGauge;
 import com.sccomponents.widgets.ScCopier;
@@ -18,9 +19,11 @@ import com.sccomponents.widgets.ScNotches;
 import com.sccomponents.widgets.ScPointer;
 import com.sccomponents.widgets.ScWriter;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.LembagaDbHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +32,8 @@ import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
 public class DashboardFragment extends Fragment {
 
 
+    @BindView(R.id.text_madrasah_expired)
+    TextView tvExpired;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -44,6 +49,10 @@ public class DashboardFragment extends Fragment {
 
         ButterKnife.bind(this, view);
         setGauge(view);
+
+        //izin operasional
+        LembagaDbHelper helper = new LembagaDbHelper(getActivity());
+        tvExpired.setText(""+helper.getAllWarningLembaga(60).size());
         return view;
     }
 
@@ -111,6 +120,8 @@ public class DashboardFragment extends Fragment {
                 info.color = sector == info.index ? Color.BLACK : Color.parseColor("#cccccc");
             }
         });
+
+
     }
 
     @OnClick(R.id.text_index_selengkapnya)

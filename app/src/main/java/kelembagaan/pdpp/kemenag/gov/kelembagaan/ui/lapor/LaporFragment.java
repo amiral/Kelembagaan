@@ -1,105 +1,174 @@
 package kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.lapor;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.KabupatenDbHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.ProvinsiDbHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Kabupaten;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Provinsi;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that cis fragment.
- */
-public class LaporFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class LaporFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    @BindView(R.id.button_lapor_pesantren)
+    Button btnPesantren;
+
+    @BindView(R.id.button_lapor_madrasah)
+    Button btnMadrasah;
+
+    @BindView(R.id.spinner_provinsi)
+    Spinner spnProvinsi;
+
+    @BindView(R.id.spinner_kabupaten)
+    Spinner spnKabupaten;
+
+    @BindView(R.id.edit_lapor)
+    EditText etLapor;
+
+    @BindView(R.id.text_hiden_lapor)
+    TextView tvHidden;
+
+    int tipeLaporan;
+
+    ArrayList<Kabupaten> lsKabupaten;
+
+    int idProvinsi = 0;
+    int idKabupaten;
 
     public LaporFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LaporFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static LaporFragment newInstance(String param1, String param2) {
-        LaporFragment fragment = new LaporFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lapor, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_lapor, container, false);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+        ButterKnife.bind(this, view);
+
+        onProvinsi();
+
+        final ArrayList<Provinsi> lsProvinsi = new ProvinsiDbHelper(getContext()).findAllProvinsi();
+        ArrayList<String> name = new ArrayList();
+        Iterator it = lsProvinsi.iterator();
+        while (it.hasNext()) {
+            name.add(((Provinsi) it.next()).getNamaProvinsi());
         }
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, name.toArray(new String[name.size()]));
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnProvinsi.setAdapter(spinnerAdapter);
+        spnProvinsi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (lsProvinsi.size() > 0) {
+                    idProvinsi = lsProvinsi.get(position).getIdProvinsi();
+                    lsKabupaten = new KabupatenDbHelper(getContext()).findAllProvinsiKabupaten(idProvinsi);
+                    ArrayList<String> name = new ArrayList();
+                    Iterator it = lsKabupaten.iterator();
+                    while (it.hasNext()) {
+                        name.add(((Kabupaten) it.next()).getNamaKabupaten());
+                    }
+                    ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, name.toArray(new String[name.size()]));
+                    spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spnKabupaten.setAdapter(spinnerAdapter);
+                    spnKabupaten.setOnItemSelectedListener(LaporFragment.this);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        if (lsProvinsi.size() > 0) {
+            lsKabupaten = new KabupatenDbHelper(getContext()).findAllProvinsiKabupaten(lsProvinsi.get(0).getIdProvinsi());
+            ArrayList<String> namaKabupaten = new ArrayList();
+            Iterator itK = lsKabupaten.iterator();
+            while (itK.hasNext()) {
+                namaKabupaten.add(((Kabupaten) itK.next()).getNamaKabupaten());
+            }
+            ArrayAdapter<String> spnAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, namaKabupaten.toArray(new String[namaKabupaten.size()]));
+            spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spnKabupaten.setAdapter(spnAdapter);
+            spnKabupaten.setOnItemSelectedListener(LaporFragment.this);
+        }
+
+        etLapor.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (s.toString().isEmpty()) {
+                    tvHidden.setVisibility(View.VISIBLE);
+                } else {
+                    tvHidden.setVisibility(View.GONE);
+                }
+            }
+        });
+        return view;
+    }
+
+
+    @OnClick(R.id.button_lapor_pesantren)
+    public void onProvinsi() {
+        tipeLaporan = 0;
+        btnPesantren.setSelected(true);
+        btnMadrasah.setSelected(false);
+        tvHidden.setText(R.string.hideen_pesantren);
+    }
+
+    @OnClick(R.id.button_lapor_madrasah)
+    public void onMadrasah() {
+        tipeLaporan = 1;
+        btnPesantren.setSelected(false);
+        btnMadrasah.setSelected(true);
+        tvHidden.setText(R.string.hidden_madrasah);
+    }
+
+    @OnClick(R.id.button_batal_lapor)
+    public void onLaporBatal() {
+
+    }
+
+    @OnClick(R.id.button_kirim_lapor)
+    public void onLaporKirim() {
+
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        idKabupaten = lsKabupaten.get(position).getIdKabupaten();
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public void onNothingSelected(AdapterView<?> parent) {
+        idKabupaten = lsKabupaten.get(0).getIdKabupaten();
     }
 }

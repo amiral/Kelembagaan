@@ -40,4 +40,14 @@
             android:text="FIELD NSM" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/text_tanggal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tanggal"
+        android:drawableLeft="@drawable/ic_action_date"
+        android:textColor="@color/red_light"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+
 </RelativeLayout>

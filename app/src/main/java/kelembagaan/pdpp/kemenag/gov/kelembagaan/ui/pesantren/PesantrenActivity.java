@@ -182,8 +182,14 @@ public class PesantrenActivity extends AppCompatActivity {
         profil.setArguments(bundle);
 
         adapter.addFragment(profil);
-        adapter.addFragment(new DaftarLembagaPesantrenFragment());
-        adapter.addFragment(new StatistikPesantrenFragment());
+
+        DaftarLembagaPesantrenFragment lembagaPesantren = new DaftarLembagaPesantrenFragment();
+        lembagaPesantren.setArguments(bundle);
+        adapter.addFragment(lembagaPesantren);
+
+        StatistikPesantrenFragment statistik = new StatistikPesantrenFragment();
+        statistik.setArguments(bundle);
+        adapter.addFragment(statistik);
 
         PetaLokasiPesantrenPesantren lokasi = new PetaLokasiPesantrenPesantren();
         Bundle bundleLokasi = new Bundle();

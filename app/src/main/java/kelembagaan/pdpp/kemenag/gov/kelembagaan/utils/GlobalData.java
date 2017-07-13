@@ -21,4 +21,5 @@ public class GlobalData {
     ID 6 v: Univ/PT*/
     public static String[] NAMA_JENJANG = {"RA", "MI", "MTS", "MA", "MAK", "Ma'had Aly", "Univ/PT"};
 
+
 }

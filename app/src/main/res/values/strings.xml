@@ -71,4 +71,7 @@
     <string name="google_maps_api_key">AIzaSyDr_5-GVAUV9rkQcddoMb2A-tInFuBbVRg</string>
 
     <string name="koreksi_hiden">Berikan saran, koreksi, komentar atau informasi terkait profil %1$s</string>
+
+    <string name="hideen_pesantren">Masukkan Nama Pesantren, NSPP, Alamat dan Nama Pimpinan Pesantren</string>
+    <string name="hidden_madrasah">Masukkan Nama Madrasah, NSM, Alamat, NSPP dan Nama Pesantren</string>
 </resources>

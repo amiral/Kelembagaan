@@ -12,6 +12,7 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Lembaga;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.utils.Tools;
 
 /**
  * Created by Amiral on 6/6/17.
@@ -85,6 +86,25 @@ public class LembagaDbHelper {
         return data;
     }
 
+    public ArrayList<Lembaga> getAllLembagaPesantren(String nspp) {
+        ArrayList<Lembaga> data = new ArrayList<>();
+
+
+        realmResult = realm.where(Lembaga.class).equalTo("nspp", nspp).findAll();
+        realmResult.sort("namaLembaga", Sort.ASCENDING);
+        if (realmResult.size() > 0) {
+            showLog("Size : " + realmResult.size());
+            for (int i = 0; i < realmResult.size(); i++) {
+                data.add(realmResult.get(i));
+            }
+
+        } else {
+//            showLog("Size : 0");
+//            showToast("Data Kosong!");
+        }
+
+        return data;
+    }
     /**
      * method mencari semua Pesantren
      */
@@ -141,6 +161,30 @@ public class LembagaDbHelper {
 
         return kb;
     }
+
+    public ArrayList<Lembaga> getAllWarningLembaga(int jumlahHari) {
+        ArrayList<Lembaga> data = new ArrayList<>();
+
+        realmResult = realm.where(Lembaga.class).findAll();
+        realmResult.sort("namaLembaga", Sort.ASCENDING);
+        if (realmResult.size() > 0) {
+            showLog("Size : " + realmResult.size());
+            for (int i = 0; i < realmResult.size(); i++) {
+                String masaBerlaku = realmResult.get(i).getMasaBerlakuIjinOperasional();
+                long sisa = Tools.sisaHariMasaberlaku(masaBerlaku);
+                if (sisa <= jumlahHari && sisa > 0) {
+                    data.add(realmResult.get(i));
+                }
+            }
+
+        } else {
+            showLog("Size : 0");
+            showToast("Database Kosong!");
+        }
+
+        return data;
+    }
+
 
     /**
      * membuat log
