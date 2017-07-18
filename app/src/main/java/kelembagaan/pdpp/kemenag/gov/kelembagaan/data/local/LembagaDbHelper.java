@@ -91,7 +91,7 @@ public class LembagaDbHelper {
 
 
         realmResult = realm.where(Lembaga.class).equalTo("nspp", nspp).findAll();
-        realmResult.sort("namaLembaga", Sort.ASCENDING);
+        realmResult.sort("idJenjangLembaga", Sort.ASCENDING);
         if (realmResult.size() > 0) {
             showLog("Size : " + realmResult.size());
             for (int i = 0; i < realmResult.size(); i++) {

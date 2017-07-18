@@ -163,7 +163,9 @@ public class MadrasahActivity extends AppCompatActivity {
         profil.setArguments(bundle);
 
         adapter.addFragment(profil);
-        adapter.addFragment(new StatistikMadrasahFragment());
+        StatistikMadrasahFragment statistik = new StatistikMadrasahFragment();
+        statistik.setArguments(bundle);
+        adapter.addFragment(statistik);
 
         PetaLokasiMadrasahFragment lokasi = new PetaLokasiMadrasahFragment();
         Bundle bundleLokasi = new Bundle();
@@ -260,6 +262,7 @@ public class MadrasahActivity extends AppCompatActivity {
             intent.putExtra("tipe", 1);
             intent.putExtra("nama", madrasah.getNamaLembaga());
             intent.putExtra("id", madrasah.getIdLembaga());
+            intent.putExtra("idKabupaten", madrasah.getKabupatenId());
             startActivity(intent);
             return true;
         }

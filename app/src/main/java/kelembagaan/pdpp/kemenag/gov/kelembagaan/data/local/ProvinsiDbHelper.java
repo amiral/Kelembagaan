@@ -2,7 +2,6 @@ package kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +55,8 @@ public class ProvinsiDbHelper {
         realm.copyToRealmOrUpdate(p);
         realm.commitTransaction();
 
-        showLog("Added ; " + p.getNamaProvinsi());
-        showToast(p.getNamaProvinsi() + " berhasil disimpan.");
+//        showLog("Added ; " + p.getNamaProvinsi());
+//        showToast(p.getNamaProvinsi() + " berhasil disimpan.");
     }
 
 
@@ -78,7 +77,7 @@ public class ProvinsiDbHelper {
 
         } else {
             showLog("Size : 0");
-            showToast("Database Kosong!");
+//            showToast("Database Kosong!");
         }
 
         return data;
@@ -105,7 +104,7 @@ public class ProvinsiDbHelper {
     /**
      * Membuat Toast Informasi
      */
-    private void showToast(String s) {
-        Toast.makeText(context, s, Toast.LENGTH_LONG).show();
-    }
+//    private void showToast(String s) {
+//        Toast.makeText(context, s, Toast.LENGTH_LONG).show();
+//    }
 }

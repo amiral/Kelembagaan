@@ -5,76 +5,153 @@
     tools:context="kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.tentang.SyncronFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="vertical"
-        android:layout_centerInParent="true">
-        <Button
-            android:id="@+id/provinsi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:textColor="@color/white"
-            android:text="Ambil Data Provinsi"
-            android:background="@drawable/green_button"/>
-        <Button
-            android:id="@+id/kabupten"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:layout_margin="5dp"
-            android:text="Ambil Data Kabupaten"
-            android:background="@drawable/green_button"/>
-
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:orientation="vertical"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@color/background_content">
-            <TextView
-                android:id="@+id/tvPesantren"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Last Update Pesantren"/>
+            android:layout_centerInParent="true">
             <Button
-                android:id="@+id/pesantren"
+                android:id="@+id/provinsi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="Ambil Data Pesantren"
                 android:layout_margin="5dp"
+                android:textColor="@color/white"
+                android:text="Ambil Data Provinsi"
                 android:background="@drawable/green_button"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@color/background_content">
-            <TextView
-                android:id="@+id/tvLembaga"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Last Update Lembaga"/>
             <Button
-                android:id="@+id/lembaga"
+                android:id="@+id/kabupten"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:layout_margin="5dp"
-                android:text="Ambil Data Lembaga"
+                android:text="Ambil Data Kabupaten"
                 android:background="@drawable/green_button"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/background_content">
+                <TextView
+                    android:id="@+id/tvPesantren"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Last Update Pesantren"/>
+                <Button
+                    android:id="@+id/pesantren"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="Ambil Data Pesantren"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/green_button"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/background_content">
+                <TextView
+                    android:id="@+id/tvLembaga"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Last Update Lembaga"/>
+                <Button
+                    android:id="@+id/lembaga"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_margin="5dp"
+                    android:text="Ambil Data Lembaga"
+                    android:background="@drawable/green_button"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/background_content">
+                <TextView
+                    android:id="@+id/tvLaporLembaga"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Last Update Laporan"/>
+                <Button
+                    android:id="@+id/button_getlapor_lembaga"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_margin="5dp"
+                    android:text="Ambil Data Laporan"
+                    android:background="@drawable/green_button"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/background_content">
+                <TextView
+                    android:id="@+id/tvStatistikLembaga"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Last Update Statistik Lembaga"/>
+                <Button
+                    android:id="@+id/button_getstatistik_lembaga"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_margin="5dp"
+                    android:text="Ambil Data Statistik Lembaga"
+                    android:background="@drawable/green_button"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/background_content">
+                <TextView
+                    android:id="@+id/tvStatistikPesantren"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Last Update Statistik Pesantren"/>
+                <Button
+                    android:id="@+id/button_getstatistik_pesantren"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_margin="5dp"
+                    android:text="Ambil Data Statistik Pesantren"
+                    android:background="@drawable/green_button"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

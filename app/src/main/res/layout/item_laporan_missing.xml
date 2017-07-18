@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:id="@+id/lytProfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/imageView"
+            android:src="@drawable/icon_user"/>
+
+        <TextView
+            android:id="@+id/text_nama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Anonim"
+            android:layout_marginTop="3dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            />
+    </LinearLayout>
+
+
+   <!-- <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/lytProfil">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/font_profil"
+            android:visibility="visible"
+            android:text="NAMA MADRASAH"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/text_nama_madrasah" />
+
+        <TextView
+            android:id="@+id/text_nsm_madrasah"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_profil"
+            android:layout_gravity="center_vertical"
+            android:visibility="visible"
+            android:text="FIELD NSM" />
+    </LinearLayout>-->
+
+    <TextView
+        android:id="@+id/text_pesan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/cast_mini_controller_font_size_line2"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/lytProfil"
+        android:text="Ini isinya bisa apa aja, suka2 orang yagn bikin laporan kadang sama kadang beda. Pokoknya suka2 deh. Jangan protes apalagi marah" />
+
+    <TextView
+        android:id="@+id/text_tanggal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tanggal"
+        android:drawableLeft="@drawable/ic_action_date"
+        android:textColor="@color/red_light"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+
+</RelativeLayout>

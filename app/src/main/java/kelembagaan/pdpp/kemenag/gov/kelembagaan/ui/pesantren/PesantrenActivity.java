@@ -323,6 +323,8 @@ public class PesantrenActivity extends AppCompatActivity {
             intent.putExtra("tipe", 0);
             intent.putExtra("nama", pesantren.getNamaPesantren());
             intent.putExtra("id", pesantren.getIdPesantren());
+            int idKabupaten = Integer.parseInt(pesantren.getKodeKabupaten());
+            intent.putExtra("idKabupaten",idKabupaten);
             startActivity(intent);
             return true;
         }

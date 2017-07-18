@@ -1,9 +1,13 @@
 package kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.lapor;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +29,14 @@ import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.KabupatenDbHelper;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.ProvinsiDbHelper;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Kabupaten;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Provinsi;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.preference.PreferenceManager;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.ApiClient;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.ApiHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.ApiServerURL;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.server.model.PostResponseKoreksi;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LaporFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
@@ -159,6 +171,165 @@ public class LaporFragment extends Fragment implements AdapterView.OnItemSelecte
 
     @OnClick(R.id.button_kirim_lapor)
     public void onLaporKirim() {
+        String pesan = etLapor.getText().toString();
+
+        if (pesan.isEmpty()){
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+            int msg = tipeLaporan == 0 ? R.string.hideen_pesantren : R.string.hidden_madrasah;
+            alertDialogBuilder.setMessage(getString(msg));
+            alertDialogBuilder.setPositiveButton("OKE",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+
+                        }
+                    });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }else{
+            submitProcess(pesan);
+        }
+    }
+
+    public void submitProcess(String pesan){
+
+
+        ApiHelper apiService = ApiClient.getClient().create(ApiHelper.class);
+
+        final String TAG = "RetrofitForgot";
+
+        final ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Proses Laporan");
+        progressDialog.setTitle("Memproses...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // show it
+        progressDialog.show();
+
+        int idPengguna = 0;
+        int idHakAkses = 0 ;
+        PreferenceManager pref = new PreferenceManager(getActivity());
+
+        if (pref.isLogin()){
+            idPengguna = pref.getPengguna().getIdPengguna();
+            idHakAkses = pref.getPengguna().getHakAksesId();
+        }
+
+        if (tipeLaporan == 0){
+            Call<PostResponseKoreksi> call = apiService
+                    .postLaporPesantren(ApiServerURL.TOKEN_PUBLIC,idPengguna,
+                            idHakAkses, idKabupaten, pesan);
+            call.enqueue(new Callback<PostResponseKoreksi>() {
+                @Override
+                public void onResponse(Call<PostResponseKoreksi>call, Response<PostResponseKoreksi> response) {
+                    progressDialog.dismiss();
+                    if (response != null && response.body() != null){
+                        if (response.body().getError()){
+                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                            alertDialogBuilder.setMessage(response.body().getPesan());
+                            alertDialogBuilder.setPositiveButton("OKE",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface arg0, int arg1) {
+
+                                        }
+                                    });
+                            AlertDialog alertDialog = alertDialogBuilder.create();
+                            alertDialog.show();
+                        }else{
+                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                            alertDialogBuilder.setMessage(response.body().getPesan());
+                            alertDialogBuilder.setPositiveButton("OKE",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface arg0, int arg1) {
+                                            etLapor.setText("");
+                                        }
+                                    });
+                            AlertDialog alertDialog = alertDialogBuilder.create();
+                            alertDialog.show();
+                        }
+                    }else{
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                        alertDialogBuilder.setMessage("Gangguan Server!");
+                        alertDialogBuilder.setPositiveButton("OKE",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface arg0, int arg1) {
+
+                                    }
+                                });
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<PostResponseKoreksi>call, Throwable t) {
+                    // Log error here since request failed
+                    Log.e(TAG, t.toString());
+                    progressDialog.dismiss();
+                }
+            });
+        }else{
+            Call<PostResponseKoreksi> call = apiService
+                    .postLaporLembaga(ApiServerURL.TOKEN_PUBLIC,idPengguna,
+                            idHakAkses, idKabupaten, pesan);
+            call.enqueue(new Callback<PostResponseKoreksi>() {
+                @Override
+                public void onResponse(Call<PostResponseKoreksi>call, Response<PostResponseKoreksi> response) {
+                    progressDialog.dismiss();
+                    if (response != null && response.body() != null ){
+                        if (response.body().getError()){
+                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                            alertDialogBuilder.setMessage(response.body().getPesan());
+                            alertDialogBuilder.setPositiveButton("OKE",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface arg0, int arg1) {
+
+                                        }
+                                    });
+                            AlertDialog alertDialog = alertDialogBuilder.create();
+                            alertDialog.show();
+                        }else{
+                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                            alertDialogBuilder.setMessage(response.body().getPesan());
+                            alertDialogBuilder.setPositiveButton("OKE",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface arg0, int arg1) {
+                                            etLapor.setText("");
+                                        }
+                                    });
+                            AlertDialog alertDialog = alertDialogBuilder.create();
+                            alertDialog.show();
+                        }
+                    }else{
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                        alertDialogBuilder.setMessage("Gangguan Server!");
+                        alertDialogBuilder.setPositiveButton("OKE",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface arg0, int arg1) {
+
+                                    }
+                                });
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<PostResponseKoreksi> call, Throwable t) {
+                    // Log error here since request failed
+                    Log.e(TAG, t.toString());
+                    progressDialog.dismiss();
+                }
+            });
+        }
 
     }
 

@@ -31,11 +31,13 @@ public class PreferenceManager {
     private static final String IS_LOGIN = "IsLogin";
     private static final String LAST_UPDATE_PESANTREN = "lastUpdatePesantren";
     private static final String LAST_UPDATE_LEMBAGA = "lastUpdateLembaga";
+    private static final String LAST_UPDATE_LAPORAN_LEMBAGA = "lastUpdateLaporanLembaga";
     private static final String USER = "pengguna";
     private static final String FILTER_KABUPATEN = "kabupatenId";
     private static final String FILTER_LEMBAGA = "tipeLembaga";
     private static final String FILTER_JENJANG = "jenjangId";
-
+    private static final String LAST_UPDATE_STATISTIK_PESANTREN = "lastUpdateStatistikPesantren";
+    private static final String LAST_UPDATE_STATISTIK_LEMBAGA = "lastUpdateStatistikLembaga";
 
     public PreferenceManager(Context context) {
         this._context = context;
@@ -77,6 +79,33 @@ public class PreferenceManager {
 
     public String getLastUpdateLembaga(){
         return pref.getString(LAST_UPDATE_LEMBAGA, "2016-01-01 00:00:00");
+    }
+
+    public void setLastUpdateLaporanLembaga(String lastUpdate){
+        editor.putString(LAST_UPDATE_LAPORAN_LEMBAGA,lastUpdate);
+        editor.commit();
+    }
+
+    public String getLastUpdateLaporanLembaga(){
+        return pref.getString(LAST_UPDATE_LAPORAN_LEMBAGA, "2016-01-01 00:00:00");
+    }
+
+    public void setLastUpdateStatistikLembaga(String lastUpdate){
+        editor.putString(LAST_UPDATE_STATISTIK_LEMBAGA,lastUpdate);
+        editor.commit();
+    }
+
+    public String getLastUpdateStatistikLembaga(){
+        return pref.getString(LAST_UPDATE_STATISTIK_LEMBAGA, "2016-01-01 00:00:00");
+    }
+
+    public void setLastUpdateStatistikPesantren(String lastUpdate){
+        editor.putString(LAST_UPDATE_STATISTIK_PESANTREN,lastUpdate);
+        editor.commit();
+    }
+
+    public String getLastUpdateStatistikPesantren(){
+        return pref.getString(LAST_UPDATE_STATISTIK_PESANTREN, "2016-01-01 00:00:00");
     }
 
     public void setPengguna(Pengguna p){

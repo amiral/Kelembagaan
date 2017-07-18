@@ -88,6 +88,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         // show it
         progressDialog.show();
+
+
         call.enqueue(new Callback<PostResponseForgotPassword>() {
             @Override
             public void onResponse(Call<PostResponseForgotPassword>call, Response<PostResponseForgotPassword> response) {

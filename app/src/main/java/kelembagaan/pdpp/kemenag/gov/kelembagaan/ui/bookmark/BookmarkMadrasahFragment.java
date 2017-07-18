@@ -63,7 +63,6 @@ public class BookmarkMadrasahFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), MadrasahActivity.class);
                 intent.putExtra("madrasah", Parcels.wrap(madrasah));
                 startActivity(intent);
-                startActivity(intent);
             }
         });
 

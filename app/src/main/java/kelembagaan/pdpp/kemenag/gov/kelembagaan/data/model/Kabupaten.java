@@ -24,9 +24,9 @@ public class Kabupaten extends RealmObject{
     private Integer provinsiIdProvinsi;
     @SerializedName("jumlah_pesantren_kabupaten")
     @Expose
-    private Integer jumlahPesantrenKabupaten;
+    private int jumlahPesantrenKabupaten;
 
-    public Integer getIdKabupaten() {
+    public int getIdKabupaten() {
         return idKabupaten;
     }
 
@@ -42,7 +42,7 @@ public class Kabupaten extends RealmObject{
         this.namaKabupaten = namaKabupaten;
     }
 
-    public Integer getProvinsiIdProvinsi() {
+    public int getProvinsiIdProvinsi() {
         return provinsiIdProvinsi;
     }
 
