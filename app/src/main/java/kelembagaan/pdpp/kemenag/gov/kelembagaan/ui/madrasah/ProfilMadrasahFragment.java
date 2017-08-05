@@ -80,7 +80,7 @@ public class ProfilMadrasahFragment extends Fragment {
         tvTelp.setText(madrasah.getTelp());
         tvPimpinan.setText(madrasah.getPimpinan());
         tvWebsite.setText(madrasah.getWebsite());
-//        String tipe = madrasah.getIdTipeLembaga(). == 0 ? GlobalData.NAMATIPELEMBAGA[madrasah.getIdTipeLembaga()-1] : "";
+//        String tipe = madrasah.getIdTipeLembaga() == 0 ? GlobalData.NAMATIPELEMBAGA[madrasah.getIdTipeLembaga()-1] : "";
         tvTipeMadrasah.setText(madrasah.getNamaTipeLembaga());
         tvIzinOperasional.setText(madrasah.getMasaBerlakuIjinOperasional());
         tvPembaruanTerakhir.setText(madrasah.getPembaharuanTerakhir());

@@ -93,7 +93,8 @@
         <activity
             android:name=".ui.home.FilterSearchActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.lapor.KoreksiActivity"/>
+        <activity android:name=".ui.lapor.KoreksiActivity" />
+        <activity android:name=".ui.dashboard.DetailLaporanLembagaActivity"></activity>
     </application>
 
 </manifest>

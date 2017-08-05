@@ -14,9 +14,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.KabupatenDbHelper;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.LembagaDbHelper;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.ProvinsiDbHelper;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Laporan;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Kabupaten;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Lembaga;
 
 /**
@@ -27,16 +26,14 @@ public class LaporanLembagaAdapter extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mInflater;
-    private List<Laporan> mDataSource;
-    private LembagaDbHelper dbLembaga;
+    private List<Lembaga> mDataSource;
     private KabupatenDbHelper dbKabupaten;
     private ProvinsiDbHelper dbProvinsi;
 
-    public LaporanLembagaAdapter(Context mContext, List<Laporan> mDataSource) {
+    public LaporanLembagaAdapter(Context mContext, List<Lembaga> mDataSource) {
         this.mContext = mContext;
         this.mDataSource = mDataSource;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        dbLembaga = new LembagaDbHelper(mContext);
         dbKabupaten = new KabupatenDbHelper(mContext);
         dbProvinsi = new ProvinsiDbHelper(mContext);
 
@@ -48,7 +45,7 @@ public class LaporanLembagaAdapter extends BaseAdapter {
     }
 
     @Override
-    public Laporan getItem(int position) {
+    public Lembaga getItem(int position) {
         return mDataSource.get(position);
     }
 
@@ -68,10 +65,11 @@ public class LaporanLembagaAdapter extends BaseAdapter {
             view.setTag(holder);
         }
 
-        Laporan laporan = mDataSource.get(position);
-        Lembaga lembaga = dbLembaga.getLembaga(laporan.getIdLembaga());
+        Lembaga lembaga = mDataSource.get(position);
 
-        String lokasi = dbKabupaten.getKabupaten(laporan.getKodeKabupaten()).getNamaKabupaten() + ", " + dbProvinsi.getProvinsi(laporan.getKodeProvinsi()).getNamaProvinsi();
+        Kabupaten kb = dbKabupaten.getKabupaten(lembaga.getKabupatenId());
+
+        String lokasi = kb.getNamaKabupaten() + ", " + dbProvinsi.getProvinsi(kb.getProvinsiIdProvinsi()).getNamaProvinsi();
 
         Log.i("lmbg", "NamaDuplikat : "+lembaga.getIdLembaga());
         String nama = ""+lembaga.getNamaLembaga();

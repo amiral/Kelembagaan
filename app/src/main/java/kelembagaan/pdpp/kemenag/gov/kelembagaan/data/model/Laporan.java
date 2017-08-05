@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -19,6 +20,8 @@ public class Laporan extends RealmObject {
     @SerializedName("id_flag_lembaga")
     @Expose
     private Integer idFlagLembaga;
+
+    @Index
     @SerializedName("id_lembaga")
     @Expose
     private Integer idLembaga;

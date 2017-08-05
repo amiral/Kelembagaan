@@ -11,6 +11,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Laporan;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Lembaga;
 
 /**
  * Created by Amiral on 6/6/17.
@@ -77,13 +78,37 @@ public class LaporanLembagaDbHelper {
 
 
     /**
+     * method getLembaga tidak akurat
+     */
+    public ArrayList<Lembaga> getLaporanLembagaTidakAkurat() {
+        ArrayList<Lembaga> data = new ArrayList<>();
+
+
+        realmResult = realm.where(Laporan.class).equalTo("invalid", 1).distinct("idLembaga");
+        realmResult.sort("createdAt", Sort.ASCENDING);
+        if (realmResult.size() > 0) {
+            showLog("Size : " + realmResult.size());
+            for (int i = 0; i < realmResult.size(); i++) {
+                Lembaga lembaga = realm.where(Lembaga.class).equalTo("idLembaga", realmResult.get(i).getIdLembaga()).findFirst();
+                data.add(lembaga);
+            }
+
+        } else {
+            showLog("Size : 0");
+            showToast("Database Kosong!");
+        }
+
+        return data;
+    }
+
+    /**
      * method getLaporan
      */
-    public ArrayList<Laporan> getTidakAkuratLaporan() {
+    public ArrayList<Laporan> getTidakAkuratLaporanLembaga(int idLembaga) {
         ArrayList<Laporan> data = new ArrayList<>();
 
 
-        realmResult = realm.where(Laporan.class).equalTo("invalid", 1).findAll();
+        realmResult = realm.where(Laporan.class).equalTo("invalid", 1).equalTo("idLembaga",idLembaga).findAll();
         realmResult.sort("createdAt", Sort.ASCENDING);
         if (realmResult.size() > 0) {
             showLog("Size : " + realmResult.size());
@@ -99,11 +124,35 @@ public class LaporanLembagaDbHelper {
         return data;
     }
 
-    public ArrayList<Laporan> getDuplikatLaporan() {
+    /**
+     * method getLembaga tidak akurat
+     */
+    public ArrayList<Lembaga> getLaporanLembagaDuplicate() {
+        ArrayList<Lembaga> data = new ArrayList<>();
+
+
+        realmResult = realm.where(Laporan.class).equalTo("duplicate", 1).distinct("idLembaga");
+        realmResult.sort("createdAt", Sort.ASCENDING);
+        if (realmResult.size() > 0) {
+            showLog("Size : " + realmResult.size());
+            for (int i = 0; i < realmResult.size(); i++) {
+                Lembaga lembaga = realm.where(Lembaga.class).equalTo("idLembaga", realmResult.get(i).getIdLembaga()).findFirst();
+                data.add(lembaga);
+            }
+
+        } else {
+            showLog("Size : 0");
+            showToast("Database Kosong!");
+        }
+
+        return data;
+    }
+
+    public ArrayList<Laporan> getDuplikatLaporanLembaga(int idLembaga) {
         ArrayList<Laporan> data = new ArrayList<>();
 
 
-        realmResult = realm.where(Laporan.class).equalTo("duplicate", 1).findAll();
+        realmResult = realm.where(Laporan.class).equalTo("duplicate", 1).equalTo("idLembaga",idLembaga).findAll();
         realmResult.sort("createdAt", Sort.ASCENDING);
         if (realmResult.size() > 0) {
             showLog("Size : " + realmResult.size());

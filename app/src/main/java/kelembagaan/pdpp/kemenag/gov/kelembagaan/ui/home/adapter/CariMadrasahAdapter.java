@@ -17,7 +17,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.KabupatenDbHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.ProvinsiDbHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Kabupaten;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Lembaga;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Provinsi;
 
 /**
  * Created by Amiral on 6/1/17.
@@ -29,6 +33,8 @@ public class CariMadrasahAdapter extends RecyclerView.Adapter<CariMadrasahAdapte
     private List<Lembaga> madrasahList;
     private ItemClickListener clickListener;
 
+    KabupatenDbHelper kabupatenDbHelper;
+    ProvinsiDbHelper provinsiDbHelper;
     public interface ItemClickListener {
         void onClick(View view, int position);
     }
@@ -36,6 +42,8 @@ public class CariMadrasahAdapter extends RecyclerView.Adapter<CariMadrasahAdapte
     public CariMadrasahAdapter(Context mContext, List<Lembaga> madrasahList){
         this.mContext = mContext;
         this.madrasahList = madrasahList;
+        kabupatenDbHelper = new KabupatenDbHelper(mContext);
+        provinsiDbHelper = new ProvinsiDbHelper(mContext);
     }
 
     @Override
@@ -52,8 +60,11 @@ public class CariMadrasahAdapter extends RecyclerView.Adapter<CariMadrasahAdapte
         Lembaga madrasah = madrasahList.get(position);
 
         holder.tvNamaMadrasah.setText(madrasah.getNamaLembaga());
-        holder.tvNamaPesantren.setText("Pesantren : "+madrasah.getNpsn());
-        holder.tvLokasiMadrasah.setText(madrasah.getLokasiLembaga());
+        holder.tvNamaPesantren.setText("Pesantren : "+madrasah.getNspp());
+        Kabupaten kb = kabupatenDbHelper.getKabupaten(madrasah.getKabupatenId());
+        Provinsi prov = provinsiDbHelper.getProvinsi(kb.getProvinsiIdProvinsi());
+        holder.tvLokasiMadrasah.setText(kb.getNamaKabupaten() + ","+prov.getNamaProvinsi());
+
         holder.tvNsm.setText("NSPP : "+madrasah.getNsm());
 
         holder.btnMore.setOnClickListener(new View.OnClickListener() {

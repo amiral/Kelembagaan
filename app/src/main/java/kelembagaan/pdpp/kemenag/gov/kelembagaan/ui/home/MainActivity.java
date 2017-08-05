@@ -1,34 +1,24 @@
 package kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.home;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.IdRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.bottomBar)
-    BottomBar bottomBar;
+//    @BindView(R.id.bottomBar)
+//    BottomBar bottomBar;
 
     RelativeLayout lytHeader;
     RelativeLayout lytHeaderLogin;
@@ -480,7 +470,7 @@ public class MainActivity extends AppCompatActivity {
                 CURRENT_TAG = TAG_CARI;
                 loadHomeFragment();
                 if (isSearchOpened) {
-                    handleMenuSearch();
+//                    handleMenuSearch();
                 }
                 return;
             }else{
@@ -517,14 +507,14 @@ public class MainActivity extends AppCompatActivity {
             index = 1;
 
         if (navItemIndex == index) {
-            getMenuInflater().inflate(R.menu.main, menu);
+//            getMenuInflater().inflate(R.menu.main, menu);
         }
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        mSearchAction = menu.findItem(R.id.action_search);
+//        mSearchAction = menu.findItem(R.id.action_search);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -536,15 +526,15 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_search) {
-            handleMenuSearch();
-            return true;
-        }
+//        if (id == R.id.action_search) {
+//            handleMenuSearch();
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void handleMenuSearch() {
+    /*private void handleMenuSearch() {
         ActionBar action = getSupportActionBar(); //get the actionbar
 
         if (isSearchOpened) { //test if the search is open
@@ -570,7 +560,6 @@ public class MainActivity extends AppCompatActivity {
             action.setDisplayShowTitleEnabled(false); //hide the title
 
             etSearch = (EditText) action.getCustomView().findViewById(R.id.edit_search); //the text editor
-
             //this is a listener to do a search when the user clicks on search button
             etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
@@ -600,7 +589,7 @@ public class MainActivity extends AppCompatActivity {
             handleBottomBar();
         }
 
-    }
+    }*/
 
     private void doSearch() {
 
@@ -611,7 +600,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void handleBottomBar() {
 
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+        /*bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
 
@@ -643,34 +632,13 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
     }
 
-    public void showDialogWilayah() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        DialogWilayahFragment newFragment = new DialogWilayahFragment();
-
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        // For a little polish, specify a transition animation
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        // To make it fullscreen, use the 'content' root view as the container
-        // for the fragment, which is always the root view for the activity
-        transaction.add(android.R.id.content, newFragment)
-                .addToBackStack(null).commit();
-//
-//        if (mIsLargeLayout) {
-//            // The device is using a large layout, so show the fragment as a dialog
-//            newFragment.show(fragmentManager, "dialog");
-//        } else {
-//            // The device is smaller, so show the fragment fullscreen
-//            FragmentTransaction transaction = fragmentManager.beginTransaction();
-//            // For a little polish, specify a transition animation
-//            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//            // To make it fullscreen, use the 'content' root view as the container
-//            // for the fragment, which is always the root view for the activity
-//            transaction.add(android.R.id.content, newFragment)
-//                    .addToBackStack(null).commit();
-//        }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
+
 
 }

@@ -203,4 +203,11 @@ public class PreferenceManager {
         arrayList = arrayList == null ? new ArrayList<Integer>() : arrayList;
         return arrayList;
     }
+
+    public void removeSearchValue(){
+        editor.remove(FILTER_JENJANG);
+        editor.remove(FILTER_KABUPATEN);
+        editor.remove(FILTER_LEMBAGA);
+        editor.commit();
+    }
 }

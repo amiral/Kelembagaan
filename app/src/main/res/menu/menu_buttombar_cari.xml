@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/tab_wilayah"
+        android:enabled="true"
+        android:icon="@drawable/ic_tab_wilayah"
+        android:title="Wilayah"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/tab_tipe"
+        android:enabled="true"
+        android:icon="@drawable/ic_tab_tipe"
+        android:title="Tipe"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/tab_jenjang"
+        android:enabled="true"
+        android:icon="@drawable/ic_tab_jenjang"
+        android:title="Jenjang"
+        app:showAsAction="always" />
+</menu>

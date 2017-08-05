@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -38,6 +37,7 @@ public class CariFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cari, container, false);
+        setHasOptionsMenu(true);
 
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         tabsStrip = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
@@ -69,6 +69,9 @@ public class CariFragment extends Fragment {
 
     }
 
+
+
+    int currentPage = 0;
     private void setViewPagerListener() {
         tabsStrip.setViewPager(viewPager);
         // Attach the page change listener to tab strip and **not** the view pager inside the activity
@@ -77,8 +80,7 @@ public class CariFragment extends Fragment {
             // This method will be invoked when a new page becomes selected.
             @Override
             public void onPageSelected(int position) {
-                Toast.makeText(getActivity(),
-                        "Selected page position: " + position, Toast.LENGTH_SHORT).show();
+                currentPage = position;
             }
 
             // This method will be invoked when the current page is scrolled

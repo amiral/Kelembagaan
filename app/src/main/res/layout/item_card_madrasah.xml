@@ -1,84 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     app:cardCornerRadius="4dp">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <RelativeLayout
+        android:layout_height="230dp"
+        android:layout_margin="5dp">
+
+        <ImageButton
+            android:id="@+id/button_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_action_more" />
+
+        <ImageView
+            android:id="@+id/image_logo_madrasah"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/icon_madrasah" />
+
+        <LinearLayout
+            android:id="@+id/lyt_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_below="@+id/image_logo_madrasah"
+            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/button_more"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_action_more" />
-
-            <ImageView
-                android:id="@+id/image_logo_madrasah"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:src="@drawable/icon_madrasah"/>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/text_nama_madrasah"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_below="@+id/image_logo_madrasah">
+                android:layout_marginTop="5dp"
+                android:text="NAMA MADRASAH"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/text_nama_madrasah"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="NAMA MADRASAH"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
-                <TextView
-                    android:id="@+id/text_nama_pesantren"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="10sp"
-                    android:layout_marginTop="3dp"
-                    android:text="Nama Pesantren"/>
-                <TextView
-                    android:id="@+id/text_nsm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:textSize="10sp"
-                    android:text="NSM"/>
+            <TextView
+                android:id="@+id/text_nama_pesantren"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Nama Pesantren"
+                android:textSize="10sp" />
 
-            </LinearLayout>
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/text_nsm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="NSM"
+                android:textSize="10sp" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/text_lokasi_madrasah"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kabupaten, Provinsi"
-            android:textStyle="bold"
             android:layout_gravity="right"
-            android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/ic_action_location_on"/>
-
-    </LinearLayout>
-
+            android:drawableLeft="@drawable/ic_action_location_on"
+            android:text="Kabupaten, Provinsi"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
 
 </android.support.v7.widget.CardView>

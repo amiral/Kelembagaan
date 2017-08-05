@@ -1,5 +1,6 @@
 package kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -71,17 +72,18 @@ public class FilterSearchActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         if (TIPE_FILTER == 1){
-            initViewFilterTipe();
+            initViewFilterTipe(false);
         }else if (TIPE_FILTER == 2){
-            initViewFilterJenjang();
+            initViewFilterJenjang(false);
         }else{
-            initViewFilterWilayah();
+            initViewFilterWilayah(false);
         }
     }
 
-    public void initViewFilterWilayah(){
+    public void initViewFilterWilayah(boolean isReset){
         lytSpinner.setVisibility(View.VISIBLE);
-        idFilterKabupaten = pref.getFilterKabupaten();
+
+        idFilterKabupaten = isReset ? new ArrayList<Integer>() : pref.getFilterKabupaten();
 
 
         final ArrayList<Provinsi> lsProvinsi = new ProvinsiDbHelper(mContext).findAllProvinsi();
@@ -120,13 +122,13 @@ public class FilterSearchActivity extends AppCompatActivity {
 
     }
 
-    public void initViewFilterTipe(){
-        idFilterTipe = pref.getFilterLembaga();
+    public void initViewFilterTipe(boolean isReset){
+        idFilterTipe = isReset ? new ArrayList<Integer>() : pref.getFilterLembaga();
         recyclerView.setAdapter(new FilterTipeAdapter());
     }
 
-    public void initViewFilterJenjang(){
-        idFilterJenjang = pref.getFilterJenjang();
+    public void initViewFilterJenjang(boolean isReset){
+        idFilterJenjang =isReset ? new ArrayList<Integer>() :  pref.getFilterJenjang();
         recyclerView.setAdapter(new FilterJenjangAdapter());
     }
 
@@ -143,17 +145,17 @@ public class FilterSearchActivity extends AppCompatActivity {
 
     public void onReset(View v){
         if (TIPE_FILTER == 1){
-            idFilterTipe = new ArrayList<Integer>();
-            pref.setFilterLembaga(idFilterTipe);
-            initViewFilterTipe();
+//            idFilterTipe = new ArrayList<Integer>();
+//            pref.setFilterLembaga(idFilterTipe);
+            initViewFilterTipe(true);
         }else if (TIPE_FILTER == 2){
-            idFilterJenjang = new ArrayList<Integer>();
-            pref.setFilterJenjang(idFilterJenjang);
-            initViewFilterJenjang();
+//            idFilterJenjang = new ArrayList<Integer>();
+//            pref.setFilterJenjang(idFilterJenjang);
+            initViewFilterJenjang(true);
         }else{
-            idFilterKabupaten = new ArrayList<Integer>();
-            pref.setFilterKabupaten(idFilterKabupaten);
-            initViewFilterWilayah();
+//            idFilterKabupaten = new ArrayList<Integer>();
+//            pref.setFilterKabupaten(idFilterKabupaten);
+            initViewFilterWilayah(true);
         }
     }
 
@@ -165,6 +167,7 @@ public class FilterSearchActivity extends AppCompatActivity {
         }else{
             pref.setFilterKabupaten(idFilterKabupaten);
         }
+        setResult(Activity.RESULT_OK);
         finish();
     }
 
@@ -196,7 +199,7 @@ public class FilterSearchActivity extends AppCompatActivity {
                         if (isChecked) {
                             idFilterKabupaten.add(kabupaten.getIdKabupaten());
                         }else{
-                            idFilterKabupaten.remove(kabupaten.getIdKabupaten());
+                            idFilterKabupaten.remove(new Integer(kabupaten.getIdKabupaten()));
                         }
                     }
                 });
@@ -238,7 +241,7 @@ public class FilterSearchActivity extends AppCompatActivity {
                         if (isChecked) {
                             idFilterTipe.add(position+1);
                         }else{
-                            idFilterTipe.remove(position+1);
+                            idFilterTipe.remove(new Integer(position+1));
                         }
                     }
                 });
@@ -270,7 +273,7 @@ public class FilterSearchActivity extends AppCompatActivity {
                 holder.checkBox.setText(jenjang);
                 holder.checkBox.setOnCheckedChangeListener(null);
                 boolean isSelected = false;
-                if (idFilterTipe.size() > 0){
+                if (idFilterJenjang.size() > 0){
                     isSelected = idFilterJenjang.contains(position);
                 }
                 holder.checkBox.setChecked(isSelected);
@@ -280,7 +283,7 @@ public class FilterSearchActivity extends AppCompatActivity {
                         if (isChecked) {
                             idFilterJenjang.add(position);
                         }else{
-                            idFilterJenjang.remove(position);
+                            idFilterJenjang.remove(new Integer(position));
                         }
                     }
                 });

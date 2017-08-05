@@ -17,7 +17,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.KabupatenDbHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.LembagaDbHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.ProvinsiDbHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Kabupaten;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Pesantren;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Provinsi;
 
 /**
  * Created by Amiral on 6/1/17.
@@ -29,7 +34,9 @@ public class CariPesantrenAdapter extends RecyclerView.Adapter<CariPesantrenAdap
     private List<Pesantren> pesantrenList;
     private ItemClickListener clickListener;
 
-
+    KabupatenDbHelper kabHelper ;
+    ProvinsiDbHelper provHelper;
+    LembagaDbHelper lembagaDbHelper;
 
     public interface ItemClickListener {
         void onClick(View view, int position);
@@ -38,6 +45,10 @@ public class CariPesantrenAdapter extends RecyclerView.Adapter<CariPesantrenAdap
     public CariPesantrenAdapter(Context mContext, List<Pesantren> pesantrenList){
         this.mContext = mContext;
         this.pesantrenList = pesantrenList;
+
+        kabHelper = new KabupatenDbHelper(mContext);
+        provHelper = new ProvinsiDbHelper(mContext);
+        lembagaDbHelper = new LembagaDbHelper(mContext);
     }
 
     @Override
@@ -55,9 +66,16 @@ public class CariPesantrenAdapter extends RecyclerView.Adapter<CariPesantrenAdap
 
         holder.tvNamaPesantren.setText(pesantren.getNamaPesantren());
         holder.tvPimpinanPesantren.setText("Pengasuh : "+pesantren.getPimpinan());
-        holder.tvLokasiPesantren.setText(pesantren.getLokasiPesantren());
+
+        Kabupaten kb = kabHelper.getKabupaten(Integer.parseInt(pesantren.getKodeKabupaten()));
+        Provinsi provinsi = provHelper.getProvinsi(kb.getProvinsiIdProvinsi());
+
+        holder.tvLokasiPesantren.setText(kb.getNamaKabupaten() + "," + provinsi.getNamaProvinsi());
+
         holder.tvNspp.setText("NSPP : "+pesantren.getNspp());
 
+
+        holder.tvJumlahMadrasah.setText(lembagaDbHelper.getAllLembagaPesantrenNumber(pesantren.getNspp()) + " Madrasah");
         holder.btnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

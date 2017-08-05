@@ -106,7 +106,10 @@ public class StatistikPesantrenFragment extends Fragment {
                 Lembaga lembaga = lsLembaga.get(i);
                 StatistikLembaga statistik = new StatisikLembagaDbHelper(getContext()).getStatistikLembaga(lembaga.getIdLembaga());
                 int totalSantri = statistik.getJumlahSantri().getPria() + statistik.getJumlahSantri().getWanita();
-                String tipeJenjang = GlobalData.NAMA_JENJANG[lembaga.getIdTipeLembaga()];
+                int jenjang = lembaga.getIdJenjangLembaga();
+                if (jenjang == 0 )
+                    jenjang = 1;
+                String tipeJenjang = GlobalData.NAMA_JENJANG[jenjang-1];
 
                 entries.add(new PieEntry((float) totalSantri, i));
                 labels.add(i, tipeJenjang);

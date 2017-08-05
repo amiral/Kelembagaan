@@ -7,12 +7,15 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Lembaga;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.utils.Tools;
+
+import static com.google.android.gms.analytics.internal.zzy.q;
 
 /**
  * Created by Amiral on 6/6/17.
@@ -84,6 +87,40 @@ public class LembagaDbHelper {
         }
 
         return data;
+    }
+
+    /**
+     * method mencari semua Pesantren
+     */
+    public ArrayList<Lembaga> getAllSearchLembaga(String search) {
+        ArrayList<Lembaga> data = new ArrayList<>();
+
+        String q = "*"+search+"*";
+
+        realmResult = realm.where(Lembaga.class).like("namaLembaga", q, Case.INSENSITIVE).or().like("nsm",q).findAll();
+//        realmResult.sort("namaPesantren", Sort.ASCENDING);
+        if (realmResult.size() > 0) {
+            Log.i("Cari", "Cari Db: "+q + " size" + realmResult.size());
+            for (int i = 0; i < realmResult.size(); i++) {
+                data.add(realmResult.get(i));
+            }
+
+        } else {
+            Log.i("Cari","Cari DB : 0 q: "+q);
+//            showToast("Database Kosong!");
+        }
+
+        return data;
+    }
+
+    public int getAllLembagaPesantrenNumber(String nspp) {
+        ArrayList<Lembaga> data = new ArrayList<>();
+        int total = 0;
+
+
+        total = realm.where(Lembaga.class).equalTo("nspp", nspp).findAll().size();
+
+        return total;
     }
 
     public ArrayList<Lembaga> getAllLembagaPesantren(String nspp) {
@@ -181,6 +218,48 @@ public class LembagaDbHelper {
             showLog("Size : 0");
             showToast("Database Kosong!");
         }
+
+        return data;
+    }
+
+    public ArrayList<Lembaga> getAllSearchLembagaFilter(String search, List<Integer> lsWilayah, List<Integer> lsTipe, List<Integer> lsJenjang) {
+        ArrayList<Lembaga> data = new ArrayList<>();
+
+        RealmQuery<Lembaga> query = realm.where(Lembaga.class);
+
+
+        if (!search.isEmpty()){
+            String q = "*"+search+"*";
+            query.like("namaLembaga", q, Case.INSENSITIVE).or().like("nsm",q);
+        }
+
+        if (lsWilayah.size() > 0){
+            Integer[] arrWilayah = lsWilayah.toArray(new Integer[lsWilayah.size()]);
+            query.in("kabupatenId", arrWilayah);
+        }
+
+        if (lsJenjang.size() > 0){
+            Integer[] arrJenjang = lsJenjang.toArray(new Integer[lsJenjang.size()]);
+            query.in("idJenjangLembaga", arrJenjang);
+        }
+
+        if (lsTipe.size()> 0){
+            Integer[] arrTipe = lsTipe.toArray(new Integer[lsTipe.size()]);
+            query.in("idTipeLembaga", arrTipe);
+        }
+
+        realmResult = query.findAll();
+        if (realmResult.size() > 0) {
+            Log.i("Cari", "Cari Db: "+q + " size" + realmResult.size());
+            for (int i = 0; i < realmResult.size(); i++) {
+                data.add(realmResult.get(i));
+            }
+
+        } else {
+            Log.i("Cari","Cari DB : 0 q: "+q);
+//            showToast("Database Kosong!");
+        }
+
 
         return data;
     }
