@@ -36,6 +36,10 @@ public class PreferenceManager {
     private static final String FILTER_KABUPATEN = "kabupatenId";
     private static final String FILTER_LEMBAGA = "tipeLembaga";
     private static final String FILTER_JENJANG = "jenjangId";
+
+    private static final String FILTER_KABUPATEN_P = "kabupatenIdP";
+    private static final String FILTER_LEMBAGA_P = "tipeLembagaP";
+    private static final String FILTER_JENJANG_P = "jenjangIdP";
     private static final String LAST_UPDATE_STATISTIK_PESANTREN = "lastUpdateStatistikPesantren";
     private static final String LAST_UPDATE_STATISTIK_LEMBAGA = "lastUpdateStatistikLembaga";
 
@@ -208,6 +212,62 @@ public class PreferenceManager {
         editor.remove(FILTER_JENJANG);
         editor.remove(FILTER_KABUPATEN);
         editor.remove(FILTER_LEMBAGA);
+        editor.commit();
+    }
+
+    public void setFilterKabupatenPesantren(ArrayList<Integer> listKabupatenId){
+        Gson gson = new Gson();
+        String json = gson.toJson(listKabupatenId);
+        editor.putString(FILTER_KABUPATEN_P, json);
+        editor.commit();
+    }
+
+    public ArrayList<Integer> getFilterKabupatenPesantren(){
+        Gson gson = new Gson();
+        String json = pref.getString(FILTER_KABUPATEN_P, null);
+        Type type = new TypeToken<ArrayList<Integer>>() {}.getType();
+        ArrayList<Integer> arrayList = gson.fromJson(json, type) ;
+
+        arrayList = arrayList == null ? new ArrayList<Integer>() : arrayList;
+        return arrayList;
+    }
+
+    public void setFilterJenjangPesantren(ArrayList<Integer> listJijangId){
+        Gson gson = new Gson();
+        String json = gson.toJson(listJijangId);
+        editor.putString(FILTER_JENJANG_P, json);
+        editor.commit();
+    }
+
+    public ArrayList<Integer> getFilterJenjangPesantren(){
+        Gson gson = new Gson();
+        String json = pref.getString(FILTER_JENJANG_P, null);
+        Type type = new TypeToken<ArrayList<Integer>>() {}.getType();
+        ArrayList<Integer> arrayList = gson.fromJson(json, type);
+        arrayList = arrayList == null ? new ArrayList<Integer>() : arrayList;
+        return arrayList;
+    }
+
+    public void setFilterLembagaPesantren(ArrayList<Integer> listTipeLembaga){
+        Gson gson = new Gson();
+        String json = gson.toJson(listTipeLembaga);
+        editor.putString(FILTER_LEMBAGA_P, json);
+        editor.commit();
+    }
+
+    public ArrayList<Integer> getFilterLembagaPesantren(){
+        Gson gson = new Gson();
+        String json = pref.getString(FILTER_LEMBAGA_P, null);
+        Type type = new TypeToken<ArrayList<Integer>>() {}.getType();
+        ArrayList<Integer> arrayList = gson.fromJson(json, type);
+        arrayList = arrayList == null ? new ArrayList<Integer>() : arrayList;
+        return arrayList;
+    }
+
+    public void removeSearchValuePesantren(){
+        editor.remove(FILTER_JENJANG_P);
+        editor.remove(FILTER_KABUPATEN_P);
+        editor.remove(FILTER_LEMBAGA_P);
         editor.commit();
     }
 }

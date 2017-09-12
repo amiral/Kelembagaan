@@ -39,12 +39,12 @@
     <!-- Splash -->
 
     <string name="title_activity_welcome">Home Screen</string>
-    <string name="next">NEXT</string>
-    <string name="skip">SKIP</string>
-    <string name="start">GOT IT</string>
+    <string name="next">Lanjutkan</string>
+    <string name="skip">Abaikan</string>
+    <string name="start">Mulai</string>
 
-    <string name="slide_1_title">Kementrian Agama Republik Indonesia</string>
-    <string name="slide_1_desc">Aplikasi kelembagaan Pesantren</string>
+    <string name="slide_1_title">Kementerian Agama Republik Indonesia</string>
+    <string name="slide_1_desc">Aplikasi Kelembagaan Pangkalan Data Pondok Pesantren (PDPP)</string>
 
     <string name="slide_2_title">Movie Tickets</string>
     <string name="slide_2_desc">Book movie tickets for your family and friends!</string>
@@ -58,7 +58,9 @@
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
 
-    <string name="copyright">copyright@ditjenpendis KEMENAG RI</string>
+    <string name="welcome">Selamat Datang di Aplikasi Kelembagaan Pangkalan Data Pondok Pesantren (PDPP)</string>
+    <string name="copyright">Hak Cipta Ditjen Pendis Kemenag RI</string>
+    <string name="welcome_detail">Aplikasi ini Berisi 28000 Data Pesantren di Seluruh Indonesia</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -74,4 +76,10 @@
 
     <string name="hideen_pesantren">Masukkan Nama Pesantren, NSPP, Alamat dan Nama Pimpinan Pesantren</string>
     <string name="hidden_madrasah">Masukkan Nama Madrasah, NSM, Alamat, NSPP dan Nama Pesantren</string>
+
+    <string name="about">Aplikasi Kelembagaan merupakan salah satu aplikasi dalam 8 rangkaian aplikasi yang tergabung dalam Pangkalan Data Pondok Pesantren (PDPP). Adapun 7 aplikasi lainnya adalah Kepesantrenan, Kesantrian, Ketenagaan, Kurikulum, Sarana dan Prasarana, KITAS, dan Indeks Integritas.\n\nPDPP merupakan sebuah media informasi terkait pesantren di Indonesia. Sistem ini dikembangkan oleh Sub Direktorat Pendidikan Diniyah dan Pondok Pesantren (Subdit PDPONTREN) Kementrian Agama dengan data perolehan dari Education Management Information System (EMIS) di bawah naungan Direktorat Jendral Pendidikan Islam (PENDIS).\n\nSistem ini diharapakan dapat membantu masyarakat dalam memperoleh informasi dasar terkait lembaga pendidikan dibawah pesantren seluruh Indonesia.
+</string>
+
+    <string name="disclaimer">Semua data yang ditampilkan di aplikasi ini berasal dari Education Management Information System (EMIS) Direktorat Jendral Pendidikan Islam, Kementrian Agama Republik Indonesia.\n\nSub Direktorat Pendidikan Diniyah dan Pondok Pesantren selaku pengampu aplikasi tidak menambah, mengubah, dan menghapus data.\n\nData masukan yang terjaring dari fitur masukkan untuk memberikan usulan perubahan dan klarifikasi data akan disampaikan kepada EMIS. Keputusan untuk merespon dan menindak lanjuti masukkan tersebut adalah kewenangan dari EMIS.\n\nApabila ada pihak lain yang ingin memanfaatkan data ini untuk kepentingan tertentu agar mengajukan perijinan terlebih dahulu kepada Kementrian Agama Republik Indonesia.</string>
+
 </resources>

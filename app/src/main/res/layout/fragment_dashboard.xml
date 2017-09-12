@@ -29,7 +29,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Index Integritas"
+                        android:text="Indeks Integritas"
                         android:textStyle="bold"
                         android:layout_margin="5dp"
                         android:textAppearance="@android:style/TextAppearance.Holo.Large"

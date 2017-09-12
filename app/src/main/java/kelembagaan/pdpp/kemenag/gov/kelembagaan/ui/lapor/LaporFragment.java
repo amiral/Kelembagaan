@@ -70,15 +70,23 @@ public class LaporFragment extends Fragment implements AdapterView.OnItemSelecte
         // Required empty public constructor
     }
 
-
-
+//    public void onResume(){
+//        super.onResume();
+//        // Set title bar
+//        ((MainActivity) getActivity())
+//                .setActionBarTitle(getString(R.string.nav_lapor));
+//    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle(R.string.nav_lapor);
         View view = inflater.inflate(R.layout.fragment_lapor, container, false);
 
         ButterKnife.bind(this, view);
+
+//        ((MainActivity) getActivity())
+//                .setActionBarTitle(getString(R.string.nav_lapor));
 
         onProvinsi();
 
@@ -166,7 +174,7 @@ public class LaporFragment extends Fragment implements AdapterView.OnItemSelecte
 
     @OnClick(R.id.button_batal_lapor)
     public void onLaporBatal() {
-
+        getActivity().onBackPressed();
     }
 
     @OnClick(R.id.button_kirim_lapor)

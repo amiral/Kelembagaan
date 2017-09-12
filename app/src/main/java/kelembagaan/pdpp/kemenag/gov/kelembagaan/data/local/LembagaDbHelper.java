@@ -73,8 +73,7 @@ public class LembagaDbHelper {
         ArrayList<Lembaga> data = new ArrayList<>();
 
 
-        realmResult = realm.where(Lembaga.class).findAll();
-        realmResult.sort("namaLembaga", Sort.ASCENDING);
+        realmResult = realm.where(Lembaga.class).findAll().sort("namaLembaga", Sort.ASCENDING);
         if (realmResult.size() > 0) {
             showLog("Size : " + realmResult.size());
             for (int i = 0; i < realmResult.size(); i++) {
@@ -97,7 +96,7 @@ public class LembagaDbHelper {
 
         String q = "*"+search+"*";
 
-        realmResult = realm.where(Lembaga.class).like("namaLembaga", q, Case.INSENSITIVE).or().like("nsm",q).findAll();
+        realmResult = realm.where(Lembaga.class).like("namaLembaga", q, Case.INSENSITIVE).or().like("nsm",q).findAll().sort("namaLembaga", Sort.ASCENDING);
 //        realmResult.sort("namaPesantren", Sort.ASCENDING);
         if (realmResult.size() > 0) {
             Log.i("Cari", "Cari Db: "+q + " size" + realmResult.size());

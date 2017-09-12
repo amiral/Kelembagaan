@@ -49,6 +49,7 @@ public class FilterSearchActivity extends AppCompatActivity {
     String[] judul = {"FILTER WILAYAH", "FILTER TIPE LEMBAGA","FILTER JENJANG"};
 
     int TIPE_FILTER;
+    int from; // 0: Lembaga , 1 : Pesantren
     PreferenceManager pref;
     ArrayList<Integer> idFilterKabupaten;
     ArrayList<Integer> idFilterTipe;
@@ -65,6 +66,7 @@ public class FilterSearchActivity extends AppCompatActivity {
 
         pref = new PreferenceManager(this);
         TIPE_FILTER = getIntent().getIntExtra("TIPEFILTER", 0);
+        from = getIntent().getIntExtra("from", 0);
         title.setText(judul[TIPE_FILTER]);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -83,8 +85,11 @@ public class FilterSearchActivity extends AppCompatActivity {
     public void initViewFilterWilayah(boolean isReset){
         lytSpinner.setVisibility(View.VISIBLE);
 
-        idFilterKabupaten = isReset ? new ArrayList<Integer>() : pref.getFilterKabupaten();
 
+        if (from == 1)
+            idFilterKabupaten = isReset ? new ArrayList<Integer>() : pref.getFilterKabupatenPesantren();
+        else
+            idFilterKabupaten = isReset ? new ArrayList<Integer>() : pref.getFilterKabupaten();
 
         final ArrayList<Provinsi> lsProvinsi = new ProvinsiDbHelper(mContext).findAllProvinsi();
         ArrayList<String> name = new ArrayList();
@@ -123,12 +128,20 @@ public class FilterSearchActivity extends AppCompatActivity {
     }
 
     public void initViewFilterTipe(boolean isReset){
-        idFilterTipe = isReset ? new ArrayList<Integer>() : pref.getFilterLembaga();
+
+        if (from == 1)
+            idFilterTipe = isReset ? new ArrayList<Integer>() : pref.getFilterLembagaPesantren();
+        else
+            idFilterTipe = isReset ? new ArrayList<Integer>() : pref.getFilterLembaga();
         recyclerView.setAdapter(new FilterTipeAdapter());
     }
 
     public void initViewFilterJenjang(boolean isReset){
-        idFilterJenjang =isReset ? new ArrayList<Integer>() :  pref.getFilterJenjang();
+        if(from == 1)
+            idFilterJenjang =isReset ? new ArrayList<Integer>() :  pref.getFilterJenjangPesantren();
+        else
+            idFilterJenjang =isReset ? new ArrayList<Integer>() :  pref.getFilterJenjang();
+
         recyclerView.setAdapter(new FilterJenjangAdapter());
     }
 
@@ -161,11 +174,21 @@ public class FilterSearchActivity extends AppCompatActivity {
 
     public void onTerapkan(View v){
         if (TIPE_FILTER == 1){
-            pref.setFilterLembaga(idFilterTipe);
+            if (from == 1)
+                pref.setFilterLembagaPesantren(idFilterTipe);
+            else
+                pref.setFilterLembaga(idFilterTipe);
         }else if (TIPE_FILTER == 2){
-            pref.setFilterJenjang(idFilterJenjang);
+            if (from == 1)
+                pref.setFilterJenjangPesantren(idFilterJenjang);
+            else
+                pref.setFilterJenjang(idFilterJenjang);
+
         }else{
-            pref.setFilterKabupaten(idFilterKabupaten);
+            if (from == 1)
+                pref.setFilterKabupatenPesantren(idFilterKabupaten);
+            else
+                pref.setFilterKabupaten(idFilterKabupaten);
         }
         setResult(Activity.RESULT_OK);
         finish();

@@ -76,13 +76,13 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        getActivity().setTitle(R.string.nav_cari);
         View view = inflater.inflate(R.layout.fragment_cari_pesantren, container, false);
         ButterKnife.bind(this, view);
         setHasOptionsMenu(true);
 
         pref = new PreferenceManager(getContext());
-        pref.removeSearchValue();
+        pref.removeSearchValuePesantren();
 
         lsWilayah = new ArrayList<Integer>();
         lsTipe = new ArrayList<Integer>();
@@ -123,8 +123,8 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
             searchView =
                     (SearchView) menu.findItem(R.id.action_search).getActionView();
 
-            String searchHint = "NSPP, Nama, Prov, Kab";
-
+            String searchHint = "NSPP, Nama, Provinsi, Kabupaten";
+            searchView.setMaxWidth(Integer.MAX_VALUE);
             searchView.setQueryHint(searchHint);
             searchView.setSearchableInfo(
                     searchManager.getSearchableInfo(getActivity().getComponentName()));
@@ -150,9 +150,9 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
 //                    recyclerView.setAdapter(adapterPesantren);
 //                    adapterPesantren.setClickListener(CariPesantrenFragment.this);
 
-                    lsWilayah = pref.getFilterKabupaten();
-                    lsTipe = pref.getFilterLembaga();
-                    lsJenjang = pref.getFilterJenjang();
+                    lsWilayah = pref.getFilterKabupatenPesantren();
+                    lsTipe = pref.getFilterLembagaPesantren();
+                    lsJenjang = pref.getFilterJenjangPesantren();
                     getDataFilter();
                     return false;
                 }
@@ -213,6 +213,7 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
 //                    intent.putExtra(FilterActivity.FILTER_TYPE, FilterType.JenisKelamin);
 //                    intent.putExtra(FilterActivity.FILTER_DATA, this.filterData);
                         intent.putExtra("TIPEFILTER", TIPE_FILTER);
+                        intent.putExtra("from", 1);
                         startActivityForResult(intent, FILTER_REQUEST);
                         getActivity().overridePendingTransition(R.anim.slide_up, R.anim.stay);
                         return true;
@@ -238,9 +239,9 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
         if (requestCode == FILTER_REQUEST && resultCode == Activity.RESULT_OK) {
             //some code
             PreferenceManager pref = new PreferenceManager(getContext());
-            lsWilayah = pref.getFilterKabupaten();
-            lsTipe = pref.getFilterLembaga();
-            lsJenjang = pref.getFilterJenjang();
+            lsWilayah = pref.getFilterKabupatenPesantren();
+            lsTipe = pref.getFilterLembagaPesantren();
+            lsJenjang = pref.getFilterJenjangPesantren();
 
             if (lsWilayah.size() > 0 ){
                 MenuItem item = bottomBar.getMenu().getItem(0);

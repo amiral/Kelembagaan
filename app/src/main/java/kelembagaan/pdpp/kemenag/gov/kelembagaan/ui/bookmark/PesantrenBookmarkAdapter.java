@@ -12,7 +12,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.KabupatenDbHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.ProvinsiDbHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Kabupaten;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Pesantren;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Provinsi;
 
 /**
  * Created by Amiral on 6/12/17.
@@ -24,10 +28,16 @@ public class PesantrenBookmarkAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private List<Pesantren> mDataSource;
 
+    KabupatenDbHelper kabHelper ;
+    ProvinsiDbHelper provHelper;
+
     public PesantrenBookmarkAdapter(Context mContext, List<Pesantren> mDataSource) {
         this.mContext = mContext;
         this.mDataSource = mDataSource;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        kabHelper = new KabupatenDbHelper(mContext);
+        provHelper = new ProvinsiDbHelper(mContext);
     }
 
     @Override
@@ -60,6 +70,10 @@ public class PesantrenBookmarkAdapter extends BaseAdapter {
 
         holder.nama.setText(pesantren.getNamaPesantren());
         holder.nomor.setText(""+pesantren.getNspp());
+
+        Kabupaten kb = kabHelper.getKabupaten(Integer.parseInt(pesantren.getKodeKabupaten()));
+        Provinsi provinsi = provHelper.getProvinsi(kb.getProvinsiIdProvinsi());
+        holder.lokasi.setText(kb.getNamaKabupaten() + ", " + provinsi.getNamaProvinsi());
 
         return view;
     }

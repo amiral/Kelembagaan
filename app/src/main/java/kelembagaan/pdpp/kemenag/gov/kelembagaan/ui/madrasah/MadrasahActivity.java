@@ -1,8 +1,11 @@
 package kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.madrasah;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -13,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -21,10 +25,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -268,16 +277,96 @@ public class MadrasahActivity extends AppCompatActivity {
         }
 
         if (item.getItemId() == R.id.action_share){
-            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            /*Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
             String shareBodyText = "Madrasah : "+madrasah.getNamaLembaga() + "\n NSM : "+madrasah.getNsm() + "\n Pimpinan : "+madrasah.getPimpinan() + "\n Alamat : "+madrasah.getAlamat();
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Cek Madrasah");
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
-            startActivity(Intent.createChooser(sharingIntent, "Shearing Option"));
+            startActivity(Intent.createChooser(sharingIntent, "Shearing Option"));*/
+            shareActivityView(MadrasahActivity.this);
             return true;
         }
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    ProgressDialog dialog;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(dialog != null && dialog.isShowing()){
+            dialog.dismiss();
+        }
+    }
+
+    public void shareActivityView(Activity activity){
+        dialog  = new ProgressDialog(activity);
+        dialog.setMessage("Menyiapkan gambar...");
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // show it
+        dialog.show();
+        //Ambil Tampilan
+        View view = activity.getWindow().getDecorView();
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
+        Bitmap b1 = view.getDrawingCache();
+        Rect frame = new Rect();
+        activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+        int statusBarHeight = frame.top;
+        int width = activity.getWindowManager().getDefaultDisplay().getWidth();
+        int height = activity.getWindowManager().getDefaultDisplay().getHeight();
+
+        Bitmap b = Bitmap.createBitmap(b1, 0, statusBarHeight, width, height  - statusBarHeight);
+        view.destroyDrawingCache();
+
+        //Simpan Tampilan
+        File shareFolder = new File(activity.getFilesDir(), "share");
+        if (!shareFolder.exists()) {
+            shareFolder.mkdirs();
+        }
+        File shareFile = new File(shareFolder, "pesantren.png");
+        if (!shareFile.exists()) {
+            try {
+                shareFile.createNewFile();
+            } catch (IOException e2) {
+                Log.e(getClass().getName(), e2.getMessage());
+            }
+        }
+
+
+        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+        FileOutputStream fos = null;
+        try
+        {
+            fos = new FileOutputStream(shareFile);
+            if (null != fos)
+            {
+                b.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                fos.flush();
+                fos.close();
+
+//                dialog.dismiss();
+
+                intent.setFlags(1);
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(activity, activity.getPackageName() + ".fileprovider", shareFile));
+                intent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Cek Madrasah");
+                String shareBodyText = "Madrasah : "+madrasah.getNamaLembaga() + "\nNSM : "+madrasah.getNsm() + "\nPimpinan : "+madrasah.getPimpinan() + "\nAlamat : "+madrasah.getAlamat()
+                +"\nhttp://pbsb.ditpdpontren.kemenag.go.id/pdpp/";
+                intent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
+                startActivity(Intent.createChooser(intent, "Shearing Option"));
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

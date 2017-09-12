@@ -1,9 +1,12 @@
 package kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.pesantren;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -14,6 +17,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -22,12 +26,17 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 
 import org.parceler.Parcels;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,16 +65,13 @@ public class PesantrenActivity extends AppCompatActivity {
     ViewPager viewPager;
 
     Menu menu;
-    private ShareActionProvider mShareActionProvider;
-
     boolean isBookmark = false;
-
     Context mContext;
     PesantrenDbHelper helper;
-
     @BindView(R.id.base_layout)
     CoordinatorLayout baseLayout;
-
+    View myView;
+    private ShareActionProvider mShareActionProvider;
     private int[] tabIcons = {
             R.drawable.ic_tab_profil_pesantren,
             R.drawable.ic_tab_lembaga_pesantren,
@@ -76,6 +82,7 @@ public class PesantrenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pesantren);
+
         ButterKnife.bind(this);
         mContext = this;
 
@@ -154,14 +161,9 @@ public class PesantrenActivity extends AppCompatActivity {
 
         tvNamaPesantren.setText(pesantren.getNamaPesantren());
 
-       /* // Get the ViewPager and set it's PagerAdapter so that it can display items
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager_pesantren);
-//        viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager()));
-        setupViewPager(viewPager);
-        // Give the PagerSlidingTabStrip the ViewPager
-        PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        // Attach the view pager to the tab strip
-        tabsStrip.setViewPager(viewPager);*/
+        int fromJumlahLembaga = getIntent().getIntExtra("from", 0);
+        if (fromJumlahLembaga == 1)
+            viewPager.setCurrentItem(1);
     }
 
     private void setupTabIcons() {
@@ -212,64 +214,6 @@ public class PesantrenActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }*/
 
-    public class SampleFragmentPagerAdapter extends FragmentPagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
-        List<Fragment> fragmentList = new ArrayList<>();
-        List<Integer> fragmentIcon = new ArrayList<>();
-        public SampleFragmentPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public int getCount() {
-            return fragmentList.size();
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragmentList.get(position);
-        }
-
-        @Override
-        public int getPageIconResId(int position) {
-            return fragmentIcon.get(position);
-        }
-
-        public void addFragment(Fragment fragment, int icon) {
-            fragmentList.add(fragment);
-            fragmentIcon.add(icon);
-        }
-    }
-
-
-    static class Adapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragments = new ArrayList<>();
-//        private final List<String> mFragmentTitles = new ArrayList<>();
-
-        public Adapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        public void addFragment(Fragment fragment) {
-            mFragments.add(fragment);
-//            mFragmentTitles.add(title);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragments.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return "";
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
@@ -286,6 +230,7 @@ public class PesantrenActivity extends AppCompatActivity {
             item.setIcon(getResources().getDrawable(R.drawable.ic_menu_bookmark_off));
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -330,12 +275,14 @@ public class PesantrenActivity extends AppCompatActivity {
         }
 
         if (item.getItemId() == R.id.action_share){
-            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-            sharingIntent.setType("text/plain");
-            String shareBodyText = "Pesantren : "+pesantren.getNamaPesantren() + "\n NSPP : "+pesantren.getNspp() + "\n Pimpinan : "+pesantren.getPimpinan() + "\n Alamat : "+pesantren.getAlamat();
-            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Cek Pesantren");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
-            startActivity(Intent.createChooser(sharingIntent, "Shearing Option"));
+//            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+//            sharingIntent.setType("text/plain");
+//            String shareBodyText = "Pesantren : "+pesantren.getNamaPesantren() + "\n NSPP : "+pesantren.getNspp() + "\n Pimpinan : "+pesantren.getPimpinan() + "\n Alamat : "+pesantren.getAlamat();
+//            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Cek Pesantren");
+//            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
+//            startActivity(Intent.createChooser(sharingIntent, "Shearing Option"));
+
+            shareActivityView(PesantrenActivity.this);
             return true;
         }
 
@@ -343,5 +290,142 @@ public class PesantrenActivity extends AppCompatActivity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    ProgressDialog dialog;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(dialog != null && dialog.isShowing()){
+            dialog.dismiss();
+        }
+    }
+
+    public void shareActivityView(Activity activity){
+        dialog  = new ProgressDialog(activity);
+        dialog.setMessage("Menyiapkan gambar...");
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // show it
+        dialog.show();
+        //Ambil Tampilan
+        View view = activity.getWindow().getDecorView();
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
+        Bitmap b1 = view.getDrawingCache();
+        Rect frame = new Rect();
+        activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+        int statusBarHeight = frame.top;
+        int width = activity.getWindowManager().getDefaultDisplay().getWidth();
+        int height = activity.getWindowManager().getDefaultDisplay().getHeight();
+
+        Bitmap b = Bitmap.createBitmap(b1, 0, statusBarHeight, width, height  - statusBarHeight);
+        view.destroyDrawingCache();
+
+        //Simpan Tampilan
+        File shareFolder = new File(activity.getFilesDir(), "share");
+        if (!shareFolder.exists()) {
+            shareFolder.mkdirs();
+        }
+        File shareFile = new File(shareFolder, "pesantren.png");
+        if (!shareFile.exists()) {
+            try {
+                shareFile.createNewFile();
+            } catch (IOException e2) {
+                Log.e(getClass().getName(), e2.getMessage());
+            }
+        }
+
+
+        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+        FileOutputStream fos = null;
+        try
+        {
+            fos = new FileOutputStream(shareFile);
+            if (null != fos)
+            {
+                b.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                fos.flush();
+                fos.close();
+
+//                dialog.dismiss();
+
+                intent.setFlags(1);
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(activity, activity.getPackageName() + ".fileprovider", shareFile));
+                intent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Cek Pesantren");
+                String shareBodyText = "Pesantren : "+pesantren.getNamaPesantren() + "\nNSPP : "+pesantren.getNspp() + "\nPimpinan : "+pesantren.getPimpinan() + "\nAlamat : "+pesantren.getAlamat()
+                        +"\nhttp://pbsb.ditpdpontren.kemenag.go.id/pdpp/";
+                intent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
+                startActivity(Intent.createChooser(intent, "Shearing Option"));
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    static class Adapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragments = new ArrayList<>();
+//        private final List<String> mFragmentTitles = new ArrayList<>();
+
+        public Adapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        public void addFragment(Fragment fragment) {
+            mFragments.add(fragment);
+//            mFragmentTitles.add(title);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "";
+        }
+    }
+
+    public class SampleFragmentPagerAdapter extends FragmentPagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
+        List<Fragment> fragmentList = new ArrayList<>();
+        List<Integer> fragmentIcon = new ArrayList<>();
+        public SampleFragmentPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentList.size();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
+        }
+
+        @Override
+        public int getPageIconResId(int position) {
+            return fragmentIcon.get(position);
+        }
+
+        public void addFragment(Fragment fragment, int icon) {
+            fragmentList.add(fragment);
+            fragmentIcon.add(icon);
+        }
     }
 }

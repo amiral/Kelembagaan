@@ -5,33 +5,33 @@
     tools:context="kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.tentang.SyncronFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="vertical"
-            android:layout_centerInParent="true">
+    <!--  <ScrollView
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_margin="10dp"
+             android:orientation="vertical"
+             android:layout_centerInParent="true">
             <Button
-                android:id="@+id/provinsi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:textColor="@color/white"
-                android:text="Ambil Data Provinsi"
-                android:background="@drawable/green_button"/>
-            <Button
-                android:id="@+id/kabupten"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:layout_margin="5dp"
-                android:text="Ambil Data Kabupaten"
-                android:background="@drawable/green_button"/>
-
-            <LinearLayout
+                 android:id="@+id/provinsi"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_margin="5dp"
+                 android:textColor="@color/white"
+                 android:text="Ambil Data Provinsi"
+                 android:background="@drawable/green_button"/>
+             <Button
+                 android:id="@+id/kabupten"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:textColor="@color/white"
+                 android:layout_margin="5dp"
+                 android:text="Ambil Data Kabupaten"
+                 android:background="@drawable/green_button"/>
+ -->
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -53,13 +53,14 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/green_button"/>
 
-            </LinearLayout>
+            </LinearLayout>-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
+                android:layout_centerInParent="true"
                 android:background="@color/background_content">
                 <TextView
                     android:id="@+id/tvLembaga"
@@ -78,7 +79,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
+           <!-- <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -149,9 +150,8 @@
                     android:background="@drawable/green_button"/>
 
             </LinearLayout>
-
         </LinearLayout>
 
-    </ScrollView>
+    </ScrollView>-->
 
 </RelativeLayout>

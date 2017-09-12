@@ -75,6 +75,7 @@ public class CariMadrasahFragment extends Fragment implements CariMadrasahAdapte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle(R.string.nav_cari);
         View view = inflater.inflate(R.layout.fragment_cari_madrasah, container, false);
         ButterKnife.bind(this, view);
         setHasOptionsMenu(true);
@@ -120,7 +121,16 @@ public class CariMadrasahFragment extends Fragment implements CariMadrasahAdapte
             SearchView searchView =
                     (SearchView) menu.findItem(R.id.action_search).getActionView();
 
-            String searchHint = "NSM, Nama, Prov, Kab";
+//            int id = searchView.getContext()
+//                    .getResources()
+//                    .getIdentifier("android:id/search_src_text", null, null);
+//            TextView textView = (TextView) searchView.findViewById(id);
+//
+////            int textSizeInSp = (int) getResources().getDimension(R.dimen.small_text);
+//            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+//                    getResources().getDimension(R.dimen.small_text));
+            searchView.setMaxWidth(Integer.MAX_VALUE);
+            String searchHint = "NSM, Nama, Provinsi, Kabupaten";
 
             searchView.setQueryHint(searchHint);
             searchView.setSearchableInfo(
@@ -211,6 +221,7 @@ public class CariMadrasahFragment extends Fragment implements CariMadrasahAdapte
 
                         Intent intent = new Intent(getContext(), FilterSearchActivity.class);
                         intent.putExtra("TIPEFILTER", TIPE_FILTER);
+                        intent.putExtra("from", 0);
                         startActivityForResult(intent, FILTER_REQUEST);
                         getActivity().overridePendingTransition(R.anim.slide_up, R.anim.stay);
                         return true;

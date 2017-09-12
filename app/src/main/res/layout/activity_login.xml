@@ -9,87 +9,99 @@
     android:orientation="vertical"
     android:id="@+id/base_layout">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/gambar_user_login"
-            android:layout_marginTop="20dp"/>
-
-        <View
-            android:layout_width="100dp"
-            android:layout_height="3dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/primary_dark"/>
-    </LinearLayout>
-
-
-
-    <TextView
-        android:id="@+id/text_welcome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Selamat Datang"
-        android:layout_marginTop="30dp"
-        android:textStyle="bold"
-        android:textSize="24sp"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp">
-
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <EditText
-                android:id="@+id/edit_username"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nama Pengguna"
-                android:textColorHint="#80ffffff"
-                android:textColor="@color/white"
-                android:layout_margin="5dp"
-                android:drawablePadding="5dp"
-                android:drawableLeft="@drawable/ic_menu_login"/>
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/gambar_user_login"
+                    android:layout_marginTop="20dp"/>
 
-            <EditText
-                android:id="@+id/edit_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Kata Sandi"
-                android:textColorHint="#80ffffff"
-                android:textColor="@color/white"
-                android:layout_margin="5dp"
-                android:drawablePadding="5dp"
-                android:drawableLeft="@drawable/ic_action_lock"/>
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/primary_dark"/>
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/button_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/green_button"
-                android:textColor="@android:color/white"
-                android:layout_margin="5dp"
-                android:text="Masuk"/>
+
+
             <TextView
+                android:id="@+id/text_welcome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lupa kata sandi?"
-                android:layout_margin="3dp"
-                android:textSize="18sp"
-                android:onClick="onForgot"
-                android:textColor="@color/grey"
-                android:textAlignment="center"/>
+                android:text="Selamat Datang"
+                android:layout_marginTop="30dp"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <EditText
+                        android:id="@+id/edit_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nama Pengguna"
+                        android:textColorHint="#80ffffff"
+                        android:textColor="@color/white"
+                        android:layout_margin="5dp"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/ic_menu_login"/>
+
+                    <EditText
+                        android:id="@+id/edit_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Kata Sandi"
+                        android:textColorHint="#80ffffff"
+                        android:textColor="@color/white"
+                        android:layout_margin="5dp"
+                        android:inputType="textPassword"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/ic_action_lock"/>
+
+                    <Button
+                        android:id="@+id/button_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/green_button"
+                        android:textColor="@android:color/white"
+                        android:layout_margin="5dp"
+                        android:text="Masuk"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Lupa kata sandi?"
+                        android:layout_margin="3dp"
+                        android:textSize="18sp"
+                        android:onClick="onForgot"
+                        android:textColor="@color/grey"
+                        android:textAlignment="center"/>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
+
+
 
 </LinearLayout>

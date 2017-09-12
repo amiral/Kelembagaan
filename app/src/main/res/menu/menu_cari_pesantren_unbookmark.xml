@@ -3,7 +3,7 @@
     <item
         android:id="@+id/action_bookmark"
         android:orderInCategory="100"
-        android:title="Bookmark" />
+        android:title="Unbookmark" />
 
     <item
         android:id="@+id/action_report"

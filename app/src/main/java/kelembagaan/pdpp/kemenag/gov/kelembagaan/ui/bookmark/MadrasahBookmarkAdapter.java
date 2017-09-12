@@ -12,7 +12,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.KabupatenDbHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.ProvinsiDbHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Kabupaten;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Lembaga;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Provinsi;
 
 /**
  * Created by Amiral on 6/12/17.
@@ -56,15 +60,14 @@ public class MadrasahBookmarkAdapter extends BaseAdapter {
             view.setTag(holder);
         }
 
-//        Lembaga madrasah = mDataSource.get(position);
-//        holder.nama.setText(madrasah.getNamaLembaga());
-//        holder.nomor.setText(""+madrasah.getNsm());
-//
-//        Kabupaten k = new KabupatenDbHelper(mContext).getKabupaten(madrasah.getKabupatenId());
-//        Provinsi p = new ProvinsiDbHelper(mContext).getProvinsi(k.getProvinsiIdProvinsi());
-//
-//        String lks = k.getNamaKabupaten() + "," + p.getNamaProvinsi();
-//        holder.lokasi.setText(lks);
+        Lembaga madrasah = mDataSource.get(position);
+        holder.nama.setText(madrasah.getNamaLembaga());
+        holder.nomor.setText(""+madrasah.getNsm());
+        Kabupaten k = new KabupatenDbHelper(mContext).getKabupaten(madrasah.getKabupatenId());
+        Provinsi p = new ProvinsiDbHelper(mContext).getProvinsi(k.getProvinsiIdProvinsi());
+        String lks = k.getNamaKabupaten() + ", " + p.getNamaProvinsi();
+        holder.lokasi.setText(lks);
+
         return view;
     }
 

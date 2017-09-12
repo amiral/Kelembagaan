@@ -35,7 +35,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Lupa Password");
+        getSupportActionBar().setTitle("Lupa Kata Sandi");
     }
 
     @Override

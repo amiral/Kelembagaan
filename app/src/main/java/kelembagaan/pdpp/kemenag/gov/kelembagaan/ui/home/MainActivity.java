@@ -449,6 +449,10 @@ public class MainActivity extends AppCompatActivity {
         navigationView.getMenu().getItem(navItemIndex).setChecked(true);
     }
 
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -474,7 +478,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return;
             }else{
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                /*AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
                 alertDialogBuilder.setMessage("Apakah anda ingin keluar dari aplikasi?");
                 alertDialogBuilder.setPositiveButton("Tidak",
                         new DialogInterface.OnClickListener() {
@@ -491,7 +495,8 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                 AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
+                alertDialog.show();*/
+                finish();
 
 //                super.onBackPressed();
             }
@@ -534,106 +539,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*private void handleMenuSearch() {
-        ActionBar action = getSupportActionBar(); //get the actionbar
-
-        if (isSearchOpened) { //test if the search is open
-
-            action.setDisplayShowCustomEnabled(false); //disable a custom view inside the actionbar
-            action.setDisplayShowTitleEnabled(true); //show the title in the action bar
-
-            //hides the keyboard
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(etSearch.getWindowToken(), 0);
-
-            //add the search icon in the action bar
-            mSearchAction.setIcon(R.drawable.ic_action_search);
-
-            isSearchOpened = false;
-            bottomBar.setVisibility(View.GONE);
-            isFirstBar = true;
-        } else { //open the search entry
-
-            action.setDisplayShowCustomEnabled(true); //enable it to display a
-            // custom view in the action bar.
-            action.setCustomView(R.layout.search_bar);//add the custom view
-            action.setDisplayShowTitleEnabled(false); //hide the title
-
-            etSearch = (EditText) action.getCustomView().findViewById(R.id.edit_search); //the text editor
-            //this is a listener to do a search when the user clicks on search button
-            etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                        doSearch();
-                        return true;
-                    }
-                    return false;
-                }
-            });
-
-
-            etSearch.requestFocus();
-
-            //open the keyboard focused in the edtSearch
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(etSearch, InputMethodManager.SHOW_IMPLICIT);
-
-
-            //add the close icon
-            mSearchAction.setIcon(R.drawable.ic_action_close);
-
-            isSearchOpened = true;
-            bottomBar.setVisibility(View.VISIBLE);
-
-            handleBottomBar();
-        }
-
-    }*/
-
-    private void doSearch() {
-
-    }
-
-    boolean isFirstBar = true;
-    boolean mIsLargeLayout;
-
-    private void handleBottomBar() {
-
-        /*bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelected(@IdRes int tabId) {
-
-                if (isFirstBar) {
-                    isFirstBar = false;
-                } else {
-
-                    int TIPE_FILTER;
-
-                    if (tabId == R.id.tab_wilayah) {
-                        // The tab with id R.id.tab_favorites was selected,
-                        // change your content accordingly.
-                        TIPE_FILTER = 0;
-//                        showDialogWilayah();
-                    } else if (tabId == R.id.tab_tipe) {
-                        // The tab with id R.id.tab_favorites was selected,
-                        // change your content accordingly.
-                        TIPE_FILTER = 1;
-                    } else {
-                        TIPE_FILTER = 2;
-                    }
-
-                    Intent intent = new Intent(MainActivity.this, FilterSearchActivity.class);
-//                    intent.putExtra(FilterActivity.FILTER_TYPE, FilterType.JenisKelamin);
-//                    intent.putExtra(FilterActivity.FILTER_DATA, this.filterData);
-                    intent.putExtra("TIPEFILTER", TIPE_FILTER);
-                    startActivityForResult(intent, FILTER_REQUEST);
-                    overridePendingTransition(R.anim.slide_up, R.anim.stay);
-                }
-
-            }
-        });*/
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

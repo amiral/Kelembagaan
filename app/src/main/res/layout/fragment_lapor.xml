@@ -3,67 +3,103 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/topLayout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="10dp"
-        android:orientation="vertical">
-
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomLayout">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/button_lapor_pesantren"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/topLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:layout_marginRight="1dp"
-                android:background="@drawable/green_grey_button"
-                android:text="Pesantren"
-                android:textColor="@color/white" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/button_lapor_madrasah"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:id="@+id/button_lapor_pesantren"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:layout_marginRight="1dp"
+                        android:background="@drawable/green_grey_button"
+                        android:text="Pesantren"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/button_lapor_madrasah"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:layout_marginLeft="1dp"
+                        android:background="@drawable/green_grey_button"
+                        android:text="Madrasah"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <Spinner
+                    android:id="@+id/spinner_provinsi"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="marquee"
+                    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                    android:gravity="center_vertical"
+                    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+                    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:textAlignment="inherit"/>
+
+                <Spinner
+                    android:id="@+id/spinner_kabupaten"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="marquee"
+                    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                    android:gravity="center_vertical"
+                    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+                    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:textAlignment="inherit"/>
+
+            </LinearLayout>
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:layout_marginLeft="1dp"
-                android:background="@drawable/green_grey_button"
-                android:text="Madrasah"
-                android:textColor="@color/white" />
+                android:layout_margin="10dp"
+                android:background="@drawable/rounded_border_background_white">
+
+                <EditText
+                    android:id="@+id/edit_lapor"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/grey"
+                    android:lines="5"
+                    android:gravity="top"
+                    android:padding="5dp" />
+
+                <TextView
+                    android:id="@+id/text_hiden_lapor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="10dp"
+                    android:drawableTop="@drawable/ic_action_information"
+                    android:text="@string/koreksi_hiden"
+                    android:textAlignment="center" />
+            </RelativeLayout>
+
         </LinearLayout>
-
-        <Spinner
-            android:id="@+id/spinner_provinsi"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
-            android:ellipsize="marquee"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall"
-            android:gravity="center_vertical"
-            android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-            android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-            android:minHeight="?android:attr/listPreferredItemHeightSmall"
-            android:textAlignment="inherit"/>
-
-        <Spinner
-            android:id="@+id/spinner_kabupaten"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
-            android:ellipsize="marquee"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall"
-            android:gravity="center_vertical"
-            android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-            android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-            android:minHeight="?android:attr/listPreferredItemHeightSmall"
-            android:textAlignment="inherit"/>
-
-    </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/bottomLayout"
@@ -94,31 +130,4 @@
             android:text="Kirim"
             android:textColor="@color/white" />
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottomLayout"
-        android:layout_below="@+id/topLayout"
-        android:layout_margin="10dp"
-        android:background="@drawable/rounded_border_background_white">
-
-        <EditText
-            android:id="@+id/edit_lapor"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/grey"
-            android:gravity="top"
-            android:padding="5dp" />
-
-        <TextView
-            android:id="@+id/text_hiden_lapor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="10dp"
-            android:drawableTop="@drawable/ic_action_information"
-            android:text="@string/koreksi_hiden"
-            android:textAlignment="center" />
-    </RelativeLayout>
 </RelativeLayout>

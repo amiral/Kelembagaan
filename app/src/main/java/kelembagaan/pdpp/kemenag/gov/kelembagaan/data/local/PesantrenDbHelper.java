@@ -76,7 +76,7 @@ public class PesantrenDbHelper {
         ArrayList<Pesantren> data = new ArrayList<>();
 
 
-        realmResult = realm.where(Pesantren.class).findAll();
+        realmResult = realm.where(Pesantren.class).findAll().sort("namaPesantren", Sort.ASCENDING);
         if (realmResult.size() > 0) {
             showLog("Size : " + realmResult.size());
             for (int i = 0; i < realmResult.size(); i++) {
@@ -171,7 +171,7 @@ public class PesantrenDbHelper {
 
 
 //        realmResult.sort("namaPesantren", Sort.ASCENDING);
-        realmResult = query.findAll();
+        realmResult = query.findAll().sort("namaPesantren", Sort.ASCENDING);;
         if (realmResult.size() > 0) {
             Log.i("Cari", "Cari Db: "+q + " size" + realmResult.size());
             for (int i = 0; i < realmResult.size(); i++) {
@@ -266,6 +266,19 @@ public class PesantrenDbHelper {
         return kb;
     }
 
+    public String getNamaPesantren(String nspp){
+        String nama;
+
+        Realm realm = Realm.getDefaultInstance();
+        try {
+            nama = realm.where(Pesantren.class).equalTo("nspp", nspp).findFirst().getNamaPesantren();
+            // do something with the person ...
+        } finally {
+            realm.close();
+        }
+
+        return nama;
+    }
     /**
      * membuat log
      *

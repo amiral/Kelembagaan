@@ -24,7 +24,18 @@ public class DisclaimerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_disclaimer, container, false);
+        View view = inflater.inflate(R.layout.fragment_disclaimer, container, false);
+
+//        WebView wv = (WebView) view.findViewById(R.id.textContent);
+//        String text;
+//        text = "<html><body><p align=\"justify\">";
+//        text+= ""+getString(R.string.disclaimer);
+//        text+= "</p></body></html>";
+//        wv.loadData(text, "text/html", "utf-8");
+
+
+        return view;
     }
+
 
 }
