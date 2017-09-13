@@ -52,11 +52,12 @@
             android:text="Kabupaten, Provinsi" />
     </LinearLayout>
     <ImageView
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/book"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="8dp"
-        android:src="@drawable/ic_bookmark_on"/>
+        android:src="@drawable/ic_action_bookmark_on"/>
 </RelativeLayout>

@@ -1,10 +1,12 @@
 package kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.bookmark;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -13,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.KabupatenDbHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.LembagaDbHelper;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.ProvinsiDbHelper;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Kabupaten;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Lembaga;
@@ -51,7 +54,7 @@ public class MadrasahBookmarkAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        ViewHolder holder;
+        final ViewHolder holder;
         if (view != null) {
             holder = (ViewHolder) view.getTag();
         } else {
@@ -60,13 +63,30 @@ public class MadrasahBookmarkAdapter extends BaseAdapter {
             view.setTag(holder);
         }
 
-        Lembaga madrasah = mDataSource.get(position);
+        final Lembaga madrasah = mDataSource.get(position);
         holder.nama.setText(madrasah.getNamaLembaga());
         holder.nomor.setText(""+madrasah.getNsm());
         Kabupaten k = new KabupatenDbHelper(mContext).getKabupaten(madrasah.getKabupatenId());
         Provinsi p = new ProvinsiDbHelper(mContext).getProvinsi(k.getProvinsiIdProvinsi());
         String lks = k.getNamaKabupaten() + ", " + p.getNamaProvinsi();
         holder.lokasi.setText(lks);
+
+        holder.btnBookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LembagaDbHelper helper = new LembagaDbHelper(mContext);
+                int iFavorit = helper.getLembaga(madrasah.getIdLembaga()).getIsFavorit();
+                if (iFavorit == 1){
+                    helper.setBookmark(madrasah, 0);
+                    holder.btnBookmark.setImageResource(R.drawable.ic_action_bookmark_off);
+                    Snackbar.make(holder.view, "Madrasah dihapus dari favorit.", Snackbar.LENGTH_SHORT).show();
+                }else{
+                    helper.setBookmark(madrasah, 1);
+                    holder.btnBookmark.setImageResource(R.drawable.ic_action_bookmark_on);
+                    Snackbar.make(holder.view, "Madrasah telah dijadikan favorit", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         return view;
     }
@@ -79,8 +99,14 @@ public class MadrasahBookmarkAdapter extends BaseAdapter {
         @BindView(R.id.text_lokasi_madrasah)
         TextView lokasi;
 
+        @BindView(R.id.bookmark)
+        ImageView btnBookmark;
+
+        View view;
+
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
+            this.view = view;
         }
     }
 }

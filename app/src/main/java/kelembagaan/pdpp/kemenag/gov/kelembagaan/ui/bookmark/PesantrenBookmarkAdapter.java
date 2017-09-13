@@ -1,10 +1,12 @@
 package kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.bookmark;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -13,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.KabupatenDbHelper;
+import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.PesantrenDbHelper;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.ProvinsiDbHelper;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Kabupaten;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Pesantren;
@@ -30,6 +33,7 @@ public class PesantrenBookmarkAdapter extends BaseAdapter {
 
     KabupatenDbHelper kabHelper ;
     ProvinsiDbHelper provHelper;
+    PesantrenDbHelper pesantrenDbHelper;
 
     public PesantrenBookmarkAdapter(Context mContext, List<Pesantren> mDataSource) {
         this.mContext = mContext;
@@ -57,7 +61,7 @@ public class PesantrenBookmarkAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        ViewHolder holder;
+        final ViewHolder holder;
         if (view != null) {
             holder = (ViewHolder) view.getTag();
         } else {
@@ -66,7 +70,7 @@ public class PesantrenBookmarkAdapter extends BaseAdapter {
             view.setTag(holder);
         }
 
-        Pesantren pesantren = mDataSource.get(position);
+        final Pesantren pesantren = mDataSource.get(position);
 
         holder.nama.setText(pesantren.getNamaPesantren());
         holder.nomor.setText(""+pesantren.getNspp());
@@ -74,6 +78,25 @@ public class PesantrenBookmarkAdapter extends BaseAdapter {
         Kabupaten kb = kabHelper.getKabupaten(Integer.parseInt(pesantren.getKodeKabupaten()));
         Provinsi provinsi = provHelper.getProvinsi(kb.getProvinsiIdProvinsi());
         holder.lokasi.setText(kb.getNamaKabupaten() + ", " + provinsi.getNamaProvinsi());
+
+        holder.btnBookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                pesantrenDbHelper = new PesantrenDbHelper(mContext);
+                int iFavorit = pesantrenDbHelper.getPesantren(pesantren.getIdPesantren()).getIsFavorit();
+                if (iFavorit == 1){
+                    pesantrenDbHelper.setBookmark(pesantren, 0);
+
+                    holder.btnBookmark.setImageResource(R.drawable.ic_action_bookmark_off);
+                    Snackbar.make(holder.view, "Pondok pesantren dihapus dari favorit.", Snackbar.LENGTH_SHORT).show();
+                }else{
+                    pesantrenDbHelper.setBookmark(pesantren, 1);
+                    holder.btnBookmark.setImageResource(R.drawable.ic_action_bookmark_on);
+                    Snackbar.make(holder.view, "Pondok pesantren telah dijadikan favorit", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         return view;
     }
@@ -86,8 +109,14 @@ public class PesantrenBookmarkAdapter extends BaseAdapter {
         @BindView(R.id.text_lokasi_pesantren)
         TextView lokasi;
 
+        @BindView(R.id.book)
+        ImageView btnBookmark;
+
+        View view;
+
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
+            this.view = view;
         }
     }
 }
