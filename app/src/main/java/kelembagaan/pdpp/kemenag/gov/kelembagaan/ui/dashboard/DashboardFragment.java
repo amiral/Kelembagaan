@@ -16,13 +16,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sccomponents.widgets.ScArcGauge;
-import com.sccomponents.widgets.ScCopier;
-import com.sccomponents.widgets.ScFeature;
-import com.sccomponents.widgets.ScGauge;
-import com.sccomponents.widgets.ScNotches;
-import com.sccomponents.widgets.ScPointer;
-import com.sccomponents.widgets.ScWriter;
+import com.sccomponents.gauges.ScArcGauge;
+import com.sccomponents.gauges.ScCopier;
+import com.sccomponents.gauges.ScFeature;
+import com.sccomponents.gauges.ScGauge;
+import com.sccomponents.gauges.ScNotches;
+import com.sccomponents.gauges.ScPointer;
+import com.sccomponents.gauges.ScWriter;
 
 import java.util.List;
 
@@ -51,9 +51,15 @@ public class DashboardFragment extends Fragment {
     @BindView(R.id.text_madrasah_expired)
     TextView tvExpired;
 
+    @BindView(R.id.text_percetage)
+    TextView tvPercentage;
+    @BindView(R.id.text_percetage_status)
+    TextView tvStatus;
     PreferenceManager prefManager;
     View view;
 
+    ScArcGauge gauge;
+    ImageView indicator;
     public DashboardFragment() {
         // Required empty public constructor
     }
@@ -68,13 +74,17 @@ public class DashboardFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         ButterKnife.bind(this, view);
+
+        gauge = (ScArcGauge) view.findViewById(R.id.gauge);
+        indicator = (ImageView) view.findViewById(R.id.indicator);
         prefManager = new PreferenceManager(getContext());
         onSyncronGeLaporanLembaga();
         return view;
     }
 
     public void initView(){
-        setGauge(view);
+
+        setGauge(50);
 
         //izin operasional
         LembagaDbHelper helper = new LembagaDbHelper(getActivity());
@@ -104,7 +114,8 @@ public class DashboardFragment extends Fragment {
             call.enqueue(new Callback<GetResponseLaporanLembaga>() {
                 @Override
                 public void onResponse(Call<GetResponseLaporanLembaga>call, Response<GetResponseLaporanLembaga> response) {
-                    progressDialog.dismiss();
+                    if (progressDialog != null)
+                        progressDialog.dismiss();
                     if (response != null && response.body().getData() != null){
                         List<Laporan> laporans = response.body().getData();
                         String lastSync = response.body().getTanggal().getDate();
@@ -157,20 +168,24 @@ public class DashboardFragment extends Fragment {
 
     }
 
-    private void setGauge(View v){
+    private void setGauge(int value){
 
-        final ScArcGauge gauge = (ScArcGauge) v.findViewById(R.id.gauge);
         assert gauge != null;
-
-        final ImageView indicator = (ImageView) v.findViewById(R.id.indicator);
         assert indicator != null;
+
+
+
+        tvPercentage.setText(""+value+" %");
+
+        String status = getStatus(value);
+        tvStatus.setText(status);
 
         // Set the center pivot for a right rotation
         indicator.setPivotX(39);
         indicator.setPivotY(88);
 
         // Set the values.
-        gauge.setHighValue(80);
+        gauge.setHighValue(value);
 
         // Set the filter of the base
         ScFeature base = gauge.findFeature(ScGauge.BASE_IDENTIFIER);
@@ -223,6 +238,33 @@ public class DashboardFragment extends Fragment {
         });
 
 
+    }
+
+    /*merah = benarnya: 1-24% buruk
+        orange = benarnya:25-49% cukup buruk
+                kuning = benarnya 50-74% cukup
+        hijau = benarnya 75-99% cukup baik
+                biru = benarnya 100% sempurna
+*/
+    private String getStatus(int value){
+        String status;
+
+        if (value == 0){
+            status = "Sangat Buruk";
+        }else if (value >= 1 && value < 25){
+            status = "Buruk";
+        }else if (value >= 25 && value < 50){
+            status = "Cukup Buruk";
+        }else if (value >= 50 && value < 75){
+            status = "Cukup";
+        }else if (value >= 75 && value < 100){
+            status = "Cukup Baik";
+        }else{
+            status = "Sempurna";
+        }
+
+
+        return status;
     }
 
     @OnClick(R.id.text_index_selengkapnya)

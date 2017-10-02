@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -19,7 +20,6 @@ import kelembagaan.pdpp.kemenag.gov.kelembagaan.R;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.local.LaporanLembagaDbHelper;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Laporan;
 import kelembagaan.pdpp.kemenag.gov.kelembagaan.data.model.Lembaga;
-import kelembagaan.pdpp.kemenag.gov.kelembagaan.utils.CustomListView;
 
 public class IndeksIntegritasActivity extends AppCompatActivity {
 
@@ -31,9 +31,13 @@ public class IndeksIntegritasActivity extends AppCompatActivity {
 
     @BindView(R.id.text_number_duplikat)
     TextView tvDuplikat;
+//
+//    @BindView(R.id.list_laporan)
+//    CustomListView lvLaporan;
+
 
     @BindView(R.id.list_laporan)
-    CustomListView lvLaporan;
+    ListView lvLaporan;
 
     LaporanLembagaDbHelper helper;
 

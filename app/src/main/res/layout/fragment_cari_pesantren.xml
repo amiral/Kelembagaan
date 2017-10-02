@@ -31,7 +31,7 @@
         android:layout_alignParentBottom="true"
         android:visibility="gone"
         app:bb_tabXmlResource="@xml/bottombar_cari" />-->
-    <android.support.design.widget.BottomNavigationView
+    <!--<android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,5 +40,85 @@
         app:itemBackground="@color/primary"
         app:itemIconTint="@drawable/navigation_bottom_bar"
         app:itemTextColor="@drawable/navigation_bottom_bar"
-        app:menu="@menu/menu_buttombar_cari" />
+        app:menu="@menu/menu_buttombar_cari" />-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="@color/primary">
+        <LinearLayout
+            android:id="@+id/bottom_wilayah"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:paddingTop="8dp"
+            android:paddingBottom="10dp"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/selector_ic_wilayah"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_bottom_item"
+                android:text="Wilayah"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottom_tipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:paddingTop="8dp"
+            android:paddingBottom="10dp"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/selector_ic_tipe"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_bottom_item"
+                android:text="Tipe"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottom_jenjang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:paddingTop="8dp"
+            android:paddingBottom="10dp"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/selector_ic_jenjang"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="@drawable/selector_bottom_item"
+                android:text="Jenjang"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+</LinearLayout>
 </RelativeLayout>

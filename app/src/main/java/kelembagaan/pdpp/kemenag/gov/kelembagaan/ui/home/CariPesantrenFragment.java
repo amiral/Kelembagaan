@@ -8,10 +8,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -42,15 +40,24 @@ import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.pesantren.PesantrenActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CariPesantrenFragment extends Fragment implements CariPesantrenAdapter.ItemClickListener {
+public class CariPesantrenFragment extends Fragment implements CariPesantrenAdapter.ItemClickListener, View.OnClickListener {
 
     @BindView(R.id.recyclerViewPesantren) RecyclerView recyclerView;
 
     @BindView(R.id.text_no_data)
     TextView tvNodata;
 
-    @BindView(R.id.bottomBar)
-    BottomNavigationView bottomBar;
+    @BindView(R.id.bottom_jenjang)
+    LinearLayout btnJenjang;
+
+    @BindView(R.id.bottom_wilayah)
+    LinearLayout btnWilayah;
+
+    @BindView(R.id.bottom_tipe)
+    LinearLayout btnTipe;
+
+//    @BindView(R.id.bottomBar)
+//    BottomNavigationView bottomBar;
 
     SearchView searchView;
     int FILTER_REQUEST = 111;
@@ -104,10 +111,13 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
             tvNodata.setVisibility(View.VISIBLE);
         }
 
+        btnWilayah.setOnClickListener(this);
+        btnTipe.setOnClickListener(this);
+        btnJenjang.setOnClickListener(this);
 
 //        dataSamplePesantren();
-        handleBottomBar();
-
+//        handleBottomBar();
+//
 
         return view;
     }
@@ -158,7 +168,7 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
                 }
             });
 
-            // Define the listener
+            /*// Define the listener
             MenuItemCompat.OnActionExpandListener expandListener = new MenuItemCompat.OnActionExpandListener() {
                 @Override
                 public boolean onMenuItemActionCollapse(MenuItem item) {
@@ -174,13 +184,13 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
                     handleBottomBar();
                     return true;  // Return true to expand action view
                 }
-            };
+            };*/
 
             // Get the MenuItem for the action item
             MenuItem actionMenuItem = menu.findItem(R.id.action_search);
 
             // Assign the listener to that action item
-            MenuItemCompat.setOnActionExpandListener(actionMenuItem, expandListener);
+//            MenuItemCompat.setOnActionExpandListener(actionMenuItem, expandListener);
 
         }catch(Exception e){e.printStackTrace();
         }
@@ -195,7 +205,7 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
 
 
 
-    public void handleBottomBar(){
+    /*public void handleBottomBar(){
         bottomBar.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -220,7 +230,7 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
                     }
                 });
 
-    }
+    }*/
 
     @Override
     public void onClick(View view, int position) {
@@ -244,27 +254,33 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
             lsJenjang = pref.getFilterJenjangPesantren();
 
             if (lsWilayah.size() > 0 ){
-                MenuItem item = bottomBar.getMenu().getItem(0);
-                item.setTitle(changetTextColorYellow(item.getTitle().toString()));
+//                MenuItem item = bottomBar.getMenu().getItem(0);
+//                item.setTitle(changetTextColorYellow(item.getTitle().toString()));
+                btnWilayah.setSelected(true);
             }else{
-                MenuItem item = bottomBar.getMenu().getItem(0);
-                item.setTitle(changetTextColorWhite(item.getTitle().toString()));
+//                MenuItem item = bottomBar.getMenu().getItem(0);
+//                item.setTitle(changetTextColorWhite(item.getTitle().toString()));
+                btnWilayah.setSelected(false);
             }
 
             if (lsTipe.size() > 0 ){
-                MenuItem item = bottomBar.getMenu().getItem(1);
-                item.setTitle(changetTextColorYellow(item.getTitle().toString()));
+//                MenuItem item = bottomBar.getMenu().getItem(1);
+//                item.setTitle(changetTextColorYellow(item.getTitle().toString()));
+                btnTipe.setSelected(true);
             }else{
-                MenuItem item = bottomBar.getMenu().getItem(1);
-                item.setTitle(changetTextColorWhite(item.getTitle().toString()));
+//                MenuItem item = bottomBar.getMenu().getItem(1);
+//                item.setTitle(changetTextColorWhite(item.getTitle().toString()));
+                btnTipe.setSelected(false);
             }
 
             if (lsJenjang.size() > 0 ){
-                MenuItem item = bottomBar.getMenu().getItem(2);
-                item.setTitle(changetTextColorYellow(item.getTitle().toString()));
+//                MenuItem item = bottomBar.getMenu().getItem(2);
+//                item.setTitle(changetTextColorYellow(item.getTitle().toString()));
+                btnJenjang.setSelected(true);
             }else{
-                MenuItem item = bottomBar.getMenu().getItem(2);
-                item.setTitle(changetTextColorWhite(item.getTitle().toString()));
+//                MenuItem item = bottomBar.getMenu().getItem(2);
+//                item.setTitle(changetTextColorWhite(item.getTitle().toString()));
+                btnJenjang.setSelected(false);
             }
 
            getDataFilter();
@@ -290,6 +306,27 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
         s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.white)), 0, s.length(), 0);
 
         return s;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+
+        if (v.getId() == R.id.bottom_wilayah){
+            TIPE_FILTER = 0;
+        }else if(v.getId() == R.id.bottom_tipe){
+            TIPE_FILTER = 1;
+        }else{
+            TIPE_FILTER = 2;
+        }
+
+        Intent intent = new Intent(getContext(), FilterSearchActivity.class);
+//                    intent.putExtra(FilterActivity.FILTER_TYPE, FilterType.JenisKelamin);
+//                    intent.putExtra(FilterActivity.FILTER_DATA, this.filterData);
+        intent.putExtra("TIPEFILTER", TIPE_FILTER);
+        intent.putExtra("from", 1);
+        startActivityForResult(intent, FILTER_REQUEST);
+        getActivity().overridePendingTransition(R.anim.slide_up, R.anim.stay);
     }
 
     /**
@@ -337,4 +374,5 @@ public class CariPesantrenFragment extends Fragment implements CariPesantrenAdap
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
+
 }
