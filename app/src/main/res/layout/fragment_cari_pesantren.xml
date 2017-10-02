@@ -43,6 +43,7 @@
         app:menu="@menu/menu_buttombar_cari" />-->
 
     <LinearLayout
+        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -62,6 +63,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
+                android:scaleType="centerInside"
                 android:src="@drawable/selector_ic_wilayah"/>
             <TextView
                 android:layout_width="match_parent"
@@ -86,6 +88,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
+                android:scaleType="centerInside"
                 android:src="@drawable/selector_ic_tipe"/>
             <TextView
                 android:layout_width="match_parent"
@@ -110,6 +113,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
+                android:scaleType="centerInside"
                 android:src="@drawable/selector_ic_jenjang"/>
             <TextView
                 android:layout_width="match_parent"

@@ -8,10 +8,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
@@ -44,15 +42,15 @@ import kelembagaan.pdpp.kemenag.gov.kelembagaan.ui.madrasah.MadrasahActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CariMadrasahFragment extends Fragment implements CariMadrasahAdapter.ItemClickListener{
+public class CariMadrasahFragment extends Fragment implements CariMadrasahAdapter.ItemClickListener, View.OnClickListener {
 
     @BindView(R.id.recyclerViewMadrasah) RecyclerView recyclerView;
 
     @BindView(R.id.text_no_data)
     TextView tvNodata;
 
-    @BindView(R.id.bottomBar)
-    BottomNavigationView bottomBar;
+//    @BindView(R.id.bottomBar)
+//    BottomNavigationView bottomBar;
 
     private CariMadrasahAdapter adapterMadrasah;
     private List<Lembaga> listMadrasah;
@@ -67,6 +65,16 @@ public class CariMadrasahFragment extends Fragment implements CariMadrasahAdapte
     List<Integer> lsJenjang ;
 
     PreferenceManager pref;
+
+    @BindView(R.id.bottom_jenjang)
+    LinearLayout btnJenjang;
+
+    @BindView(R.id.bottom_wilayah)
+    LinearLayout btnWilayah;
+
+    @BindView(R.id.bottom_tipe)
+    LinearLayout btnTipe;
+
     public CariMadrasahFragment() {
         // Required empty public constructor
     }
@@ -105,8 +113,12 @@ public class CariMadrasahFragment extends Fragment implements CariMadrasahAdapte
         }
 
 //        dataSampleMadrasah();
-        handleBottomBar();
+//        handleBottomBar();
 
+
+        btnWilayah.setOnClickListener(this);
+        btnTipe.setOnClickListener(this);
+        btnJenjang.setOnClickListener(this);
         return view;
     }
 
@@ -166,7 +178,7 @@ public class CariMadrasahFragment extends Fragment implements CariMadrasahAdapte
             });
 
             // Define the listener
-            MenuItemCompat.OnActionExpandListener expandListener = new MenuItemCompat.OnActionExpandListener() {
+           /* MenuItemCompat.OnActionExpandListener expandListener = new MenuItemCompat.OnActionExpandListener() {
                 @Override
                 public boolean onMenuItemActionCollapse(MenuItem item) {
                     // Do something when action item collapses
@@ -181,13 +193,13 @@ public class CariMadrasahFragment extends Fragment implements CariMadrasahAdapte
                     handleBottomBar();
                     return true;  // Return true to expand action view
                 }
-            };
+            };*/
 
             // Get the MenuItem for the action item
             MenuItem actionMenuItem = menu.findItem(R.id.action_search);
 
             // Assign the listener to that action item
-            MenuItemCompat.setOnActionExpandListener(actionMenuItem, expandListener);
+//            MenuItemCompat.setOnActionExpandListener(actionMenuItem, expandListener);
 
         }catch(Exception e){e.printStackTrace();}
     }
@@ -205,7 +217,7 @@ public class CariMadrasahFragment extends Fragment implements CariMadrasahAdapte
         adapterMadrasah.setClickListener(CariMadrasahFragment.this);
     }
 
-    public void handleBottomBar(){
+   /* public void handleBottomBar(){
         bottomBar.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -228,7 +240,7 @@ public class CariMadrasahFragment extends Fragment implements CariMadrasahAdapte
                     }
                 });
 
-    }
+    }*/
 
     @Override
     public void onClick(View view, int position) {
@@ -251,27 +263,33 @@ public class CariMadrasahFragment extends Fragment implements CariMadrasahAdapte
             lsJenjang = pref.getFilterJenjang();
 
             if (lsWilayah.size() > 0 ){
-                MenuItem item = bottomBar.getMenu().getItem(0);
-                item.setTitle(changetTextColorYellow(item.getTitle().toString()));
+//                MenuItem item = bottomBar.getMenu().getItem(0);
+//                item.setTitle(changetTextColorYellow(item.getTitle().toString()));
+                btnWilayah.setSelected(true);
             }else{
-                MenuItem item = bottomBar.getMenu().getItem(0);
-                item.setTitle(changetTextColorWhite(item.getTitle().toString()));
+//                MenuItem item = bottomBar.getMenu().getItem(0);
+//                item.setTitle(changetTextColorWhite(item.getTitle().toString()));
+                btnWilayah.setSelected(false);
             }
 
             if (lsTipe.size() > 0 ){
-                MenuItem item = bottomBar.getMenu().getItem(1);
-                item.setTitle(changetTextColorYellow(item.getTitle().toString()));
+//                MenuItem item = bottomBar.getMenu().getItem(1);
+//                item.setTitle(changetTextColorYellow(item.getTitle().toString()));
+                btnTipe.setSelected(true);
             }else{
-                MenuItem item = bottomBar.getMenu().getItem(1);
-                item.setTitle(changetTextColorWhite(item.getTitle().toString()));
+//                MenuItem item = bottomBar.getMenu().getItem(1);
+//                item.setTitle(changetTextColorWhite(item.getTitle().toString()));
+                btnTipe.setSelected(false);
             }
 
             if (lsJenjang.size() > 0 ){
-                MenuItem item = bottomBar.getMenu().getItem(2);
-                item.setTitle(changetTextColorYellow(item.getTitle().toString()));
+//                MenuItem item = bottomBar.getMenu().getItem(2);
+//                item.setTitle(changetTextColorYellow(item.getTitle().toString()));
+                btnJenjang.setSelected(true);
             }else{
-                MenuItem item = bottomBar.getMenu().getItem(2);
-                item.setTitle(changetTextColorWhite(item.getTitle().toString()));
+//                MenuItem item = bottomBar.getMenu().getItem(2);
+//                item.setTitle(changetTextColorWhite(item.getTitle().toString()));
+                btnJenjang.setSelected(false);
             }
 
             getDataFilter();
@@ -290,6 +308,24 @@ public class CariMadrasahFragment extends Fragment implements CariMadrasahAdapte
         s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.white)), 0, s.length(), 0);
 
         return s;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.bottom_wilayah){
+            TIPE_FILTER = 0;
+        }else if(v.getId() == R.id.bottom_tipe){
+            TIPE_FILTER = 1;
+        }else{
+            TIPE_FILTER = 2;
+        }
+
+
+        Intent intent = new Intent(getContext(), FilterSearchActivity.class);
+        intent.putExtra("TIPEFILTER", TIPE_FILTER);
+        intent.putExtra("from", 0);
+        startActivityForResult(intent, FILTER_REQUEST);
+        getActivity().overridePendingTransition(R.anim.slide_up, R.anim.stay);
     }
 
 
